@@ -1,6 +1,9 @@
 /* $Id$ */
 
-#ifndef _WIN32
+#ifdef _WIN32
+# include <winsock2.h>
+# include <iphlpapi.h>
+#else
 # include <sys/types.h>
 # include <sys/ioctl.h>
 # include <sys/time.h>
@@ -38,39 +41,121 @@ pcap_ex_immediate(pcap_t *pcap)
 #endif
 }
 
+#ifdef _WIN32
+/* XXX - set device list in libdnet order. */
+static int
+_pcap_ex_findalldevs(pcap_if_t **dst, char *ebuf)
+{
+        pcap_if_t *pifs, *cur, *prev, *next;
+	int ret;
+	
+	if ((ret = pcap_findalldevs(&pifs, ebuf)) != -1) {
+		/* XXX - flip script like a dyslexic actor */
+		for (prev = NULL, cur = pifs; cur != NULL; ) {
+			next = cur->next, cur->next = prev;
+			prev = cur, cur = next;
+		}
+		*dst = prev;
+	}
+	return (ret);
+}
+#endif
+
 char *
 pcap_ex_name(char *name)
 {
 #ifdef _WIN32
+	/*
+	 * XXX - translate from libdnet logical interface name to
+	 * WinPcap native interface name.
+	 */
 	static char pcap_name[256];
-        pcap_if_t *pifs, *cur, *prev, *next;
+        pcap_if_t *pifs, *pif;
 	char ebuf[128];
-	int i, idx, max;
+	int idx, i = 0;
 
-	if (strncmp(name, "eth", 3) != 0 ||
-	    sscanf(name + 3, "%u", &idx) != 1 ||
-	    pcap_findalldevs(&pifs, ebuf) == -1 || pifs == NULL) {
+	/* XXX - according to the WinPcap FAQ, no loopback support??? */
+        if (strncmp(name, "eth", 3) != 0 || sscanf(name+3, "%u", &idx) != 1 ||
+	    _pcap_ex_findalldevs(&pifs, ebuf) == -1) {
 		return (name);
 	}
-	/* XXX - flip script like a dyslexic actor */
-	for (prev = NULL, cur = pifs, max = 0; cur != NULL; max++) {
-		next = cur->next;
-		cur->next = prev;
-		prev = cur;
-		cur = next;
-	}
-	pifs = prev;
-	for (cur = pifs, i = 0; i != idx && i < max; i++) {
-		cur = cur->next;
-	}
-	if (i != max) {
-		strncpy(pcap_name, cur->name, sizeof(pcap_name)-1);
-		name = pcap_name;
+	for (pif = pifs; pif != NULL; pif = pif->next) {
+		if (i++ == idx) {
+			strncpy(pcap_name, pif->name, sizeof(pcap_name)-1);
+			pcap_name[sizeof(pcap_name)-1] = '\0';
+			name = pcap_name;
+			break;
+		}
 	}
 	pcap_freealldevs(pifs);
 	return (name);
 #else
 	return (name);
+#endif
+}
+
+char *
+pcap_ex_lookupdev(char *ebuf)
+{
+#ifdef _WIN32
+	/* XXX - holy poo this sux */
+	static char _ifname[8];
+	IP_INTERFACE_INFO *ifinfo;
+	MIB_IPADDRTABLE *ipaddrs;
+	DWORD i, didx, dsz, outip;
+	pcap_if_t *pifs, *pif;
+	struct pcap_addr *pa;
+	char *name = NULL;
+	int idx;
+	
+	/* Find index of the first configured interface. */
+	ifinfo = malloc((dsz = sizeof(*ifinfo)));
+	while (GetInterfaceInfo(ifinfo, &dsz) == ERROR_INSUFFICIENT_BUFFER) {
+		free(ifinfo);
+		ifinfo = malloc(dsz);
+	}
+	didx = ifinfo->NumAdapters ? ifinfo->Adapter[0].Index : 0;
+	free(ifinfo);
+	if (!didx) {
+		sprintf(ebuf, "no configured interfaces");
+		return (name);
+	}
+	/* Find its IP address. */
+	ipaddrs = malloc((dsz = sizeof(*ipaddrs)));
+	while (GetIpAddrTable(ipaddrs, &dsz, 0) == ERROR_INSUFFICIENT_BUFFER) {
+		free(ipaddrs);
+		ipaddrs = malloc(dsz);
+	}
+	for (i = outip = 0; i < ipaddrs->dwNumEntries; i++) {
+		if (ipaddrs->table[i].dwIndex == didx) {
+			outip = ipaddrs->table[i].dwAddr;
+			break;
+		}
+	}
+	free(ipaddrs);
+	if (!outip) {
+		sprintf(ebuf, "first configured interface has no IP?");
+		return (name);
+	}
+	/* Find matching pcap interface by IP. */
+	if (_pcap_ex_findalldevs(&pifs, ebuf) == -1)
+		return (name);
+	
+	for (pif = pifs, idx = 0; pif != NULL && name == NULL;
+	    pif = pif->next, idx++) {
+		for (pa = pif->addresses; pa != NULL; pa = pa->next) {
+			if (pa->addr->sa_family == AF_INET &&
+			    ((struct sockaddr_in *)pa->addr)->sin_addr.S_un.S_addr == outip) {
+				sprintf(_ifname, "eth%d", idx);
+				name = _ifname;
+				break;
+			}
+		}
+	}
+	pcap_freealldevs(pifs);
+	return (name);
+#else
+	return (pcap_lookupdev(ebuf));
 #endif
 }
 
@@ -80,15 +165,16 @@ pcap_ex_fileno(pcap_t *pcap)
 #ifdef _WIN32
 	/* XXX - how to handle savefiles? */
 	return ((int)pcap_getevent(pcap));
-#endif
-#ifdef HAVE_PCAP_FILE
-	FILE *f = pcap_file(pcap);
 #else
+# ifdef HAVE_PCAP_FILE
+	FILE *f = pcap_file(pcap);
+# else
 	FILE *f = pcap->sf.rfile;
-#endif
+# endif
 	if (f != NULL)
 		return (fileno(f));
 	return (pcap_fileno(pcap));
+#endif /* !_WIN32 */
 }
 
 static int __pcap_ex_gotsig;

@@ -44,7 +44,6 @@ cdef extern from "pcap.h":
     pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
                            int to_ms, char *errbuf)
     pcap_t *pcap_open_offline(char *fname, char *errbuf)
-    char   *pcap_lookupdev(char *errbuf)
     int     pcap_compile(pcap_t *p, bpf_program *fp, char *str, int optimize,
                          unsigned int netmask)
     int     pcap_setfilter(pcap_t *p, bpf_program *fp)
@@ -62,6 +61,7 @@ cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
     void    pcap_ex_immediate(pcap_t *p)
     char   *pcap_ex_name(char *name)
+    char   *pcap_ex_lookupdev(char *ebuf)
     int     pcap_ex_fileno(pcap_t *p)
     void    pcap_ex_setup(pcap_t *p)
     int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
@@ -138,7 +138,7 @@ cdef class pcap:
         cdef char *p
         
         if not name:
-            p = pcap_lookupdev(self.__ebuf)
+            p = pcap_ex_lookupdev(self.__ebuf)
             if p == NULL:
                 raise OSError, "couldn't lookup device"
             self.__name = strdup(p)
@@ -313,11 +313,8 @@ def ex_name(char *foo):
 def lookupdev():
     """Return the name of a network device suitable for sniffing."""
     cdef char *p, ebuf[256]
-    p = pcap_lookupdev(ebuf)
+    p = pcap_ex_lookupdev(ebuf)
     if p == NULL:
         raise OSError, ebuf
-    elif p[0] == '\\'[0] and p[1] == '\0'[0]:
-        # XXX - winpcap b0rkage - should find first UP interface instead
-        return 'eth0'
     return p
 
