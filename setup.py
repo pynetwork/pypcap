@@ -49,8 +49,9 @@ class config_pcap(config.config):
                                 cfg['library_dirs'] = [ os.path.join(d, sd) ]
                                 cfg['libraries'] = [ lib[0] ]
                                 if lib[0] == 'wpcap':
-                                    cfg['extra_compile_args'] = [ '-DWIN32',
-                                                                  '-DWPCAP' ]
+                                    cfg['libraries'].append('iphlpapi')
+                                    cfg['extra_compile_args'] = \
+                                        [ '-DWIN32', '-DWPCAP' ]
                                 print 'found', cfg
                                 self._write_config_h(cfg)
                                 return cfg
