@@ -1,16 +1,24 @@
 # $Id$
 
+PYTHON	= python
+CONFIG_ARGS =
+
+# PYTHON = C:\\Python23\\python.exe
+# CONFIG_ARGS = --with-pcap=..\\wpdpack
+
 all: pcap.c
-	python setup.py build
+	$(PYTHON) setup.py config $(CONFIG_ARGS)
+	$(PYTHON) setup.py build
 
 pcap.c: pcap.pyx
 	pyrexc pcap.pyx
 
 install:
-	python setup.py install
+	$(PYTHON) setup.py install
 
 clean:
-	rm -rf build
+	$(PYTHON) setup.py clean
 
 cleandir distclean: clean
-	rm -f *.c *~
+	$(PYTHON) setup.py clean -a
+	rm -f *~

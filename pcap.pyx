@@ -14,26 +14,15 @@ __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
 __license__ = 'Python'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '0.2'
+__version__ = '0.3'
 
 import sys
 
 cdef extern from "Python.h":
     object PyString_FromStringAndSize(char *s, int len)
-    void  *PyList_New(int n)
-    void  *PyMem_Malloc(int n)
-    void   PyMem_Free(void *)
-    int	   Py_BEGIN_ALLOW_THREADS	# XXX
-    int    Py_END_ALLOW_THREADS		# XXX
+    int    PyGILState_Ensure()
+    void   PyGILState_Release(int gil)
     object PyErr_SetFromErrno(object type)
-    
-cdef extern from "pcap-int.h":
-    # XXX - to make pcap_fileno() work with dumpfiles...
-    cdef struct pcap_sf:
-        void   *rfile			# XXX
-    ctypedef struct pcap_t:
-        int     fd
-        pcap_sf sf
     
 cdef extern from "pcap.h":
     cdef struct bpf_program:
@@ -48,6 +37,8 @@ cdef extern from "pcap.h":
     cdef struct pcap_pkthdr:
         bpf_timeval ts
         unsigned int caplen
+    ctypedef struct pcap_t:
+        int __xxx
     
     ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
     
@@ -64,47 +55,36 @@ cdef extern from "pcap.h":
     int     pcap_datalink(pcap_t *p)
     int     pcap_snapshot(pcap_t *p)
     int     pcap_stats(pcap_t *p, pcap_stat *ps)
-    int     pcap_fileno(pcap_t *p)
     char   *pcap_geterr(pcap_t *p)
     void    pcap_close(pcap_t *p)
 
-cdef extern from "setjmp.h":
-    ctypedef struct jmp_buf:
-        int __xxx
-    int  setjmp(jmp_buf env)
-    void longjmp(jmp_buf env, int val)
+cdef extern from "pcap_ex.h":
+    # XXX - hrr, sync with libdnet and libevent
+    char   *pcap_ex_name(char *name)
+    int     pcap_ex_fileno(pcap_t *p)
+    int     pcap_ex_wait(int handle)
 
 cdef extern from *:
-    int   R_OK
-    int   access(char *path, int mode)
     char *strdup(char *src)
     void  free(void *ptr)
-    int   fileno(void *f)		# XXX
     
-    ctypedef struct fd_set:
-        int __xxx
-    void FD_ZERO(fd_set *fdset)
-    void FD_SET(int fd, fd_set *fdset)
-    int  FD_ISSET(int fd, fd_set *fdset)
-    int  select(int nfds, fd_set *rfds, fd_set *wfds, fd_set *efds, void *tv)
-
 cdef struct pcap_handler_ctx:
-    void   *callback
-    void   *arg
-    void   *exc
-    jmp_buf env
+    void *callback
+    void *arg
+    int   got_exc
 
 cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
     cdef pcap_handler_ctx *ctx
+    cdef int gil
     ctx = <pcap_handler_ctx *>arg
+    gil = PyGILState_Ensure()
     try:
         (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                                PyString_FromStringAndSize(pkt, hdr.caplen),
                                <object>ctx.arg)
     except:
-        # XXX - don't interfere with Pyrex internal exception handling
-        (<object>ctx.exc).extend(sys.exc_info())
-        longjmp(ctx.env, 1)
+        ctx.got_exc = 1
+    PyGILState_Release(gil)
 
 DLT_NULL =	0
 DLT_EN10MB =	1
@@ -163,15 +143,11 @@ cdef class pcap:
             self.__name = strdup(name)
             
         self.__filter = strdup("")
-        
-        if access(self.__name, R_OK) == 0:
-            self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
-            # XXX - libpcap should do this!
-            if self.__pcap:
-                self.__pcap.fd = fileno(self.__pcap.sf.rfile)
-        else:
-            self.__pcap = pcap_open_live(self.__name, snaplen, promisc, 50,
-                                         self.__ebuf)
+
+        self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
+        if not self.__pcap:
+            self.__pcap = pcap_open_live(pcap_ex_name(self.__name),
+                                         snaplen, promisc, 50, self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
 
@@ -192,20 +168,20 @@ cdef class pcap:
         """Datalink offset (length of layer-2 frame header)."""
         def __get__(self):
             return self.__dloff
-    
-    property fd:
-        """File descriptor for capture handle."""
-        def __get__(self):
-            return pcap_fileno(self.__pcap)
 
     property filter:
         """Current packet capture filter."""
         def __get__(self):
             return self.__filter
     
+    property fd:
+        """File descriptor (or win32 HANDLE) for capture handle."""
+        def __get__(self):
+            return pcap_ex_fileno(self.__pcap)
+        
     def fileno(self):
-        """Return file descriptor for capture handle."""
-        return pcap_fileno(self.__pcap)
+        """Return file descriptor (or win32 HANDLE) for capture handle."""
+        return pcap_ex_fileno(self.__pcap)
     
     def setfilter(self, value):
         """Set BPF-format packet capture filter."""
@@ -253,26 +229,17 @@ cdef class pcap:
                     EOF is reached, or the read times out;
                     or -1 to process all packets received in one buffer
         """
-        cdef pcap_handler_ctx *ctx
+        cdef pcap_handler_ctx ctx
         cdef int n
-
-        # XXX - because Pyrex doesn't understand 'volatile'
-        ctx = <pcap_handler_ctx *>PyMem_Malloc(sizeof(pcap_handler_ctx))
         ctx.callback = <void *>callback
         ctx.arg = <void *>arg
-        ctx.exc = PyList_New(0)	# XXX
-        
-        if setjmp(ctx.env) == 0:
-            n = pcap_dispatch(self.__pcap, cnt, __pcap_handler,
-                              <unsigned char *>ctx)
-            PyMem_Free(ctx)
-            if n < 0:
-                raise OSError, pcap_geterr(self.__pcap)
-            return n
-        
-        exc = <object>ctx.exc
-        PyMem_Free(ctx)
-        raise exc[0], exc[1], exc[2]
+        ctx.got_exc = 0
+        n = pcap_dispatch(self.__pcap, cnt, __pcap_handler,
+                          <unsigned char *>&ctx)
+        if ctx.got_exc:
+            exc = sys.exc_info()
+            raise exc[0], exc[1], exc[2]
+        return n
 
     def loop(self, callback, arg=None):
         """Loop forever, processing packets with a user callback.
@@ -283,23 +250,15 @@ cdef class pcap:
         callback -- function with (timestamp, pkt, arg) prototype
         arg      -- optional argument passed to callback on execution
         """
-        cdef fd_set rfds
-        cdef int fd, n
-        
-        fd = pcap_fileno(self.__pcap)
-        if fd < 0:
-            raise OSError, pcap_geterr(self.__pcap)
+        cdef int handle, n
+        handle = pcap_ex_fileno(self.__pcap)
         while 1:
-            FD_ZERO(&rfds)
-            FD_SET(fd, &rfds)
-            Py_BEGIN_ALLOW_THREADS
-            n = select(fd + 1, &rfds, NULL, NULL, NULL)
-            Py_END_ALLOW_THREADS
-            if n <= 0:
-                PyErr_SetFromErrno(OSError)
-            elif FD_ISSET(fd, &rfds) != 0:
-                if self.dispatch(callback, arg) == 0:
-                    break
+            n = pcap_ex_wait(handle)
+            if n < 0:
+                raise KeyboardInterrupt	# XXX - hrr
+                #PyErr_SetFromErrno(OSError)
+                #break
+            self.dispatch(callback, arg)
     
     def geterr(self):
         """Return the last error message associated with this handle."""
@@ -320,12 +279,18 @@ cdef class pcap:
             free(self.__filter)
         if self.__pcap:
             pcap_close(self.__pcap)
-    
+
+def ex_name(char *foo):
+    return pcap_ex_name(foo)
+
 def lookupdev():
     """Return the name of a network device suitable for sniffing."""
     cdef char *p, buf[128]
     p = pcap_lookupdev(buf)
     if p == NULL:
         raise OSError, buf
+    elif p[0] == '\\'[0] and p[1] == '\0'[0]:
+        # XXX - winpcap b0rkage - should find first UP interface instead
+        return 'eth0'
     return p
 
