@@ -64,9 +64,9 @@ pcap_ex_fileno(pcap_t *pcap)
 #endif
 }
 
-#ifdef _WIN32
 static int __pcap_ex_gotsig;
 
+#ifdef _WIN32
 static BOOL CALLBACK
 __pcap_ex_ctrl(DWORD sig)
 {
@@ -77,6 +77,7 @@ __pcap_ex_ctrl(DWORD sig)
 static void
 __pcap_ex_signal(int sig)
 {
+	__pcap_ex_gotsig = 1;
 }
 #endif
 
@@ -92,7 +93,7 @@ pcap_ex_setup(pcap_t *pcap)
 	fd = pcap_fileno(pcap);
 	n = fcntl(fd, F_GETFL, 0) | O_NONBLOCK;
 	fcntl(fd, F_SETFL, n);
-	
+
 	signal(SIGINT, __pcap_ex_signal);
 #endif
 }
@@ -116,6 +117,10 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 
 	fd = pcap_fileno(pcap);
 	for (;;) {
+		if (__pcap_ex_gotsig) {
+			__pcap_ex_gotsig = 0;
+			return (-1);
+		}
 		if ((__pkt = (u_char *)pcap_next(pcap, &__hdr)) == NULL) {
 			if (pcap->sf.rfile != NULL)
 				return (-2);
