@@ -19,7 +19,19 @@ class config_pcap(config.config):
         self.dump_source = 0
         #self.noisy = 0
         self.with_pcap = None
-        
+
+    def _write_config_h(self, cfg):
+        # XXX - write out config.h for pcap_ex.c
+        d = {}
+        if os.path.exists(os.path.join(cfg['include_dirs'][0], 'pcap-int.h')):
+            d['HAVE_PCAP_INT_H'] = 1
+        buf = open(os.path.join(cfg['include_dirs'][0], 'pcap.h')).read()
+        if buf.find('pcap_file(') != -1:
+            d['HAVE_PCAP_FILE'] = 1
+        f = open('config.h', 'w')
+        for k, v in d.iteritems():
+            f.write('#define %s %s\n' % (k, v))
+    
     def _pcap_config(self, dirs=[ None ]):
         cfg = {}
         if not dirs[0]:
@@ -40,11 +52,12 @@ class config_pcap(config.config):
                                     cfg['extra_compile_args'] = [ '-DWIN32',
                                                                   '-DWPCAP' ]
                                 print 'found', cfg
+                                self._write_config_h(cfg)
                                 return cfg
         raise "couldn't find pcap build or installation directory"
     
     def run(self):
-        config.log.set_verbosity(0)
+        #config.log.set_verbosity(0)
         cPickle.dump(self._pcap_config([ self.with_pcap ]),
                      open(pcap_cache, 'wb'))
         self.temp_files.append(pcap_cache)
