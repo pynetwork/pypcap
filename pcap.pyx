@@ -14,12 +14,12 @@ __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
 __license__ = 'BSD license'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '0.4'
+__version__ = '0.5'
 
 import sys
 
 cdef extern from "Python.h":
-    object PyString_FromStringAndSize(char *s, int len)
+    object PyBuffer_FromMemory(char *s, int len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
     
@@ -38,7 +38,7 @@ cdef extern from "pcap.h":
         unsigned int caplen
     ctypedef struct pcap_t:
         int __xxx
-    
+
     ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
     
     pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
@@ -59,6 +59,7 @@ cdef extern from "pcap.h":
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
+    void    pcap_ex_immediate(pcap_t *p)
     char   *pcap_ex_name(char *name)
     int     pcap_ex_fileno(pcap_t *p)
     void    pcap_ex_setup(pcap_t *p)
@@ -80,7 +81,7 @@ cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
     gil = PyGILState_Ensure()
     try:
         (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                               PyString_FromStringAndSize(pkt, hdr.caplen),
+                               PyBuffer_FromMemory(pkt, hdr.caplen),
                                <object>ctx.arg)
     except:
         ctx.got_exc = 1
@@ -108,30 +109,62 @@ else:
     DLT_LOOP =		108
     DLT_RAW =		12
 
-dloff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
+dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
           DLT_LOOP:4, DLT_RAW:0 }
 
+"""XXX - NOTYET
+cdef class BPF:
+    cdef bpf_program fcode
+    
+    def __init__(self, filter, snaplen=1500, linktype=DLT_EN10MB,
+                 optimize=True):
+        if not pcap_compile_nopcap(snaplen, linktype, &self.fcode,
+                                   filter, optimize, 0):
+            raise ValueError, 'bad packet filter expression'
+        self.filter = filter
+
+    def match(self, buf):
+        if bpf_filter(self.fcode.bf_insns, buf, len(buf), len(buf)):
+            return True
+        return False
+
+    def __repr__(self):
+        return 'BPF(%r)' % self.filter
+
+    def __str__(self):
+        l = []
+        for i from 0 <= i <= self.fcode.bf_len:
+            l.append(bpf_image(self.fcode.bf_insns, i))
+        return ''.join(l)
+    
+    def __del__(self):
+        # XXX - missing pcap_freecode on some platforms
+        if self.filter:
+            free(self.fcode.bf_insns)
+"""
+
 cdef class pcap:
-    """pcap(name=None, snaplen=65535, promisc=True) -> packet capture object
+    """pcap(name=None, snaplen=65535, promisc=True, immediate=False) -> packet capture object
     
     Open a handle to a packet capture descriptor.
     
     Keyword arguments:
-    name    -- name of a network interface or dumpfile to open,
-               or None to open the first available up interface.
-    snaplen -- maximum number of bytes to capture for each packet
-    promisc -- boolean to specify promiscuous mode sniffing
+    name      -- name of a network interface or dumpfile to open,
+                 or None to open the first available up interface
+    snaplen   -- maximum number of bytes to capture for each packet
+    promisc   -- boolean to specify promiscuous mode sniffing
+    immediate -- disable buffering, if possible
     """
     cdef pcap_t *__pcap
     cdef char *__name
     cdef char *__filter
-    cdef char __ebuf[128]
+    cdef char __ebuf[256]
     cdef int __dloff
     
     def __init__(self, name=None, snaplen=65535, promisc=True,
                  immediate=False):
-        global dloff
+        global dltoff
         cdef char *p
         
         if not name:
@@ -147,12 +180,13 @@ cdef class pcap:
         self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_open_live(pcap_ex_name(self.__name),
-                                         snaplen, promisc, 1000, self.__ebuf)
+                                         snaplen, promisc, 500, self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
-
-        try: self.__dloff = dloff[pcap_datalink(self.__pcap)]
+        try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError: pass
+        if immediate:
+            pcap_ex_immediate(self.__pcap)
     
     property name:
         """Network interface or dumpfile name."""
@@ -183,12 +217,12 @@ cdef class pcap:
         """Return file descriptor (or Win32 HANDLE) for capture handle."""
         return pcap_ex_fileno(self.__pcap)
     
-    def setfilter(self, value):
+    def setfilter(self, value, optimize=1):
         """Set BPF-format packet capture filter."""
         cdef bpf_program fcode
         free(self.__filter)
         self.__filter = strdup(value)
-        if pcap_compile(self.__pcap, &fcode, self.__filter, 1, 0) < 0:
+        if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         if pcap_setfilter(self.__pcap, &fcode) < 0:
             raise OSError, pcap_geterr(self.__pcap)
@@ -205,7 +239,7 @@ cdef class pcap:
         if not pkt:
             return None
         return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                PyString_FromStringAndSize(pkt, hdr.caplen))
+                PyBuffer_FromMemory(pkt, hdr.caplen))
 
     def __add_pkts(self, ts, pkt, pkts):
         pkts.append((ts, pkt))
@@ -258,7 +292,7 @@ cdef class pcap:
             n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                         PyString_FromStringAndSize(pkt, hdr.caplen), arg)
+                         PyBuffer_FromMemory(pkt, hdr.caplen), arg)
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
@@ -289,10 +323,10 @@ def ex_name(char *foo):
 
 def lookupdev():
     """Return the name of a network device suitable for sniffing."""
-    cdef char *p, buf[128]
-    p = pcap_lookupdev(buf)
+    cdef char *p, ebuf[256]
+    p = pcap_lookupdev(ebuf)
     if p == NULL:
-        raise OSError, buf
+        raise OSError, ebuf
     elif p[0] == '\\'[0] and p[1] == '\0'[0]:
         # XXX - winpcap b0rkage - should find first UP interface instead
         return 'eth0'
