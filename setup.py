@@ -28,6 +28,8 @@ class config_pcap(config.config):
         buf = open(os.path.join(cfg['include_dirs'][0], 'pcap.h')).read()
         if buf.find('pcap_file(') != -1:
             d['HAVE_PCAP_FILE'] = 1
+        if buf.find('pcap_compile_nopcap(') != -1:
+            d['HAVE_PCAP_COMPILE_NOPCAP'] = 1
         f = open('config.h', 'w')
         for k, v in d.iteritems():
             f.write('#define %s %s\n' % (k, v))
@@ -87,7 +89,7 @@ pcap = Extension(name='pcap',
 pcap_cmds = { 'config':config_pcap, 'clean':clean_pcap }
 
 setup(name='pcap',
-      version='0.5',
+      version='0.6',
       author='Dug Song',
       author_email='dugsong@monkey.org',
       url='http://monkey.org/~dugsong/pypcap/',
