@@ -6,11 +6,11 @@ from distutils.core import setup, Extension
 import sys
 
 if 'bsd' in sys.platform:
-    pcap_incdir = [ ]
-    pcap_libdir = [ ]
+    pcap_incdir = []
+    pcap_libdir = []
 else:
-    pcap_incdir = [ '/usr/local/include' ]
-    pcap_libdir = [ '/usr/local/lib' ]
+    pcap_incdir = [ '%s/include' % sys.prefix ]
+    pcap_libdir = [ '%s/lib' % sys.prefix ]
 
 pcap = Extension(name='pcap',
                  sources=[ 'pcap.c' ],
@@ -20,6 +20,7 @@ pcap = Extension(name='pcap',
 
 setup(name='pcap',
       version='1.0',
-      description='packet capture library',
       author='Dug Song',
+      url='http://monkey.org/~dugsong/pypcap',
+      description='packet capture library',
       ext_modules = [ pcap ])
