@@ -103,7 +103,7 @@ DLT_FDDI =	10
 # XXX - OpenBSD
 DLT_PFLOG =	117
 DLT_PFSYNC =	18
-if 'openbsd' in sys.platform:
+if sys.platform.find('openbsd') != -1:
     DLT_LOOP =		12
     DLT_RAW =		14
 else:
