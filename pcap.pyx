@@ -62,7 +62,8 @@ cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
     char   *pcap_ex_name(char *name)
     int     pcap_ex_fileno(pcap_t *p)
-    int     pcap_ex_wait(int handle)
+    void    pcap_ex_setup(pcap_t *p)
+    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
 
 cdef extern from *:
     char *strdup(char *src)
@@ -147,7 +148,7 @@ cdef class pcap:
         self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_open_live(pcap_ex_name(self.__name),
-                                         snaplen, promisc, 50, self.__ebuf)
+                                         snaplen, promisc, 1000, self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
 
@@ -175,12 +176,12 @@ cdef class pcap:
             return self.__filter
     
     property fd:
-        """File descriptor (or win32 HANDLE) for capture handle."""
+        """File descriptor (or Win32 HANDLE) for capture handle."""
         def __get__(self):
             return pcap_ex_fileno(self.__pcap)
         
     def fileno(self):
-        """Return file descriptor (or win32 HANDLE) for capture handle."""
+        """Return file descriptor (or Win32 HANDLE) for capture handle."""
         return pcap_ex_fileno(self.__pcap)
     
     def setfilter(self, value):
@@ -250,15 +251,20 @@ cdef class pcap:
         callback -- function with (timestamp, pkt, arg) prototype
         arg      -- optional argument passed to callback on execution
         """
-        cdef int handle, n
-        handle = pcap_ex_fileno(self.__pcap)
+        cdef pcap_pkthdr *hdr
+        cdef char *pkt
+        cdef int n
+        pcap_ex_setup(self.__pcap)
         while 1:
-            n = pcap_ex_wait(handle)
-            if n < 0:
-                raise KeyboardInterrupt	# XXX - hrr
+            n = pcap_ex_next(self.__pcap, &hdr, &pkt)
+            if n == 1:
+                callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                         PyString_FromStringAndSize(pkt, hdr.caplen), arg)
+            elif n == -1:
+                raise KeyboardInterrupt	# XXX
                 #PyErr_SetFromErrno(OSError)
-                #break
-            self.dispatch(callback, arg)
+            elif n == -2:
+                break
     
     def geterr(self):
         """Return the last error message associated with this handle."""

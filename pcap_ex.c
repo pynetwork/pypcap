@@ -3,6 +3,7 @@
 #ifndef _WIN32
 # include <sys/types.h>
 # include <sys/time.h>
+# include <fcntl.h>
 # include <string.h>
 # include <unistd.h>
 #endif
@@ -71,36 +72,54 @@ __pcap_ex_ctrl(DWORD sig)
 	__pcap_ex_gotsig = 1;
 	return (TRUE);
 }
-
-int
-pcap_ex_wait(int handle)
-{
-	DWORD ret;
-
-	/* XXX - hrr, this sux */
-	SetConsoleCtrlHandler(__pcap_ex_ctrl, TRUE);
-	__pcap_ex_gotsig = 0;
-	
-	for (;;) {
-		ret = WaitForSingleObject((HANDLE)handle, 100);
-		if (ret == WAIT_FAILED) {
-			return (-1);
-		} else if (ret == WAIT_TIMEOUT) {
-			if (__pcap_ex_gotsig)
-				return (-1);
-		} else break;
-	}
-	return (0);
-}
-#else
-int
-pcap_ex_wait(int fd)
-{
-	fd_set rfds;
-	
-	FD_ZERO(&rfds);
-	FD_SET(fd, &rfds);
-	return (select(fd + 1, &rfds, NULL, NULL, NULL));
-}
 #endif
 
+/* XXX - hrr, this sux */
+void
+pcap_ex_setup(pcap_t *pcap)
+{
+#ifdef _WIN32
+	SetConsoleCtrlHandler(__pcap_ex_ctrl, TRUE);
+#else
+	int fd, n;
+	
+	fd = pcap_fileno(pcap);
+	n = fcntl(fd, F_GETFL, 0) | O_NONBLOCK;
+	fcntl(fd, F_SETFL, n);
+#endif
+}
+
+/* return codes: 1 = pkt, 0 = timeout, -1 = error, -2 = EOF */
+int
+pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
+{
+#ifdef _WIN32
+	if (__pcap_ex_gotsig) {
+		__pcap_ex_gotsig = 0;
+		return (-1);
+	}
+	return (pcap_next_ex(pcap, hdr, pkt));
+#else
+	static u_char *__pkt;
+	static struct pcap_pkthdr __hdr;
+	struct timeval tv = { 1, 0 };
+	fd_set rfds;
+	int fd, n;
+
+	fd = pcap_fileno(pcap);
+	for (;;) {
+		if ((__pkt = (u_char *)pcap_next(pcap, &__hdr)) == NULL) {
+			FD_ZERO(&rfds);
+			FD_SET(fd, &rfds);
+			n = select(fd + 1, &rfds, NULL, NULL, &tv);
+			if (n <= 0)
+				return (n);
+		} else
+			break;
+	}
+	*pkt = __pkt;
+	*hdr = &__hdr;
+	
+	return (1);
+#endif
+}
