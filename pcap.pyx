@@ -133,7 +133,7 @@ cdef class pcap:
     cdef int __dloff
     
     def __init__(self, name=None, snaplen=65535, promisc=True,
-                 immediate=False):
+                 timeout_ms=500, immediate=False):
         global dltoff
         cdef char *p
         
@@ -150,7 +150,8 @@ cdef class pcap:
         self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_open_live(pcap_ex_name(self.__name),
-                                         snaplen, promisc, 500, self.__ebuf)
+                                         snaplen, promisc, timeout_ms,
+                                         self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
         try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
