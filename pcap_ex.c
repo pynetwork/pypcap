@@ -2,6 +2,7 @@
 
 #ifndef _WIN32
 # include <sys/types.h>
+# include <sys/ioctl.h>
 # include <sys/time.h>
 # include <fcntl.h>
 # include <string.h>
@@ -14,6 +15,14 @@
 # include <pcap-int.h>
 #endif
 #include "pcap_ex.h"
+
+void
+pcap_ex_immediate(pcap_t *pcap)
+{
+#ifdef BIOCIMMEDIATE
+	ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, 1);
+#endif
+}
 
 char *
 pcap_ex_name(char *name)
