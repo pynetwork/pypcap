@@ -113,37 +113,6 @@ dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
           DLT_LOOP:4, DLT_RAW:0 }
 
-"""XXX - NOTYET
-cdef class BPF:
-    cdef bpf_program fcode
-    
-    def __init__(self, filter, snaplen=1500, linktype=DLT_EN10MB,
-                 optimize=True):
-        if not pcap_compile_nopcap(snaplen, linktype, &self.fcode,
-                                   filter, optimize, 0):
-            raise ValueError, 'bad packet filter expression'
-        self.filter = filter
-
-    def match(self, buf):
-        if bpf_filter(self.fcode.bf_insns, buf, len(buf), len(buf)):
-            return True
-        return False
-
-    def __repr__(self):
-        return 'BPF(%r)' % self.filter
-
-    def __str__(self):
-        l = []
-        for i from 0 <= i <= self.fcode.bf_len:
-            l.append(bpf_image(self.fcode.bf_insns, i))
-        return ''.join(l)
-    
-    def __del__(self):
-        # XXX - missing pcap_freecode on some platforms
-        if self.filter:
-            free(self.fcode.bf_insns)
-"""
-
 cdef class pcap:
     """pcap(name=None, snaplen=65535, promisc=True, immediate=False) -> packet capture object
     
@@ -309,6 +278,24 @@ cdef class pcap:
         if pcap_stats(self.__pcap, &pstat) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         return (pstat.ps_recv, pstat.ps_drop, pstat.ps_ifdrop)
+
+    def __iter__(self):
+        pcap_ex_setup(self.__pcap)
+        return self
+
+    def __next__(self):
+        cdef pcap_pkthdr *hdr
+        cdef char *pkt
+        cdef int n
+        while 1:
+            n = pcap_ex_next(self.__pcap, &hdr, &pkt)
+            if n == 1:
+                return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                        PyBuffer_FromMemory(pkt, hdr.caplen))
+            elif n == -1:
+                raise KeyboardInterrupt
+            elif n == -2:
+                raise StopIteration
     
     def __dealloc__(self):
         if self.__name:
