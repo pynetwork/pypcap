@@ -87,7 +87,7 @@ pcap = Extension(name='pcap',
 pcap_cmds = { 'config':config_pcap, 'clean':clean_pcap }
 
 setup(name='pcap',
-      version='0.4',
+      version='0.5',
       author='Dug Song',
       author_email='dugsong@monkey.org',
       url='http://monkey.org/~dugsong/pypcap/',
