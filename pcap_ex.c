@@ -5,6 +5,7 @@
 # include <sys/time.h>
 # include <fcntl.h>
 # include <string.h>
+# include <signal.h>
 # include <unistd.h>
 #endif
 
@@ -72,6 +73,11 @@ __pcap_ex_ctrl(DWORD sig)
 	__pcap_ex_gotsig = 1;
 	return (TRUE);
 }
+#else
+static void
+__pcap_ex_signal(int sig)
+{
+}
 #endif
 
 /* XXX - hrr, this sux */
@@ -86,6 +92,8 @@ pcap_ex_setup(pcap_t *pcap)
 	fd = pcap_fileno(pcap);
 	n = fcntl(fd, F_GETFL, 0) | O_NONBLOCK;
 	fcntl(fd, F_SETFL, n);
+	
+	signal(SIGINT, __pcap_ex_signal);
 #endif
 }
 

@@ -22,7 +22,6 @@ cdef extern from "Python.h":
     object PyString_FromStringAndSize(char *s, int len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
-    object PyErr_SetFromErrno(object type)
     
 cdef extern from "pcap.h":
     cdef struct bpf_program:
@@ -261,8 +260,7 @@ cdef class pcap:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                          PyString_FromStringAndSize(pkt, hdr.caplen), arg)
             elif n == -1:
-                raise KeyboardInterrupt	# XXX
-                #PyErr_SetFromErrno(OSError)
+                raise KeyboardInterrupt
             elif n == -2:
                 break
     
