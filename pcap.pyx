@@ -41,8 +41,9 @@ cdef extern from "pcap.h":
     ctypedef struct pcap_t:
         int __xxx
 
-    ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
-    
+ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
+
+cdef extern from "pcap.h":
     pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
                            int to_ms, char *errbuf)
     pcap_t *pcap_open_offline(char *fname, char *errbuf)
