@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import getopt, sys
-import pcap
-from dpkt.ethernet import Ethernet
+import dpkt, pcap
 
 def usage():
     print >>sys.stderr, 'usage: %s [-i device] [pattern]' % sys.argv[0]
@@ -14,12 +13,16 @@ def main():
     for o, a in opts:
         if o == '-i': name = a
         else: usage()
+        
     pc = pcap.pcap(name)
     pc.setfilter(' '.join(args))
+    decode = { pcap.DLT_LOOP:dpkt.loopback.Loopback,
+               pcap.DLT_NULL:dpkt.loopback.Loopback,
+               pcap.DLT_EN10MB:dpkt.ethernet.Ethernet }[pc.datalink()]
     try:
         print 'listening on %s: %s' % (pc.name, pc.filter)
         for ts, pkt in pc:
-            print ts, `Ethernet(pkt)`
+            print ts, `decode(pkt)`
     except KeyboardInterrupt:
         nrecv, ndrop, nifdrop = pc.stats()
         print '\n%d packets received by filter' % nrecv
