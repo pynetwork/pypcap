@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-import getopt, glob, pcap, time, sys
+import getopt, glob, time, sys
 sys.path.insert(0, glob.glob('build/lib.*'))
+import pcap
 
 def print_pkt(ts, pkt, arg):
     print '%s: %d bytes' % (time.ctime(ts), len(pkt))
