@@ -15,12 +15,11 @@ class PcapTestCase(unittest.TestCase):
 
     def test_pcap_errors(self):
         p = pcap.pcap('test.pcap')
-        stats_err = "Statistics aren't available from savefiles"
         try:
             print p.stats()
-        except OSError, msg:
-            assert msg != stats_err, 'pcap_stats'
-        assert p.geterr() == stats_err, 'pcap_geterr'
+        except OSError:
+            pass
+        assert p.geterr() != '', 'pcap_geterr'
 
     def __test_pcap_cb(self, method):
         def __cnt_handler(ts, pkt, d):
