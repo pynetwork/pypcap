@@ -25,4 +25,4 @@ clean:
 
 cleandir distclean: clean
 	$(PYTHON) setup.py clean -a
-	rm -f *~
+	rm -f config.h *~
