@@ -117,6 +117,8 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 	fd = pcap_fileno(pcap);
 	for (;;) {
 		if ((__pkt = (u_char *)pcap_next(pcap, &__hdr)) == NULL) {
+			if (pcap->sf.rfile != NULL)
+				return (-2);
 			FD_ZERO(&rfds);
 			FD_SET(fd, &rfds);
 			n = select(fd + 1, &rfds, NULL, NULL, &tv);
