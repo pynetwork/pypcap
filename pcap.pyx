@@ -12,9 +12,9 @@ accessible through this mechanism.
 
 __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
-__license__ = 'Python'
+__license__ = 'BSD license'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '0.3'
+__version__ = '0.4'
 
 import sys
 
