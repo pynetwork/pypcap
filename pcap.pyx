@@ -14,7 +14,7 @@ __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
 __license__ = 'BSD license'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '0.5'
+__version__ = '0.6'
 
 import sys
 
@@ -24,8 +24,10 @@ cdef extern from "Python.h":
     void   PyGILState_Release(int gil)
     
 cdef extern from "pcap.h":
-    cdef struct bpf_program:
+    cdef struct bpf_insn:
         int __xxx
+    cdef struct bpf_program:
+        bpf_insn *bf_insns
     cdef struct bpf_timeval:
         unsigned int tv_sec
         unsigned int tv_usec
@@ -56,6 +58,7 @@ cdef extern from "pcap.h":
     int     pcap_stats(pcap_t *p, pcap_stat *ps)
     char   *pcap_geterr(pcap_t *p)
     void    pcap_close(pcap_t *p)
+    int     bpf_filter(bpf_insn *insns, char *buf, int len, int caplen)
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
@@ -65,6 +68,9 @@ cdef extern from "pcap_ex.h":
     int     pcap_ex_fileno(pcap_t *p)
     void    pcap_ex_setup(pcap_t *p)
     int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
+    int     pcap_ex_compile_nopcap(int snaplen, int dlt,
+                                   bpf_program *fp, char *str,
+                                   int optimize, unsigned int netmask)
 
 cdef extern from *:
     char *strdup(char *src)
@@ -114,6 +120,22 @@ dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
           DLT_LOOP:4, DLT_RAW:0 }
 
+cdef class bpf:
+    """bpf(filter, dlt=DLT_RAW) -> BPF filter object"""
+    cdef bpf_program fcode
+    def __init__(self, char *filter, dlt=DLT_RAW):
+        if pcap_ex_compile_nopcap(65535, dlt, &self.fcode, filter, 1, 0) < 0:
+            raise IOError, 'bad filter'
+    def filter(self, buf):
+        """Return boolean match for buf against our filter."""
+        cdef int n
+        n = len(buf)
+        if bpf_filter(self.fcode.bf_insns, buf, n, n) == 0:
+            return False
+        return True
+    def __dealloc__(self):
+        pcap_freecode(&self.fcode)
+            
 cdef class pcap:
     """pcap(name=None, snaplen=65535, promisc=True, immediate=False) -> packet capture object
     
@@ -141,19 +163,18 @@ cdef class pcap:
             p = pcap_ex_lookupdev(self.__ebuf)
             if p == NULL:
                 raise OSError, "couldn't lookup device"
-            self.__name = strdup(p)
         else:
-            self.__name = strdup(name)
-            
-        self.__filter = strdup("")
-
-        self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
+            p = name
+        
+        self.__pcap = pcap_open_offline(p, self.__ebuf)
         if not self.__pcap:
-            self.__pcap = pcap_open_live(pcap_ex_name(self.__name),
-                                         snaplen, promisc, timeout_ms,
-                                         self.__ebuf)
+            self.__pcap = pcap_open_live(pcap_ex_name(p), snaplen, promisc,
+                                         timeout_ms, self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
+        
+        self.__name = strdup(p)
+        self.__filter = strdup("")
         try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError: pass
         if immediate:

@@ -9,5 +9,7 @@ char *pcap_ex_lookupdev(char *ebuf);
 int   pcap_ex_fileno(pcap_t *pcap);
 void  pcap_ex_setup(pcap_t *pcap);
 int   pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt);
+int   pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp,
+          char *str, int optimize, unsigned int netmask);
 
 #endif /* PCAP_EX_H */

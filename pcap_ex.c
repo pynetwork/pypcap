@@ -250,3 +250,39 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 	return (1);
 #endif
 }
+
+int
+pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
+    int optimize, unsigned int netmask)
+{
+#ifdef HAVE_PCAP_COMPILE_NOPCAP
+	return (pcap_compile_nopcap(snaplen, dlt, fp, str, optimize, netmask));
+#else
+	FILE *f;
+	struct pcap_file_header hdr;
+	pcap_t *pc;
+	char path[] = "/tmp/.pypcapXXXXXX.pcap";
+	char ebuf[PCAP_ERRBUF_SIZE];
+	int ret = -1;
+	
+	mktemp(path);
+	if ((f = fopen(path, "w")) != NULL) {
+		hdr.magic = 0xa1b2c3d4;
+		hdr.version_major = PCAP_VERSION_MAJOR;
+		hdr.version_minor = PCAP_VERSION_MINOR;
+		hdr.thiszone = 0;
+		hdr.snaplen = snaplen;
+		hdr.sigfigs = 0;
+		hdr.linktype = dlt;
+		fwrite(&hdr, sizeof(hdr), 1, f);
+		fclose(f);
+	
+		if ((pc = pcap_open_offline(path, ebuf)) != NULL) {
+			ret = pcap_compile(pc, fp, str, optimize, netmask);
+			pcap_close(pc);
+		}
+		unlink(path);
+	}
+	return (ret);
+#endif
+}
