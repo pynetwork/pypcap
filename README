@@ -1,0 +1,24 @@
+
+Python pcap module
+------------------
+
+this is a simplified object-oriented Python wrapper for libpcap - both
+the current tcpdump.org version, and the legacy version shipping with
+some of the BSD operating systems.
+
+if your libpcap installation is somewhere else, edit setup.py
+appropriately. then just 'make' and 'make install'.
+
+example use:
+
+>>> import pcap
+>>> def print_pkt(ts, pkt, arg):
+...     print repr(pkt)
+... 
+>>> pc = pcap.pcap()
+>>> pc.loop(print_pkt)
+
+-d.
+
+---
+http://monkey.org/~dugsong
