@@ -1,10 +1,6 @@
 #
 # pcap.pyx
 #
-# pcap Python bindings
-#
-# Copyright (c) 2004 Dug Song <dugsong@monkey.org>
-#
 # $Id$
 
 """packet capture library
@@ -13,6 +9,12 @@ This module provides a high level interface to packet capture systems.
 All packets on the network, even those destined for other hosts, are
 accessible through this mechanism.
 """
+
+__author__ = 'Dug Song <dugsong@monkey.org>'
+__copyright__ = 'Copyright (c) 2004 Dug Song'
+__license__ = 'Python'
+__url__ = 'http://monkey.org/~dugsong/pypcap/'
+__version__ = '0.2'
 
 import sys
 
@@ -136,7 +138,8 @@ cdef class pcap:
     Open a handle to a packet capture descriptor.
     
     Keyword arguments:
-    name    -- name of a network interface or dumpfile to open
+    name    -- name of a network interface or dumpfile to open,
+               or None to open the first available up interface.
     snaplen -- maximum number of bytes to capture for each packet
     promisc -- boolean to specify promiscuous mode sniffing
     """
@@ -164,7 +167,8 @@ cdef class pcap:
         if access(self.__name, R_OK) == 0:
             self.__pcap = pcap_open_offline(self.__name, self.__ebuf)
             # XXX - libpcap should do this!
-            self.__pcap.fd = fileno(self.__pcap.sf.rfile)
+            if self.__pcap:
+                self.__pcap.fd = fileno(self.__pcap.sf.rfile)
         else:
             self.__pcap = pcap_open_live(self.__name, snaplen, promisc, 50,
                                          self.__ebuf)
@@ -204,7 +208,7 @@ cdef class pcap:
         return pcap_fileno(self.__pcap)
     
     def setfilter(self, value):
-        """Set packet capture filter."""
+        """Set BPF-format packet capture filter."""
         cdef bpf_program fcode
         free(self.__filter)
         self.__filter = strdup(value)
@@ -231,7 +235,7 @@ cdef class pcap:
         pkts.append((ts, pkt))
     
     def readpkts(self):
-        """Return a list of (ts, pkt) tuples received in one buffer."""
+        """Return a list of (timestamp, packet) tuples received in one buffer."""
         pkts = []
         self.dispatch(self.__add_pkts, pkts)
         return pkts
@@ -244,10 +248,10 @@ cdef class pcap:
         
         callback -- function with (timestamp, pkt, arg) prototype
         arg      -- optional argument passed to callback on execution
-        cnt      -- number of packets to process; or
-                    0 to process all packets until an error occurs,
-                    EOF is reached, or the read times out; or
-                    -1 to process all packets received in one buffer
+        cnt      -- number of packets to process;
+                    or 0 to process all packets until an error occurs,
+                    EOF is reached, or the read times out;
+                    or -1 to process all packets received in one buffer
         """
         cdef pcap_handler_ctx *ctx
         cdef int n
@@ -272,7 +276,8 @@ cdef class pcap:
 
     def loop(self, callback, arg=None):
         """Loop forever, processing packets with a user callback.
-
+        The loop can be exited with an exception, including KeyboardInterrupt.
+        
         Arguments:
 
         callback -- function with (timestamp, pkt, arg) prototype
