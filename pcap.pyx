@@ -321,3 +321,11 @@ cdef class pcap:
         if self.__pcap:
             pcap_close(self.__pcap)
     
+def lookupdev():
+    """Return the name of a network device suitable for sniffing."""
+    cdef char *p, buf[128]
+    p = pcap_lookupdev(buf)
+    if p == NULL:
+        raise OSError, buf
+    return p
+
