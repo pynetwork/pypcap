@@ -19,7 +19,7 @@ pcap = Extension(name='pcap',
                  libraries=[ 'pcap' ])
 
 setup(name='pcap',
-      version='1.0',
+      version='0.2',
       author='Dug Song',
       url='http://monkey.org/~dugsong/pypcap',
       description='packet capture library',
