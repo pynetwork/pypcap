@@ -48,6 +48,7 @@ cdef extern from "pcap.h":
     int     pcap_compile(pcap_t *p, bpf_program *fp, char *str, int optimize,
                          unsigned int netmask)
     int     pcap_setfilter(pcap_t *p, bpf_program *fp)
+    void    pcap_freecode(bpf_program *fp)
     int     pcap_dispatch(pcap_t *p, int cnt, pcap_handler callback,
                           unsigned char *arg)
     unsigned char *pcap_next(pcap_t *p, pcap_pkthdr *hdr)
@@ -195,6 +196,7 @@ cdef class pcap:
             raise OSError, pcap_geterr(self.__pcap)
         if pcap_setfilter(self.__pcap, &fcode) < 0:
             raise OSError, pcap_geterr(self.__pcap)
+        pcap_freecode(&fcode)
     
     def datalink(self):
         """Return datalink type (DLT_* values)."""
