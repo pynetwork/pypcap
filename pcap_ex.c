@@ -32,12 +32,7 @@ void
 pcap_ex_immediate(pcap_t *pcap)
 {
 #ifdef BIOCIMMEDIATE
-#ifdef HAVE_PCAP_FILE
-	if (pcap_file(pcap) == NULL)
-#else
-        if (pcap->sf.rfile == NULL)
-#endif
-		ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, 1);
+	ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, 1);
 #endif
 }
 
