@@ -221,7 +221,7 @@ cdef class pcap:
     
     def dispatch(self, callback, arg=None, cnt=-1):
         """Collect and process packets with a user callback,
-        return the number of packets processed.
+        return the number of packets processed, or 0 for a savefile.
         
         Arguments:
         
