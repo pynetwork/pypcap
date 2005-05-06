@@ -24,18 +24,18 @@ cdef extern from "Python.h":
     void   PyGILState_Release(int gil)
     
 cdef extern from "pcap.h":
-    cdef struct bpf_insn:
+    struct bpf_insn:
         int __xxx
-    cdef struct bpf_program:
+    struct bpf_program:
         bpf_insn *bf_insns
-    cdef struct bpf_timeval:
+    struct bpf_timeval:
         unsigned int tv_sec
         unsigned int tv_usec
-    cdef struct pcap_stat:
+    struct pcap_stat:
         unsigned int ps_recv
         unsigned int ps_drop
         unsigned int ps_ifdrop
-    cdef struct pcap_pkthdr:
+    struct pcap_pkthdr:
         bpf_timeval ts
         unsigned int caplen
     ctypedef struct pcap_t:
@@ -88,9 +88,13 @@ cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
     ctx = <pcap_handler_ctx *>arg
     gil = PyGILState_Ensure()
     try:
-        (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                               PyBuffer_FromMemory(pkt, hdr.caplen),
-                               <object>ctx.arg)
+        if ctx.arg == NULL:
+            (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
+                                   PyBuffer_FromMemory(pkt, hdr.caplen))
+        else:
+            (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
+                                   PyBuffer_FromMemory(pkt, hdr.caplen),
+                                   <object>ctx.arg)
     except:
         ctx.got_exc = 1
     PyGILState_Release(gil)
@@ -250,7 +254,7 @@ cdef class pcap:
         
         Arguments:
         
-        callback -- function with (timestamp, pkt, arg) prototype
+        callback -- function with (timestamp, pkt[, arg]) prototype
         arg      -- optional argument passed to callback on execution
         cnt      -- number of packets to process;
                     or 0 to process all packets until an error occurs,
@@ -260,7 +264,10 @@ cdef class pcap:
         cdef pcap_handler_ctx ctx
         cdef int n
         ctx.callback = <void *>callback
-        ctx.arg = <void *>arg
+        if arg is None:
+            ctx.arg = NULL
+        else:
+            ctx.arg = <void *>arg
         ctx.got_exc = 0
         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler,
                           <unsigned char *>&ctx)
@@ -275,7 +282,7 @@ cdef class pcap:
         
         Arguments:
 
-        callback -- function with (timestamp, pkt, arg) prototype
+        callback -- function with (timestamp, pkt[, arg]) prototype
         arg      -- optional argument passed to callback on execution
         """
         cdef pcap_pkthdr *hdr
@@ -285,8 +292,12 @@ cdef class pcap:
         while 1:
             n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                         PyBuffer_FromMemory(pkt, hdr.caplen), arg)
+                if arg is None:
+                    callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                              PyBuffer_FromMemory(pkt, hdr.caplen))
+                else:
+                    callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                             PyBuffer_FromMemory(pkt, hdr.caplen), arg)
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
