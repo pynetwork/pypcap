@@ -79,7 +79,7 @@ cdef extern from *:
     
 cdef struct pcap_handler_ctx:
     void *callback
-    void *arg
+    void *args
     int   got_exc
 
 cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
@@ -88,13 +88,9 @@ cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
     ctx = <pcap_handler_ctx *>arg
     gil = PyGILState_Ensure()
     try:
-        if ctx.arg == NULL:
-            (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-                                   PyBuffer_FromMemory(pkt, hdr.caplen))
-        else:
-            (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-                                   PyBuffer_FromMemory(pkt, hdr.caplen),
-                                   <object>ctx.arg)
+        (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
+                               PyBuffer_FromMemory(pkt, hdr.caplen),
+                               *(<object>ctx.args))
     except:
         ctx.got_exc = 1
     PyGILState_Release(gil)
@@ -245,29 +241,27 @@ cdef class pcap:
     def readpkts(self):
         """Return a list of (timestamp, packet) tuples received in one buffer."""
         pkts = []
-        self.dispatch(self.__add_pkts, pkts)
+        self.dispatch(-1, self.__add_pkts, pkts)
         return pkts
     
-    def dispatch(self, callback, arg=None, cnt=-1):
+    def dispatch(self, cnt, callback, *args):
         """Collect and process packets with a user callback,
         return the number of packets processed, or 0 for a savefile.
         
         Arguments:
         
-        callback -- function with (timestamp, pkt[, arg]) prototype
-        arg      -- optional argument passed to callback on execution
         cnt      -- number of packets to process;
                     or 0 to process all packets until an error occurs,
                     EOF is reached, or the read times out;
                     or -1 to process all packets received in one buffer
+        callback -- function with (timestamp, pkt, *args) prototype
+        *args    -- optional arguments passed to callback on execution
         """
         cdef pcap_handler_ctx ctx
         cdef int n
+
         ctx.callback = <void *>callback
-        if arg is None:
-            ctx.arg = NULL
-        else:
-            ctx.arg = <void *>arg
+        ctx.args = <void *>args
         ctx.got_exc = 0
         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler,
                           <unsigned char *>&ctx)
@@ -276,14 +270,14 @@ cdef class pcap:
             raise exc[0], exc[1], exc[2]
         return n
 
-    def loop(self, callback, arg=None):
+    def loop(self, callback, *args):
         """Loop forever, processing packets with a user callback.
         The loop can be exited with an exception, including KeyboardInterrupt.
         
         Arguments:
 
-        callback -- function with (timestamp, pkt[, arg]) prototype
-        arg      -- optional argument passed to callback on execution
+        callback -- function with (timestamp, pkt, *args) prototype
+        *args    -- optional arguments passed to callback on execution
         """
         cdef pcap_pkthdr *hdr
         cdef char *pkt
@@ -292,12 +286,8 @@ cdef class pcap:
         while 1:
             n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                if arg is None:
-                    callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                              PyBuffer_FromMemory(pkt, hdr.caplen))
-                else:
-                    callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                             PyBuffer_FromMemory(pkt, hdr.caplen), arg)
+                callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                         PyBuffer_FromMemory(pkt, hdr.caplen), *args)
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
