@@ -28,11 +28,15 @@ int    PyGILState_Ensure() { return (0); }
 void   PyGILState_Release(int gil) { }
 #endif
 
-void
+int
 pcap_ex_immediate(pcap_t *pcap)
 {
 #ifdef BIOCIMMEDIATE
-	ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, 1);
+	int n = 1;
+	
+	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+#else
+	return (0);
 #endif
 }
 
@@ -196,13 +200,32 @@ pcap_ex_setup(pcap_t *pcap)
 #ifdef _WIN32
 	SetConsoleCtrlHandler(__pcap_ex_ctrl, TRUE);
 #else
+#if 0
 	int fd, n;
 	
 	fd = pcap_fileno(pcap);
 	n = fcntl(fd, F_GETFL, 0) | O_NONBLOCK;
 	fcntl(fd, F_SETFL, n);
-
+#endif
 	signal(SIGINT, __pcap_ex_signal);
+#endif
+}
+
+void
+pcap_ex_setnonblock(pcap_t *pcap, int nonblock, char *ebuf)
+{
+#ifdef HAVE_PCAP_SETNONBLOCK
+	pcap_setnonblock(pcap, nonblock, ebuf);
+#endif
+}
+
+int
+pcap_ex_getnonblock(pcap_t *pcap, char *ebuf)
+{
+#ifdef HAVE_PCAP_SETNONBLOCK
+	return (pcap_getnonblock(pcap, ebuf));
+#else
+	return (0);
 #endif
 }
 

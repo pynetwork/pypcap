@@ -63,11 +63,13 @@ cdef extern from "pcap.h":
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
-    void    pcap_ex_immediate(pcap_t *p)
+    int     pcap_ex_immediate(pcap_t *p)
     char   *pcap_ex_name(char *name)
     char   *pcap_ex_lookupdev(char *ebuf)
     int     pcap_ex_fileno(pcap_t *p)
     void    pcap_ex_setup(pcap_t *p)
+    void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
+    int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
     int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
@@ -163,7 +165,7 @@ cdef class pcap:
         if not name:
             p = pcap_ex_lookupdev(self.__ebuf)
             if p == NULL:
-                raise OSError, "couldn't lookup device"
+                raise OSError, self.__ebuf
         else:
             p = name
         
@@ -178,8 +180,8 @@ cdef class pcap:
         self.__filter = strdup("")
         try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError: pass
-        if immediate:
-            pcap_ex_immediate(self.__pcap)
+        if immediate and pcap_ex_immediate(self.__pcap) < 0:
+            raise OSError, "couldn't set BPF immediate mode"
     
     property name:
         """Network interface or dumpfile name."""
@@ -220,6 +222,19 @@ cdef class pcap:
         if pcap_setfilter(self.__pcap, &fcode) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         pcap_freecode(&fcode)
+
+    def setnonblock(self, nonblock=True):
+        """Set non-blocking capture mode."""
+        pcap_ex_setnonblock(self.__pcap, nonblock, self.__ebuf)
+    
+    def getnonblock(self):
+        """Return non-blocking capture mode as boolean."""
+        ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
+        if ret < 0:
+            raise OSError, self.__ebuf
+        elif ret:
+            return True
+        return False
     
     def datalink(self):
         """Return datalink type (DLT_* values)."""
