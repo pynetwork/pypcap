@@ -6,9 +6,6 @@ this is a simplified object-oriented Python wrapper for libpcap - the
 current tcpdump.org version, the legacy version shipping with some of
 the BSD operating systems, and the WinPcap-3.x port for Windows.
 
-if your libpcap installation is somewhere else, edit the Makefile
-appropriately. then just 'make' and 'make install'.
-
 example use:
 
 >>> import pcap
