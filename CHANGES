@@ -1,0 +1,11 @@
+
+pypcap-1.0:
+
+- API CHANGE: require 'cnt' as first parameter to pcap.dispatch(),
+  shadowing libpcap pcap_dispatch().
+	
+- add pcap.{get,set}nonblock(), to work around broken BPF select()
+  on certain platforms (MacOS X, older FreeBSD, etc.).
+
+# $Id$
+
