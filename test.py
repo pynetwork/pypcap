@@ -21,29 +21,23 @@ class PcapTestCase(unittest.TestCase):
             pass
         assert p.geterr() != '', 'pcap_geterr'
 
-    def __test_pcap_cb(self, method):
+    def test_pcap_dispatch(self):
         def __cnt_handler(ts, pkt, d):
             d['cnt'] += 1
         p = pcap.pcap('test.pcap')
         d = { 'cnt':0 }
-        n = getattr(p, method)(__cnt_handler, d)
-        if method == 'dispatch': assert n == 0
+        n = p.dispatch(-1, __cnt_handler, d)
+        assert n == 0
         assert d['cnt'] == 6
-
-        def __bad_handler(ts, pkt, arg):
+        
+        def __bad_handler(ts, pkt):
             raise NotImplementedError
         p = pcap.pcap('test.pcap')
         try:
-            getattr(p, method)(__bad_handler)
+            p.dispatch(-1, __bad_handler)
         except NotImplementedError:
             pass
 
-    def test_pcap_dispatch(self):
-        self.__test_pcap_cb('dispatch')
-        
-    def test_pcap_loop(self):
-        self.__test_pcap_cb('loop')
-        
     def test_pcap_readpkts(self):
         assert len(pcap.pcap('test.pcap').readpkts()) == 6
 
