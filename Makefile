@@ -21,7 +21,7 @@ test:
 
 clean:
 	$(PYTHON) setup.py clean
-	rm -rf build
+	rm -rf build dist
 
 cleandir distclean: clean
 	$(PYTHON) setup.py clean -a
