@@ -1,4 +1,14 @@
 
+pypcap-1.1:
+
+- better lookupdev() on win32, as requested by Zack Payton
+  <zack@tek-pros.com>
+
+- add Linux SLL datalink type
+
+- better threading support from Olaf Matuschek
+  <olaf.matuschek@uni-freiburg.de>
+
 pypcap-1.0:
 
 - API CHANGE: require 'cnt' as first parameter to pcap.dispatch(),
