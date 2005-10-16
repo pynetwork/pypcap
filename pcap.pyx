@@ -14,7 +14,7 @@ __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
 __license__ = 'BSD license'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '0.6'
+__version__ = '1.1'
 
 import sys
 
@@ -22,6 +22,8 @@ cdef extern from "Python.h":
     object PyBuffer_FromMemory(char *s, int len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
+    void   Py_BEGIN_ALLOW_THREADS()
+    void   Py_END_ALLOW_THREADS()
     
 cdef extern from "pcap.h":
     struct bpf_insn:
@@ -108,7 +110,8 @@ DLT_ARCNET =	7
 DLT_SLIP =	8
 DLT_PPP =	9
 DLT_FDDI =	10
-
+# XXX - Linux
+DLT_LINUX_SLL =	113
 # XXX - OpenBSD
 DLT_PFLOG =	117
 DLT_PFSYNC =	18
@@ -121,7 +124,7 @@ else:
 
 dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
-          DLT_LOOP:4, DLT_RAW:0 }
+          DLT_LOOP:4, DLT_RAW:0, DLT_LINUX_SLL:16 }
 
 cdef class bpf:
     """bpf(filter, dlt=DLT_RAW) -> BPF filter object"""
@@ -299,7 +302,9 @@ cdef class pcap:
         cdef int n
         pcap_ex_setup(self.__pcap)
         while 1:
+            Py_BEGIN_ALLOW_THREADS
             n = pcap_ex_next(self.__pcap, &hdr, &pkt)
+            Py_END_ALLOW_THREADS
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)
@@ -329,7 +334,9 @@ cdef class pcap:
         cdef char *pkt
         cdef int n
         while 1:
+            Py_BEGIN_ALLOW_THREADS
             n = pcap_ex_next(self.__pcap, &hdr, &pkt)
+            Py_END_ALLOW_THREADS
             if n == 1:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                         PyBuffer_FromMemory(pkt, hdr.caplen))
