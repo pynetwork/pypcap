@@ -99,42 +99,36 @@ pcap_ex_lookupdev(char *ebuf)
 #ifdef _WIN32
 	/* XXX - holy poo this sux */
 	static char _ifname[8];
-	IP_INTERFACE_INFO *ifinfo;
 	MIB_IPADDRTABLE *ipaddrs;
-	DWORD i, didx, dsz, outip;
+	DWORD i, dsz, outip;
 	pcap_if_t *pifs, *pif;
 	struct pcap_addr *pa;
 	char *name = NULL;
 	int idx;
 	
-	/* Find index of the first configured interface. */
-	ifinfo = malloc((dsz = sizeof(*ifinfo)));
-	while (GetInterfaceInfo(ifinfo, &dsz) == ERROR_INSUFFICIENT_BUFFER) {
-		free(ifinfo);
-		ifinfo = malloc(dsz);
-	}
-	didx = ifinfo->NumAdapters ? ifinfo->Adapter[0].Index : 0;
-	free(ifinfo);
-	if (!didx) {
-		sprintf(ebuf, "no configured interfaces");
-		return (name);
-	}
-	/* Find its IP address. */
+	/* Find our primary IP address. */
 	ipaddrs = malloc((dsz = sizeof(*ipaddrs)));
 	while (GetIpAddrTable(ipaddrs, &dsz, 0) == ERROR_INSUFFICIENT_BUFFER) {
 		free(ipaddrs);
 		ipaddrs = malloc(dsz);
 	}
-	for (i = outip = 0; i < ipaddrs->dwNumEntries; i++) {
-		if (ipaddrs->table[i].dwIndex == didx) {
+	outip = 0;
+	for (i = 0; i < ipaddrs->dwNumEntries; i++) {
+		if (ipaddrs->table[i].dwAddr != 0 &&
+		    ipaddrs->table[i].dwAddr != 0x100007f
+#if 0
+		    /* XXX -no wType/MIB_IPADDR_PRIMARY in w32api/iprtrmib.h */
+		    && ipaddrs->table[i].unused2 & 0x01
+#endif
+		    ) {
 			outip = ipaddrs->table[i].dwAddr;
 			break;
 		}
 	}
 	free(ipaddrs);
-	if (!outip) {
-		sprintf(ebuf, "first configured interface has no IP?");
-		return (name);
+	if (outip == 0) {
+		/* XXX - default to first Ethernet interface. */
+		return ("eth0");
 	}
 	/* Find matching pcap interface by IP. */
 	if (_pcap_ex_findalldevs(&pifs, ebuf) == -1)
