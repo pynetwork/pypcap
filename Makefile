@@ -19,6 +19,12 @@ install:
 test:
 	$(PYTHON) test.py
 
+pkg_win32:
+	$(PYTHON) setup.py bdist_wininst
+
+pkg_osx:
+	bdist_mpkg --readme=README --license=LICENSE
+
 clean:
 	$(PYTHON) setup.py clean
 	rm -rf build dist
