@@ -273,7 +273,14 @@ pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
     int optimize, unsigned int netmask)
 {
 #ifdef HAVE_PCAP_COMPILE_NOPCAP
+  #ifdef __NetBSD__
+	/* We love consistent interfaces */
+	char errbuf[PCAP_ERRBUF_SIZE];
+	return (pcap_compile_nopcap(snaplen, dlt, fp, str, optimize, netmask,
+		errbuf));
+  #else
 	return (pcap_compile_nopcap(snaplen, dlt, fp, str, optimize, netmask));
+  #endif
 #else
 	FILE *f;
 	struct pcap_file_header hdr;
