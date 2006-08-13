@@ -243,16 +243,6 @@ cdef class pcap:
         """Return datalink type (DLT_* values)."""
         return pcap_datalink(self.__pcap)
     
-    def next(self):
-        """Return the next (timestamp, packet) tuple, or None on error."""
-        cdef pcap_pkthdr hdr
-        cdef char *pkt
-        pkt = <char *>pcap_next(self.__pcap, &hdr)
-        if not pkt:
-            return None
-        return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                PyBuffer_FromMemory(pkt, hdr.caplen))
-
     def __add_pkts(self, ts, pkt, pkts):
         pkts.append((ts, pkt))
     
