@@ -13,6 +13,21 @@ example use:
 ...     print ts, `pkt`
 ... 
 
+Building
+--------
+
+just try 'make', and then 'make install'
+
+if your libpcap installation is missing the pcap-int.h header, you
+will need to build against a libpcap build directory. modify the
+CONFIG_ARGS in the Makefile to point to the location of your built
+libpcap distribution, and try again.
+
+Support
+-------
+
+visit http://code.google.com/p/pypcap for help!
+
 -d.
 
 ---
