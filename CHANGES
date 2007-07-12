@@ -6,8 +6,7 @@ pypcap-1.1:
 
 - add Linux SLL datalink type
 
-- better threading support from Olaf Matuschek
-  <olaf.matuschek@uni-freiburg.de>
+- better threading support from A. Nonymous
 
 pypcap-1.0:
 
