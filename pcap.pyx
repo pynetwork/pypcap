@@ -20,6 +20,7 @@ import sys
 
 cdef extern from "Python.h":
     object PyBuffer_FromMemory(char *s, int len)
+    int    PyObject_AsCharBuffer(object obj, char **buffer, int *buffer_len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
     void   Py_BEGIN_ALLOW_THREADS()
@@ -134,9 +135,11 @@ cdef class bpf:
             raise IOError, 'bad filter'
     def filter(self, buf):
         """Return boolean match for buf against our filter."""
+        cdef char *p
         cdef int n
-        n = len(buf)
-        if bpf_filter(self.fcode.bf_insns, buf, n, n) == 0:
+        if PyObject_AsCharBuffer(buf, &p, &n) < 0:
+            raise TypeError
+        if bpf_filter(self.fcode.bf_insns, p, n, n) == 0:
             return False
         return True
     def __dealloc__(self):
