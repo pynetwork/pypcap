@@ -42,7 +42,7 @@ class config_pcap(config.config):
             dirs = [ '/usr', sys.prefix ] + glob.glob('/opt/libpcap*') + \
                    glob.glob('../libpcap*') + glob.glob('../wpdpack*')
         for d in dirs:
-            for sd in ('include', 'include/pcap', ''):
+            for sd in ('include/pcap', 'include', ''):
                 incdirs = [ os.path.join(d, sd) ]
                 if os.path.exists(os.path.join(d, sd, 'pcap.h')):
                     cfg['include_dirs'] = [ os.path.join(d, sd) ]
