@@ -61,7 +61,7 @@ class config_pcap(config.config):
                                 print 'found', cfg
                                 self._write_config_h(cfg)
                                 return cfg
-        raise "couldn't find pcap build or installation directory"
+        raise Exception("couldn't find pcap build or installation directory")
     
     def run(self):
         #config.log.set_verbosity(0)
