@@ -2,9 +2,8 @@
 Python pcap module
 ------------------
 
-this is a simplified object-oriented Python wrapper for libpcap -
-the current tcpdump.org version, the legacy version shipping with 
-some of the BSD operating systems, and the WinPcap port for Windows.
+This is a simplified object-oriented Python wrapper for libpcap -
+the current tcpdump.org version, and the WinPcap port for Windows.
 
 example use:
 
@@ -16,19 +15,15 @@ example use:
 Building
 --------
 
-just try 'make', and then 'make install'
+Just try 'make', and then 'make install'
 
-if your libpcap installation is missing the pcap-int.h header, you
-will need to build against a libpcap build directory. modify the
+If your libpcap installation is missing the pcap-int.h header, you
+will need to build against a libpcap build directory. Modify the
 CONFIG_ARGS in the Makefile to point to the location of your built
 libpcap distribution, and try again.
 
 Support
 -------
 
-visit http://code.google.com/p/pypcap for help!
+Visit http://code.google.com/p/pypcap for help!
 
--d.
-
----
-http://monkey.org/~dugsong
