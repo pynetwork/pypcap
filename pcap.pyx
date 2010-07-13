@@ -302,18 +302,24 @@ cdef class pcap:
             raise exc[0], exc[1], exc[2]
         return n
 
-    def loop(self, callback, *args):
-        """Loop forever, processing packets with a user callback.
-        The loop can be exited with an exception, including KeyboardInterrupt.
+    def loop(self, cnt, callback, *args):
+        """Processing packets with a user callback during a loop.
+        The loop can be exited when cnt value is reached
+        or with an exception, including KeyboardInterrupt.
         
         Arguments:
 
+        cnt      -- number of packets to process;
+                    0 or -1 to process all packets until an error occurs,
+                    EOF is reached;
         callback -- function with (timestamp, pkt, *args) prototype
         *args    -- optional arguments passed to callback on execution
         """
         cdef pcap_pkthdr *hdr
         cdef char *pkt
         cdef int n
+        cdef int i
+        i = 1
         pcap_ex_setup(self.__pcap)
         while 1:
             Py_BEGIN_ALLOW_THREADS
@@ -326,6 +332,9 @@ cdef class pcap:
                 raise KeyboardInterrupt
             elif n == -2:
                 break
+            if i == cnt:
+                break
+            i = i + 1
     
     def geterr(self):
         """Return the last error message associated with this handle."""
