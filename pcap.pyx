@@ -328,6 +328,8 @@ cdef class pcap:
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)
+            elif n == 0:
+                break
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
