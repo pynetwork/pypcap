@@ -157,7 +157,7 @@ cdef class bpf:
         pcap_freecode(&self.fcode)
             
 cdef class pcap:
-    """pcap(name=None, snaplen=65535, promisc=True, immediate=False, timeout_ms=None) -> packet capture object
+    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False)  -> packet capture object
     
     Open a handle to a packet capture descriptor.
     
@@ -166,20 +166,19 @@ cdef class pcap:
                  or None to open the first available up interface
     snaplen   -- maximum number of bytes to capture for each packet
     promisc   -- boolean to specify promiscuous mode sniffing
-    immediate -- disable buffering, if possible
     timeout_ms -- requests for the next packet will return None if the timeout
                   (in milliseconds) is reached and no packets were received
                   (Default: no timeout)  
+    immediate -- disable buffering, if possible
     """
     cdef pcap_t *__pcap
     cdef char *__name
     cdef char *__filter
     cdef char __ebuf[256]
     cdef int __dloff
-    cdef int __timeout_returns_none
     
     def __init__(self, name=None, snaplen=65535, promisc=True,
-                 timeout_ms=None, immediate=False):
+                 timeout_ms=0, immediate=False):
         global dltoff
         cdef char *p
         
@@ -190,12 +189,6 @@ cdef class pcap:
         else:
             p = name
             
-        if timeout_ms is None:
-            timeout_ms = 500
-            self.__timeout_returns_none = 0
-        else:
-            self.__timeout_returns_none = 1
-        
         self.__pcap = pcap_open_offline(p, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_open_live(pcap_ex_name(p), snaplen, promisc,
@@ -365,8 +358,8 @@ cdef class pcap:
             if n == 1:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                         PyBuffer_FromMemory(pkt, hdr.caplen))
-            elif n == 0 and self.__timeout_returns_none == 1:
-                return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0), None)
+            elif n == 0:
+                return None
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
