@@ -17,6 +17,7 @@ __url__ = 'http://monkey.org/~dugsong/pypcap/'
 __version__ = '1.1'
 
 import sys
+import struct
 
 cdef extern from "Python.h":
     object PyBuffer_FromMemory(char *s, int len)
@@ -69,6 +70,10 @@ cdef extern from "pcap.h":
     int     bpf_filter(bpf_insn *insns, char *buf, int len, int caplen)
     int     pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
     void    pcap_freealldevs(pcap_if_t *alldevs)
+    int     pcap_lookupnet(char *device,
+                           unsigned int *netp,
+                           unsigned int *maskp,
+                           char *errbuf)
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
@@ -394,3 +399,17 @@ def findalldevs():
         curr = curr.next
     pcap_freealldevs(devs)
     return retval
+
+def lookupnet(char *dev):
+    """
+    Return the address and the netmask of a given device
+    as network-byteorder integers.
+    """
+    cdef unsigned int netp
+    cdef unsigned int maskp
+    cdef char ebuf[256]
+
+    status = pcap_lookupnet(dev, &netp, &maskp, ebuf)
+    if status:
+        raise OSError(ebuf)
+    return struct.pack('I', netp), struct.pack('I', maskp)
