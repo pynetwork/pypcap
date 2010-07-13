@@ -43,6 +43,10 @@ cdef extern from "pcap.h":
         unsigned int caplen
     ctypedef struct pcap_t:
         int __xxx
+    ctypedef struct pcap_if_t # hack for win32
+    ctypedef struct pcap_if_t:
+        pcap_if_t *next
+        char *name
 
 ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
 
@@ -63,6 +67,8 @@ cdef extern from "pcap.h":
     char   *pcap_geterr(pcap_t *p)
     void    pcap_close(pcap_t *p)
     int     bpf_filter(bpf_insn *insns, char *buf, int len, int caplen)
+    int     pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
+    void    pcap_freealldevs(pcap_if_t *alldevs)
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
@@ -369,3 +375,22 @@ def lookupdev():
         raise OSError, ebuf
     return p
 
+def findalldevs():
+    """Return a list of capture devices."""
+    cdef pcap_if_t *devs, *curr
+    cdef char ebuf[256]
+
+    status = pcap_findalldevs(&devs, ebuf)
+    if status:
+        raise OSError(ebuf)
+    retval = []
+    if not devs:
+        return retval
+    curr = devs
+    while 1:
+        retval.append(curr.name)
+        if not curr.next:
+            break
+        curr = curr.next
+    pcap_freealldevs(devs)
+    return retval
