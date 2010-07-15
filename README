@@ -22,6 +22,8 @@ will need to build against a libpcap build directory. Modify the
 CONFIG_ARGS in the Makefile to point to the location of your built
 libpcap distribution, and try again.
 
+See INSTALL file for more detailed build instructions.
+
 Support
 -------
 

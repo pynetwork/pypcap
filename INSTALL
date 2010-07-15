@@ -1,0 +1,93 @@
+INSTALLATION NOTES
+
+Dependencies
+------------
+
+Building pypcap requires the following:
+- libpcap/winpcap with development headers
+- a working C compiler + make
+- pyrex
+
+
+Generic build instructions
+--------------------------
+
+Unpack the sources. Enter the source directory and type:
+
+    $ make
+    $ make install
+
+This will do the trick in most cases. If not, read on...
+
+
+Testing the installation
+------------------------
+
+Fire up the Python shell and type:
+
+    >>> import pcap
+    >>> pcap.pcap().next()
+
+As soon as a packet appears on the first (default) interface, a line similar
+to the following one will appear:
+
+    (1278540477.9454119, <read-only buffer ptr 0xb6a79046, size 178 at 0xb755b5c0>)
+
+Congratulations! You now have a working pypcap installation.
+
+
+Building under Linux
+--------------------
+
+You need to have the following packages installed (package names come from
+Ubuntu/Debian; other distros use different conventions):
+
+    - build-essential (compiler+make)
+    - libpcap0.8 and libpcap0.8-dev
+    - python-pyrex
+
+Use the following commands to build and install pypcap:
+
+    $ make
+    $ sudo make install
+
+
+Building under Windows
+----------------------
+
+The easiest way to build the module under Windows is with the MinGW compiler.
+To build, install the following:
+
+    - Pyrex from http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+    - MinGW from http://www.mingw.org/
+    - WinPcap Developer's Pack from http://www.winpcap.org/
+
+Afterwards, edit (create if doesn't exist) the following file:
+
+    C:\Python26\Lib\distutils\distutils.cfg
+
+and insert the following section:
+
+    [build]
+    compiler = mingw32
+
+Unpack the module sources to c:\pypcap, and developer's pack to c:\wpdpack.
+Edit the pypcap Makefile; uncomment the following line:
+
+    CONFIG_ARGS = --with-pcap=..\\wpdpack
+
+and change the line:
+
+    pyrexc pcap.pyx
+
+to read:
+
+    $(PYTHON) c:\Python26\Scripts\pyrexc.py pcap.pyx
+
+Afterwards, fire up the command line, navigate to the sources dir, and type:
+
+    C:\pypcap> set PATH=%PATH%;c:\MinGW\bin;c:\Python26
+    C:\pypcap> mingw32-make
+    C:\pypcap> mingw32-make install
+
+Pypcap should get installed to c:\Python26\lib\site-packages\pcap.pyd.
