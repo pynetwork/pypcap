@@ -1,3 +1,11 @@
+pypcap-trunk:
+
+- API CHANGE: require 'cnt' as first parameter to pcap.loop()
+  - by Bartosz Skowron
+
+- lookupnet() support - from Joao Medeiros
+
+- findalldevs() support - by Bartosz Skowron
 
 pypcap-1.1:
 
@@ -17,4 +25,3 @@ pypcap-1.0:
   on certain platforms (MacOS X, older FreeBSD, etc.).
 
 # $Id$
-
