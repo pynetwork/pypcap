@@ -74,6 +74,7 @@ cdef extern from "pcap.h":
                            unsigned int *netp,
                            unsigned int *maskp,
                            char *errbuf)
+    int     pcap_sendpacket(pcap_t *p, char *buf, int size)
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
@@ -330,6 +331,13 @@ cdef class pcap:
             if i == cnt:
                 break
             i = i + 1
+
+    def sendpacket(self, buf):
+        """Send a raw network packet on the interface."""
+        ret = pcap_sendpacket(self.__pcap, buf, len(buf))
+        if ret == -1:
+            raise OSError, pcap_geterr(self.__pcap)
+        return len(buf)
     
     def geterr(self):
         """Return the last error message associated with this handle."""

@@ -1,5 +1,7 @@
 pypcap-trunk:
 
+- sendpacket() support - by Kosma Moczek
+
 - API CHANGE: require 'cnt' as first parameter to pcap.loop()
   - by Bartosz Skowron
 
