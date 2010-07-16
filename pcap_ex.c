@@ -35,6 +35,8 @@ pcap_ex_immediate(pcap_t *pcap)
 	int n = 1;
 	
 	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+#elif defined _WIN32
+	return pcap_setmintocopy(pcap, 1);
 #else
 	return (0);
 #endif

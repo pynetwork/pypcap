@@ -202,7 +202,7 @@ cdef class pcap:
         try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError: pass
         if immediate and pcap_ex_immediate(self.__pcap) < 0:
-            raise OSError, "couldn't set BPF immediate mode"
+            raise OSError, "couldn't enable immediate mode"
     
     property name:
         """Network interface or dumpfile name."""
