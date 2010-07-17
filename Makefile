@@ -41,3 +41,6 @@ clean:
 cleandir distclean: clean
 	$(PYTHON) setup.py clean -a
 	rm -f config.h *~
+
+# mingw32-make fix
+.PHONY: install
