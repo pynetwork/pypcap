@@ -75,8 +75,10 @@ class config_pcap(config.config):
                  '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*']
 
         for d in dirs:
-            # This makes sure that we first search inside of $d/usr/include/pcap
-            search_dirs = [os.path.join(d, 'usr', 'include', 'pcap'), d]
+            # This makes sure that we first search inside of */include/pcap
+            search_dirs = [os.path.join(d, 'usr', 'include', 'pcap'),
+                           os.path.join(d, 'include', 'pcap'),
+                           d]
             try:
                 pcap_h = recursive_search_dirs(search_dirs, ['pcap.h'])
             except:
