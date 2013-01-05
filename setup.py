@@ -5,6 +5,7 @@
 from __future__ import with_statement
 from distutils.core import setup, Extension
 from distutils.command import config, clean
+from Pyrex.Distutils import build_ext
 import cPickle
 import glob
 import os
@@ -148,25 +149,25 @@ if len(sys.argv) > 1 and sys.argv[1] == 'build':
 
 pcap = Extension(
     name='pcap',
-    sources=['pcap.c', 'pcap_ex.c'],
+    sources=['pcap.pyx', 'pcap_ex.c'],
     include_dirs=pcap_config.get('include_dirs', ''),
     library_dirs=pcap_config.get('library_dirs', ''),
     libraries=pcap_config.get('libraries', ''),
     extra_compile_args=pcap_config.get('extra_compile_args', '')
 )
 
-pcap_cmds = {
-    'config': config_pcap,
-    'clean': clean_pcap
-}
-
 setup(
-    name='pcap',
+    name='pypcap',
     version='1.1',
     author='Dug Song',
     author_email='dugsong@monkey.org',
     url='http://monkey.org/~dugsong/pypcap/',
     description='packet capture library',
-    cmdclass=pcap_cmds,
-    ext_modules=[pcap]
+    cmdclass={
+        'config': config_pcap,
+        'clean': clean_pcap,
+        'build_ext': build_ext
+    },
+    ext_modules=[pcap],
+    data_files=["pcap_ex.h"],
 )
