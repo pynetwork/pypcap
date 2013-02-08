@@ -19,8 +19,6 @@
 #endif
 #include "pcap_ex.h"
 
-#include "config.h"
-
 /* XXX - hack around older Python versions */
 #include "patchlevel.h"
 #if PY_VERSION_HEX < 0x02030000
