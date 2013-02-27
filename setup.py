@@ -92,7 +92,7 @@ for line in pcap_h_file:
 pcap = Extension(
     name='pcap',
     sources=['pcap.pyx', 'pcap_ex.c'],
-    include_dirs=include_dirs,
+    include_dirs=[include_dirs],
     define_macros=define_macros,
     libraries=libraries,
     extra_compile_args=extra_compile_args,
@@ -100,7 +100,7 @@ pcap = Extension(
 
 setup(
     name='pypcap',
-    version='1.1',
+    version='1.1.1',
     author='Dug Song',
     author_email='dugsong@monkey.org',
     url='http://monkey.org/~dugsong/pypcap/',
