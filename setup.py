@@ -5,11 +5,17 @@
 from __future__ import with_statement
 from setuptools import setup, Extension
 from Pyrex.Distutils import build_ext
+from Pyrex.Compiler import Scanning
 import glob
 import os
 import sys
 import re
 
+# This is a hack to avoid Pyrex violating the setuptools sandbox when
+# installing pypcap as a dependency.
+def pickle_lexicon():
+    print "Skipping pickling"
+Scanning.pickle_lexicon = pickle_lexicon
 
 def recursive_search_dirs(dirs, target_files):
     for d in dirs:
