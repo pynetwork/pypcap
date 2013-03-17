@@ -78,7 +78,7 @@ elif lib_file == "wpcap.lib":
 define_macros = []
 
 if recursive_search_dirs(dirs, ['pcap-int.h']):
-        define_macros.append(('HAVE_PCAP_INT_H', 1))
+    define_macros.append(('HAVE_PCAP_INT_H', 1))
 else:
     print "No pcap-int.h found"
 
@@ -100,7 +100,7 @@ pcap = Extension(
     sources=['pcap.pyx', 'pcap_ex.c'],
     include_dirs=[include_dirs],
     define_macros=define_macros,
-    libraries=libraries,
+    libraries=list(libraries),
     extra_compile_args=extra_compile_args,
 )
 
