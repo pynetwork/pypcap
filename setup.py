@@ -27,7 +27,6 @@ def recursive_search_dirs(dirs, target_files):
 def recursive_search(path, target_files):
     for root, dirs, files in os.walk(path):
         for filename in files:
-            #print "Searching for %s %s" % (root, filename)
             if filename in target_files:
                 return os.path.join(root, filename)
 
@@ -47,9 +46,10 @@ for d in dirs:
     if pcap_h:
         print "Found pcap headers in %s" % pcap_h
         break
-    else:
-        print "pcap.h not found"
-        sys.exit(1)
+
+if not pcap_h:
+    print "pcap.h not found"
+    sys.exit(1)
 
 include_dirs = os.path.dirname(pcap_h)
 lib_sub_dirs = [os.path.join(d, sub_dir) \
