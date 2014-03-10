@@ -386,7 +386,8 @@ def ex_name(char *foo):
 
 def lookupdev():
     """Return the name of a network device suitable for sniffing."""
-    cdef char *p, ebuf[256]
+    cdef char *p
+    cdef char ebuf[256]
     p = pcap_ex_lookupdev(ebuf)
     if p == NULL:
         raise OSError, ebuf
@@ -394,7 +395,8 @@ def lookupdev():
 
 def findalldevs():
     """Return a list of capture devices."""
-    cdef pcap_if_t *devs, *curr
+    cdef pcap_if_t *devs
+    cdef pcap_if_t *curr
     cdef char ebuf[256]
 
     status = pcap_findalldevs(&devs, ebuf)
