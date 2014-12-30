@@ -85,7 +85,7 @@ cdef extern from "pcap_ex.h":
     void    pcap_ex_setup(pcap_t *p)
     void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
     int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
-    void    pcap_ex_setdirection(pcap_t *p, int direction)
+    int    pcap_ex_setdirection(pcap_t *p, int direction)
     int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
@@ -251,7 +251,10 @@ cdef class pcap:
 		
     def setdirection(self, direction):
         """Set capture direction."""
-        pcap_ex_setdirection(self.__pcap, direction)
+        ret = pcap_ex_setdirection(self.__pcap, direction)
+        if ret == 0:
+            return True
+        return False
 
     def setnonblock(self, nonblock=True):
         """Set non-blocking capture mode."""

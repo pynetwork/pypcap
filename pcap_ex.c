@@ -205,11 +205,13 @@ pcap_ex_setup(pcap_t *pcap)
 #endif
 }
 
-void
+int
 pcap_ex_setdirection(pcap_t *pcap, int direction)
 {
 #ifdef HAVE_PCAP_SETDIRECTION
-    pcap_setdirection(pcap, (pcap_direction_t) direction);
+    return (pcap_setdirection(pcap, (pcap_direction_t) direction));
+#else
+	return (-2);
 #endif
 }
 
