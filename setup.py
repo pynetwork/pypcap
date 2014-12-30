@@ -32,6 +32,7 @@ for d in dirs:
     # This makes sure that we first search inside of */include/pcap
     search_dirs = [os.path.join(d, 'usr', 'include', 'pcap'),
                    os.path.join(d, 'include', 'pcap'),
+				   os.path.join(d, 'local', 'include', 'pcap'),
                    d]
 
     pcap_h = recursive_search_dirs(search_dirs, ['pcap.h'])
@@ -74,7 +75,7 @@ if recursive_search_dirs(dirs, ['pcap-int.h']):
 else:
     print "No pcap-int.h found"
 
-pcap_h_file = open("/usr/local/include/pcap/pcap.h").readlines()
+pcap_h_file = open(pcap_h).readlines()
 for line in pcap_h_file:
     if 'pcap_file(' in line:
         print "found pcap_file function"
