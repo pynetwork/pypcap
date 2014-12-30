@@ -74,7 +74,7 @@ if recursive_search_dirs(dirs, ['pcap-int.h']):
 else:
     print "No pcap-int.h found"
 
-pcap_h_file = open(pcap_h).readlines()
+pcap_h_file = open("/usr/local/include/pcap/pcap.h").readlines()
 for line in pcap_h_file:
     if 'pcap_file(' in line:
         print "found pcap_file function"
@@ -85,6 +85,9 @@ for line in pcap_h_file:
     if 'pcap_setnonblock(' in line:
         print "found pcap_setnonblock"
         define_macros.append(('HAVE_PCAP_SETNONBLOCK', 1))
+    if 'pcap_setdirection(' in line:
+        print "found pcap_setdirection"
+        define_macros.append(('HAVE_PCAP_SETDIRECTION', 1))
 
 
 pcap = Extension(

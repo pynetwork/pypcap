@@ -85,6 +85,7 @@ cdef extern from "pcap_ex.h":
     void    pcap_ex_setup(pcap_t *p)
     void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
     int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
+    int    pcap_ex_setdirection(pcap_t *p, int direction)
     int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
@@ -134,6 +135,10 @@ if sys.platform.find('openbsd') != -1:
 else:
     DLT_LOOP =		108
     DLT_RAW =		12
+
+PCAP_D_INOUT = 0
+PCAP_D_IN = 1
+PCAP_D_OUT = 2
 
 dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
@@ -243,6 +248,13 @@ cdef class pcap:
         if pcap_setfilter(self.__pcap, &fcode) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         pcap_freecode(&fcode)
+		
+    def setdirection(self, direction):
+        """Set capture direction."""
+        ret = pcap_ex_setdirection(self.__pcap, direction)
+        if ret == 0:
+            return True
+        return False
 
     def setnonblock(self, nonblock=True):
         """Set non-blocking capture mode."""

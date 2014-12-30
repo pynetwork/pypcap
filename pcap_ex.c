@@ -205,6 +205,16 @@ pcap_ex_setup(pcap_t *pcap)
 #endif
 }
 
+int
+pcap_ex_setdirection(pcap_t *pcap, int direction)
+{
+#ifdef HAVE_PCAP_SETDIRECTION
+    return (pcap_setdirection(pcap, (pcap_direction_t) direction));
+#else
+	return (-2);
+#endif
+}
+
 void
 pcap_ex_setnonblock(pcap_t *pcap, int nonblock, char *ebuf)
 {

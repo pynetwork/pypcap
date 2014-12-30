@@ -11,6 +11,7 @@ void  pcap_ex_setup(pcap_t *pcap);
 void  pcap_ex_setnonblock(pcap_t *pcap, int nonblock, char *ebuf);
 int   pcap_ex_getnonblock(pcap_t *pcap, char *ebuf);
 int   pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt);
+int   pcap_ex_setdirection(pcap_t *pcap, int direction);
 int   pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp,
           char *str, int optimize, unsigned int netmask);
 
