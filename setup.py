@@ -106,7 +106,7 @@ pcap = Extension(
 
 setup(
     name='pypcap',
-    version='1.1.2',
+    version='1.1.3',
     author='Dug Song',
     author_email='dugsong@monkey.org',
     url='http://monkey.org/~dugsong/pypcap/',
