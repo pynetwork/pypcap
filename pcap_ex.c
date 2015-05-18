@@ -15,7 +15,7 @@
 
 #include <pcap.h>
 #ifdef HAVE_PCAP_INT_H
-# include <pcap-int.h>
+#include <pcap-int.h>
 #endif
 #include "pcap_ex.h"
 
