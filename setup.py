@@ -32,7 +32,7 @@ for d in dirs:
     # This makes sure that we first search inside of */include/pcap
     search_dirs = [os.path.join(d, 'usr', 'include', 'pcap'),
                    os.path.join(d, 'include', 'pcap'),
-				   os.path.join(d, 'local', 'include', 'pcap'),
+                   os.path.join(d, 'local', 'include', 'pcap'),
                    d]
 
     pcap_h = recursive_search_dirs(search_dirs, ['pcap.h'])
@@ -102,7 +102,7 @@ pcap = Extension(
 
 setup(
     name='pypcap',
-    version='1.1.1',
+    version='1.1.2',
     author='Dug Song',
     author_email='dugsong@monkey.org',
     url='http://monkey.org/~dugsong/pypcap/',
