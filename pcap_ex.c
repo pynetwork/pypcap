@@ -29,14 +29,14 @@ void   PyGILState_Release(int gil) { }
 int
 pcap_ex_immediate(pcap_t *pcap)
 {
-#ifdef BIOCIMMEDIATE
-	int n = 1;
-	
-	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
-#elif defined _WIN32
+#ifdef _WIN32
 	return pcap_setmintocopy(pcap, 1);
-#else
-	return (0);
+#elif defined BIOCIMMEDIATE
+	int n = 1;
+	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+#else /* XXX This case seems to happen on Macs */
+	int n = 1;
+    return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
 #endif
 }
 
