@@ -30,12 +30,12 @@ int
 pcap_ex_immediate(pcap_t *pcap)
 {
 #ifdef _WIN32
-	return pcap_setmintocopy(pcap, 1);
+    return pcap_setmintocopy(pcap, 1);
 #elif defined BIOCIMMEDIATE
-	int n = 1;
-	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+    int n = 1;
+    return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
 #else /* XXX This case seems to happen on Macs */
-	int n = 1;
+    int n = 1;
     return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
 #endif
 }
