@@ -29,14 +29,14 @@ void   PyGILState_Release(int gil) { }
 int
 pcap_ex_immediate(pcap_t *pcap)
 {
-#ifdef BIOCIMMEDIATE
-	int n = 1;
-	
-	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
-#elif defined _WIN32
-	return pcap_setmintocopy(pcap, 1);
-#else
-	return (0);
+#ifdef _WIN32
+    return pcap_setmintocopy(pcap, 1);
+#elif defined BIOCIMMEDIATE
+    int n = 1;
+    return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+#else /* XXX On OSX Yosemite (10.10.3) BIOCIMMEDIATE is not defined) */
+    int n = 1;
+    return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
 #endif
 }
 
