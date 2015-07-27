@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-#
-# $Id$
-
-from __future__ import with_statement
+"""Setup for pycapy"""
 from setuptools import setup, Extension
 import glob
 import os
@@ -10,19 +6,20 @@ import sys
 import re
 
 def recursive_search_dirs(dirs, target_files):
+    """Recursive search directories"""
     for d in dirs:
         r = recursive_search(d, target_files)
         if r:
             return r
 
-
 def recursive_search(path, target_files):
-    for root, dirs, files in os.walk(path):
+    """Recursively search for files"""
+    for root, _dirs, files in os.walk(path):
         for filename in files:
             if filename in target_files:
                 return os.path.join(root, filename)
 
-
+# A list of all the possible search directories
 dirs = ['/usr', sys.prefix] + glob.glob('/opt/libpcap*') + \
     glob.glob('../libpcap*') + glob.glob('../wpdpack*') + \
     ['/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/'] + \
@@ -45,15 +42,16 @@ if not pcap_h:
     sys.exit(1)
 
 include_dirs = [os.path.dirname(pcap_h)]
+# FIXME: This is super weird 'd' here is what? the last d in dir list?
 lib_sub_dirs = [os.path.join(d, sub_dir) \
         for sub_dir in ('lib', 'lib64', \
         'lib/x86_64-linux-gnu', 'lib/i386-linux-gnu', '')]
 
 lib_files = [
-        'libpcap.a',
-        'libpcap.so',
-        'libpcap.dylib',
-        'wpcap.lib'
+    'libpcap.a',
+    'libpcap.so',
+    'libpcap.dylib',
+    'wpcap.lib'
 ]
 lib_file_path = recursive_search_dirs(lib_sub_dirs, lib_files)
 
@@ -106,7 +104,7 @@ pcap = Extension(
 
 setup(
     name='pypcap',
-    version='1.1.3',
+    version='1.1.4',
     author='Dug Song',
     author_email='dugsong@monkey.org',
     url='http://monkey.org/~dugsong/pypcap/',
