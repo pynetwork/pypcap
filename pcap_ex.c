@@ -34,9 +34,11 @@ pcap_ex_immediate(pcap_t *pcap)
 #elif defined BIOCIMMEDIATE
     int n = 1;
     return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
-#else /* XXX On OSX Yosemite (10.10.3) BIOCIMMEDIATE is not defined) */
+#elif defined __APPLE__ /* XXX On OSX Yosemite (10.10.3) BIOCIMMEDIATE is not defined) */
     int n = 1;
     return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
+#else
+    return 0;
 #endif
 }
 
