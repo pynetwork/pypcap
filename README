@@ -1,4 +1,3 @@
-
 Python pcap module
 ------------------
 
@@ -10,17 +9,23 @@ example use:
 >>> import pcap
 >>> for ts, pkt in pcap.pcap():
 ...     print ts, `pkt`
-... 
+...
 
 Install
 --------
 
-    easy_install pypcap
+This package requires:
+
+* libpcap-dev
+
+* python-dev
+
+To install run::
+
     pip install pypcap
 
 
 Support
 -------
 
-Visit http://code.google.com/p/pypcap for help!
-
+Visit https://github.com/pynetwork/pypcap for help!

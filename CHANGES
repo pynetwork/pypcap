@@ -1,4 +1,22 @@
-pypcap-trunk:
+pypcap-1.1.5:
+
+- fix for immediate mode on linux (#12)
+
+pypcap-1.1.4:
+
+- fix for immediate mode on Mac OS X 10.10
+
+pypcap-1.1.3:
+
+- minor bugfixing
+
+pypcap-1.1.2:
+
+- setdirection() support - from Eddi Linder
+
+- make it possible to install without pyrex
+
+pypcap-1.1.1:
 
 - honor 'immediate' flag to disable buffering under Windows - by Kosma Moczek
 
@@ -10,6 +28,8 @@ pypcap-trunk:
 - lookupnet() support - from Joao Medeiros
 
 - findalldevs() support - by Bartosz Skowron
+
+- better support for installing on Fedora, Ubuntu and Mac OS X
 
 pypcap-1.1:
 
@@ -24,7 +44,7 @@ pypcap-1.0:
 
 - API CHANGE: require 'cnt' as first parameter to pcap.dispatch(),
   shadowing libpcap pcap_dispatch().
-	
+
 - add pcap.{get,set}nonblock(), to work around broken BPF select()
   on certain platforms (MacOS X, older FreeBSD, etc.).
 

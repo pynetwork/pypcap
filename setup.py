@@ -22,8 +22,7 @@ def recursive_search(path, target_files):
 # A list of all the possible search directories
 dirs = ['/usr', sys.prefix] + glob.glob('/opt/libpcap*') + \
     glob.glob('../libpcap*') + glob.glob('../wpdpack*') + \
-    ['/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/'] + \
-     glob.glob('/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*')
+    glob.glob('/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*')
 
 for d in dirs:
     # This makes sure that we first search inside of */include/pcap
@@ -104,10 +103,10 @@ pcap = Extension(
 
 setup(
     name='pypcap',
-    version='1.1.4',
+    version='1.1.5',
     author='Dug Song',
     author_email='dugsong@monkey.org',
-    url='http://monkey.org/~dugsong/pypcap/',
+    url='https://github.com/pynetwork/pypcap',
     description='packet capture library',
     ext_modules=[pcap],
 )
