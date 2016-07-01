@@ -67,15 +67,6 @@ elif lib_file == "wpcap.lib":
 
 define_macros = []
 
-pcap_int_path = recursive_search_dirs(dirs, ['pcap-int.h'])
-if pcap_int_path:
-    pcap_int_dir = os.path.dirname(pcap_int_path)
-    if pcap_int_dir not in include_dirs:
-        include_dirs.append(pcap_int_dir)
-    define_macros.append(('HAVE_PCAP_INT_H', 1))
-else:
-    print "No pcap-int.h found"
-
 pcap_h_file = open(pcap_h).readlines()
 for line in pcap_h_file:
     if 'pcap_compile_nopcap(' in line:

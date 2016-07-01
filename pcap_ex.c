@@ -14,9 +14,6 @@
 #endif
 
 #include <pcap.h>
-#ifdef HAVE_PCAP_INT_H
-#include <pcap-int.h>
-#endif
 #include "pcap_ex.h"
 
 /* XXX - hack around older Python versions */
@@ -255,11 +252,7 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 			return (-1);
 		}
 		if ((__pkt = (u_char *)pcap_next(pcap, &__hdr)) == NULL) {
-#ifdef HAVE_PCAP_FILE
 			if (pcap_file(pcap) != NULL)
-#else
-			if (pcap->sf.rfile != NULL)
-#endif
 				return (-2);
 			FD_ZERO(&rfds);
 			FD_SET(fd, &rfds);
