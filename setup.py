@@ -41,10 +41,14 @@ if not pcap_h:
     sys.exit(1)
 
 include_dirs = [os.path.dirname(pcap_h)]
-# FIXME: This is super weird 'd' here is what? the last d in dir list?
+
+# This logic will use the path 'd' that the pcap.h was found in
 lib_sub_dirs = [os.path.join(d, sub_dir) \
         for sub_dir in ('lib', 'lib64', \
         'lib/x86_64-linux-gnu', 'lib/i386-linux-gnu', '')]
+
+# For Mac OSX the default system pcap lib is in /usr/lib
+lib_sub_dirs.append('/usr/lib')
 
 lib_files = [
     'libpcap.a',
