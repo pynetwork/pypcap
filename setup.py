@@ -33,11 +33,11 @@ for d in dirs:
 
     pcap_h = recursive_search_dirs(search_dirs, ['pcap.h'])
     if pcap_h:
-        print "Found pcap headers in %s" % pcap_h
+        print("Found pcap headers in %s" % pcap_h)
         break
 
 if not pcap_h:
-    print "pcap.h not found"
+    print("pcap.h not found")
     sys.exit(1)
 
 include_dirs = [os.path.dirname(pcap_h)]
@@ -54,7 +54,7 @@ lib_files = [
 ]
 lib_file_path = recursive_search_dirs(lib_sub_dirs, lib_files)
 
-print "Found libraries in %s" % lib_file_path
+print("Found libraries in %s" % lib_file_path)
 
 lib_file = os.path.basename(lib_file_path)
 
@@ -74,21 +74,21 @@ if pcap_int_path:
         include_dirs.append(pcap_int_dir)
     define_macros.append(('HAVE_PCAP_INT_H', 1))
 else:
-    print "No pcap-int.h found"
+    print("No pcap-int.h found")
 
 pcap_h_file = open(pcap_h).readlines()
 for line in pcap_h_file:
     if 'pcap_file(' in line:
-        print "found pcap_file function"
+        print("found pcap_file function")
         define_macros.append(('HAVE_PCAP_FILE', 1))
     if 'pcap_compile_nopcap(' in line:
-        print "found pcap_compile_nopcap function"
+        print("found pcap_compile_nopcap function")
         define_macros.append(('HAVE_PCAP_COMPILE_NOPCAP', 1))
     if 'pcap_setnonblock(' in line:
-        print "found pcap_setnonblock"
+        print("found pcap_setnonblock")
         define_macros.append(('HAVE_PCAP_SETNONBLOCK', 1))
     if 'pcap_setdirection(' in line:
-        print "found pcap_setdirection"
+        print("found pcap_setdirection")
         define_macros.append(('HAVE_PCAP_SETDIRECTION', 1))
 
 
