@@ -161,11 +161,7 @@ pcap_ex_fileno(pcap_t *pcap)
 	/* XXX - how to handle savefiles? */
 	return ((int)pcap_getevent(pcap));
 #else
-# ifdef HAVE_PCAP_FILE
 	FILE *f = pcap_file(pcap);
-# else
-	FILE *f = pcap->sf.rfile;
-# endif
 	if (f != NULL)
 		return (fileno(f));
 	return (pcap_fileno(pcap));
