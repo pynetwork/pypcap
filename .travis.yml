@@ -4,8 +4,8 @@ env:
   global:
     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
-    - TOXENV=py27,coveralls
-    - TOXENV=pypy,coveralls
+    - TOXENV=py27
+    - TOXENV=pypy
     - TOXENV=docs
 before_install:
   - sudo apt-get update -qq
