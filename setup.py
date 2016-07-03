@@ -104,4 +104,5 @@ setup(
     url='https://github.com/pynetwork/pypcap',
     description='packet capture library',
     ext_modules=[pcap],
+    tests_require=['dpkt']
 )
