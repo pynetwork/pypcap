@@ -1,2 +1,2 @@
-include README
+include README.rst
 include pcap_ex.h
