@@ -108,7 +108,6 @@ setup_args = dict(
     author_email='dugsong@monkey.org',
     url='https://github.com/pynetwork/pypcap',
     description='pypcap -- Python interface to pcap a packet capture library',
-    ext_modules=[pcap],
     tests_require=['dpkt']
 )
 
