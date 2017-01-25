@@ -27,8 +27,6 @@ To install run::
     pip install pypcap
 
 
-
-
 Support
 -------
 
@@ -36,3 +34,13 @@ Visit https://github.com/pynetwork/pypcap for help!
 
 .. |travis| image:: https://img.shields.io/travis/pynetwork/pypcap.svg
    :target: https://travis-ci.org/pynetwork/pypcap
+
+
+Building docs
+-------------
+
+To build docs you need the following additional dependencies:
+
+```
+pip install sphinx mock sphinxcontrib.napoleon
+```
