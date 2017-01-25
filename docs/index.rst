@@ -24,25 +24,12 @@ To install run
 ::
 
     pip install pypcap
-    
-    
+
+
 Support
 -------
-    
+
 Visit https://github.com/pynetwork/pypcap for help!
-
-
-Examples and References
------------------------
-.. toctree::
-    :maxdepth: 3
-
-    examples
-
-.. toctree::
-    :maxdepth: 3
-
-    class_reference/index
 
 Help the Project
 ----------------
@@ -53,6 +40,6 @@ Help the Project
 
 Indices and tables
 ------------------
- 
+
  * :ref:`genindex`
  * :ref:`modindex`
