@@ -6,15 +6,15 @@ Python PCAP module
 This is a simplified object-oriented Python wrapper for libpcap -
 the current tcpdump.org version, and the WinPcap port for Windows.
 
-example use:
+Example use:
 
 >>> import pcap
 >>> for ts, pkt in pcap.pcap():
 ...     print ts, `pkt`
 ...
 
-Install
---------
+Installation
+------------
 
 This package requires:
 
@@ -25,6 +25,24 @@ This package requires:
 To install run::
 
     pip install pypcap
+
+
+Installation from sources
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Please clone the sources and run::
+
+    python setup.py install
+
+Note for Windows users: WinPcap doesn't provide the development package, therefore
+the additional actions are required.
+Please download the latest compiled library from https://github.com/patmarion/winpcap
+and put it into the sibling directory as ``wpdpack`` (``setup.py`` will discover it)::
+
+    cd ..
+    git clone https://github.com/patmarion/winpcap.git wpdpack
+    cd pypcap
+    python setup.py install
 
 
 Support
