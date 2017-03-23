@@ -14,7 +14,7 @@ __author__ = 'Dug Song <dugsong@monkey.org>'
 __copyright__ = 'Copyright (c) 2004 Dug Song'
 __license__ = 'BSD license'
 __url__ = 'http://monkey.org/~dugsong/pypcap/'
-__version__ = '1.1'
+__version__ = '1.1.6.dev0'
 
 import sys
 import struct
