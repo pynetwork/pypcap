@@ -15,6 +15,19 @@ Example use:
 ...     print ts, '\tSRC', addr(pkt, sniffer.dloff + 12), '\tDST', addr(pkt, sniffer.dloff + 16)
 ...
 
+
+Windows notes
+-------------
+
+WinPcap has the compatibility issues with Windows 10, therefore
+it's recommended to use `Npcap <https://nmap.org/npcap/>`_
+(Nmap's packet sniffing library for Windows, based on the WinPcap/Libpcap libraries, but with improved speed, portability, security, and efficiency). Please enable WinPcap API-compatible mode during the library installation.
+
+The sample installation using `Chocolatey <https://chocolatey.org/>`_::
+
+    choco install -y npcap --ia '/winpcap_mode=yes'
+
+
 Installation
 ------------
 
@@ -36,13 +49,13 @@ Please clone the sources and run::
 
     python setup.py install
 
-Note for Windows users: WinPcap doesn't provide the development package, therefore
-the additional actions are required.
-Please download the latest compiled library from https://github.com/patmarion/winpcap
-and put it into the sibling directory as ``wpdpack`` (``setup.py`` will discover it)::
+Note for Windows users: Please download the `WinPcap Developer's Pack <https://www.winpcap.org/devel.htm>`_, unpack the archive and put it into the sibling directory as ``wpdpack`` (``setup.py`` will discover it).
+
+Sample procedure in PowerShell::
 
     cd ..
-    git clone https://github.com/patmarion/winpcap.git wpdpack
+    wget -usebasicparsing -outfile WpdPack_4_1_2.zip http://www.winpcap.org/install/bin/WpdPack_4_1_2.zip
+    unzip WpdPack_4_1_2.zip
     cd pypcap
     python setup.py install
 
