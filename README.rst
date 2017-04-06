@@ -6,12 +6,12 @@ Python PCAP module
 This is a simplified object-oriented Python wrapper for libpcap -
 the current tcpdump.org version, and the WinPcap port for Windows.
 
-example use:
+example use::
 
->>> import pcap
->>> for ts, pkt in pcap.pcap():
-...     print ts, `pkt`
-...
+    >>> import pcap
+    >>> for ts, pkt in pcap.pcap():
+    ...     print ts, `pkt`
+    ...
 
 Install
 --------
@@ -39,8 +39,13 @@ Visit https://github.com/pynetwork/pypcap for help!
 Building docs
 -------------
 
-To build docs you need the following additional dependencies:
+To build docs you need the following additional dependencies::
 
-```
-pip install sphinx mock sphinxcontrib.napoleon
-```
+    pip install sphinx mock sphinxcontrib.napoleon
+
+Building bindings
+-----------------
+
+To build the C bindings you should ensure you have cython installed and then you should run::
+
+    cython pcap.pyx
