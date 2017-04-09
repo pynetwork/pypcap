@@ -26,8 +26,6 @@ cdef extern from "Python.h":
     void   PyGILState_Release(int gil)
     void   Py_BEGIN_ALLOW_THREADS()
     void   Py_END_ALLOW_THREADS()
-    object PyCObject_FromVoidPtr(void* cobj, void (*destr)(void *))
-    void* PyCObject_AsVoidPtr(object self)
 
 cdef extern from "pcap.h":
     struct bpf_insn:
