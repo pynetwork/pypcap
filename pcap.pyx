@@ -26,7 +26,9 @@ cdef extern from "Python.h":
     void   PyGILState_Release(int gil)
     void   Py_BEGIN_ALLOW_THREADS()
     void   Py_END_ALLOW_THREADS()
-    
+    object PyCObject_FromVoidPtr(void* cobj, void (*destr)(void *))
+    void* PyCObject_AsVoidPtr(object self)
+
 cdef extern from "pcap.h":
     struct bpf_insn:
         int __xxx
@@ -100,7 +102,7 @@ cdef extern from *:
 cdef struct pcap_handler_ctx:
     void *callback
     void *args
-    int   got_exc
+    void *exc
 
 cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt):
     cdef pcap_handler_ctx *ctx
@@ -112,7 +114,7 @@ cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
                                PyBuffer_FromMemory(<char *>pkt, hdr.caplen),
                                *(<object>ctx.args))
     except:
-        ctx.got_exc = 1
+        ctx.exc = PyCObject_AsVoidPtr(sys.exc_info())
     PyGILState_Release(gil)
 
 DLT_NULL =	0
@@ -302,10 +304,10 @@ cdef class pcap:
 
         ctx.callback = <void *>callback
         ctx.args = <void *>args
-        ctx.got_exc = 0
+        ctx.exc = NULL
         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *>&ctx)
-        if ctx.got_exc:
-            exc = sys.exc_info()
+        if ctx.exc:
+            exc = PyCObject_FromVoidPtr(ctx.exc, NULL)
             raise exc[0], exc[1], exc[2]
         return n
 

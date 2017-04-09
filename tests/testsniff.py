@@ -8,9 +8,15 @@ import pcap
 
 
 def usage():
-    print >>sys.stderr, 'Usage: %s [-i device] [pattern]' % sys.argv[0]
-    devs = pcap.findalldevs()
-    print >>sys.stderr, '\nAvailable devices:\n\t', '\n\t'.join(devs)
+    print >>sys.stderr, 'Usage: %s [-i device] [-l] [pattern]' % sys.argv[0]
+    print >>sys.stderr, """
+Options:
+
+\t-i device - Use the specific device.
+\t-l - Use pcap.loop() method.
+
+Available devices:"""
+    print >>sys.stderr, '\t', '\n\t'.join(pcap.findalldevs())
     sys.exit(1)
 
 
