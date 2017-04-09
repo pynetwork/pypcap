@@ -19,8 +19,12 @@ __version__ = '1.1'
 import sys
 import struct
 
+# Copied from object.h
+PyBUF_READ = 0x100
+PyBUF_WRITE = 0x200
+
 cdef extern from "Python.h":
-    object PyBuffer_FromMemory(char *s, int len)
+    object PyMemoryView_FromMemory(char *s, int len, int flags)
     int    PyObject_AsCharBuffer(object obj, char **buffer, int *buffer_len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
@@ -107,7 +111,7 @@ cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
     gil = PyGILState_Ensure()
     try:
         (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-                               PyBuffer_FromMemory(pkt, hdr.caplen),
+                               PyMemoryView_FromMemory(pkt, hdr.caplen, PyBUF_WRITE),
                                *(<object>ctx.args))
     except:
         ctx.got_exc = 1
@@ -333,7 +337,7 @@ cdef class pcap:
             Py_END_ALLOW_THREADS
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                         PyBuffer_FromMemory(pkt, hdr.caplen), *args)
+                         PyMemoryView_FromMemory(pkt, hdr.caplen, PyBUF_WRITE), *args)
             elif n == 0:
                 break
             elif n == -1:
@@ -377,7 +381,7 @@ cdef class pcap:
             Py_END_ALLOW_THREADS
             if n == 1:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                        PyBuffer_FromMemory(pkt, hdr.caplen))
+                        PyMemoryView_FromMemory(pkt, hdr.caplen, PyBUF_WRITE))
             elif n == 0:
                 return None
             elif n == -1:
