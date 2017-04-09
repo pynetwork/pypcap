@@ -3818,7 +3818,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
  *                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
  *                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)             # <<<<<<<<<<<<<<
  *             elif n == 0:
- *                 break
+ *                 continue
  */
       __pyx_t_2 = PyBuffer_FromMemory(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 339, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
@@ -3844,7 +3844,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
  *                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
  *                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)             # <<<<<<<<<<<<<<
  *             elif n == 0:
- *                 break
+ *                 continue
  */
       __pyx_t_2 = PyNumber_Add(__pyx_t_3, __pyx_v_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 338, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
@@ -3875,7 +3875,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
  *                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
  *                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)
  *             elif n == 0:             # <<<<<<<<<<<<<<
- *                 break
+ *                 continue
  *             elif n == -1:
  */
       case 0:
@@ -3883,24 +3883,24 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
       /* "pcap.pyx":341
  *                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)
  *             elif n == 0:
- *                 break             # <<<<<<<<<<<<<<
+ *                 continue             # <<<<<<<<<<<<<<
  *             elif n == -1:
  *                 raise KeyboardInterrupt
  */
-      goto __pyx_L4_break;
+      goto __pyx_L3_continue;
 
       /* "pcap.pyx":340
  *                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
  *                          PyBuffer_FromMemory(pkt, hdr.caplen), *args)
  *             elif n == 0:             # <<<<<<<<<<<<<<
- *                 break
+ *                 continue
  *             elif n == -1:
  */
       break;
 
       /* "pcap.pyx":342
  *             elif n == 0:
- *                 break
+ *                 continue
  *             elif n == -1:             # <<<<<<<<<<<<<<
  *                 raise KeyboardInterrupt
  *             elif n == -2:
@@ -3908,7 +3908,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
       case -1L:
 
       /* "pcap.pyx":343
- *                 break
+ *                 continue
  *             elif n == -1:
  *                 raise KeyboardInterrupt             # <<<<<<<<<<<<<<
  *             elif n == -2:
@@ -3919,7 +3919,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
 
       /* "pcap.pyx":342
  *             elif n == 0:
- *                 break
+ *                 continue
  *             elif n == -1:             # <<<<<<<<<<<<<<
  *                 raise KeyboardInterrupt
  *             elif n == -2:
@@ -3996,6 +3996,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20loop(struct __pyx_obj_4pcap_pcap *__pyx_
  *     def sendpacket(self, buf):
  */
     __pyx_v_i = (__pyx_v_i + 1);
+    __pyx_L3_continue:;
   }
   __pyx_L4_break:;
 
