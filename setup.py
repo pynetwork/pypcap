@@ -89,7 +89,7 @@ def get_extension():
         libraries = ('pcap',)
     elif lib_file == "wpcap.lib":
         libraries = ('wpcap', 'iphlpapi')
-        extra_compile_args = ['-DWIN32', '-DWPCAP']
+        extra_compile_args = ['-DWIN32', '-DWPCAP', '-D_CRT_SECURE_NO_WARNINGS']
 
     define_macros = []
 

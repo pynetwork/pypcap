@@ -21,7 +21,7 @@ import struct
 
 cdef extern from "Python.h":
     object PyBuffer_FromMemory(char *s, int len)
-    int    PyObject_AsCharBuffer(object obj, char **buffer, int *buffer_len)
+    int    PyObject_AsCharBuffer(object obj, char **buffer, Py_ssize_t *buffer_len)
     int    PyGILState_Ensure()
     void   PyGILState_Release(int gil)
     void   Py_BEGIN_ALLOW_THREADS()
@@ -49,7 +49,9 @@ cdef extern from "pcap.h":
         pcap_if_t *next
         char *name
 
-ctypedef void (*pcap_handler)(void *arg, pcap_pkthdr *hdr, char *pkt)
+ctypedef unsigned int u_int
+ctypedef unsigned char u_char
+ctypedef void (*pcap_handler)(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
 
 cdef extern from "pcap.h":
     pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
@@ -67,14 +69,14 @@ cdef extern from "pcap.h":
     int     pcap_stats(pcap_t *p, pcap_stat *ps)
     char   *pcap_geterr(pcap_t *p)
     void    pcap_close(pcap_t *p)
-    int     bpf_filter(bpf_insn *insns, char *buf, int len, int caplen)
+    int     bpf_filter(bpf_insn *insns, char *buf, u_int len, u_int caplen)
     int     pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
     void    pcap_freealldevs(pcap_if_t *alldevs)
     int     pcap_lookupnet(char *device,
                            unsigned int *netp,
                            unsigned int *maskp,
                            char *errbuf)
-    int     pcap_sendpacket(pcap_t *p, char *buf, int size)
+    int     pcap_sendpacket(pcap_t *p, const u_char *buf, int size)
 
 cdef extern from "pcap_ex.h":
     # XXX - hrr, sync with libdnet and libevent
@@ -100,14 +102,14 @@ cdef struct pcap_handler_ctx:
     void *args
     int   got_exc
 
-cdef void __pcap_handler(void *arg, pcap_pkthdr *hdr, char *pkt):
+cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt):
     cdef pcap_handler_ctx *ctx
     cdef int gil
     ctx = <pcap_handler_ctx *>arg
     gil = PyGILState_Ensure()
     try:
         (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-                               PyBuffer_FromMemory(pkt, hdr.caplen),
+                               PyBuffer_FromMemory(<char *>pkt, hdr.caplen),
                                *(<object>ctx.args))
     except:
         ctx.got_exc = 1
@@ -153,10 +155,10 @@ cdef class bpf:
     def filter(self, buf):
         """Return boolean match for buf against our filter."""
         cdef char *p
-        cdef int n
+        cdef Py_ssize_t n
         if PyObject_AsCharBuffer(buf, &p, &n) < 0:
             raise TypeError
-        if bpf_filter(self.fcode.bf_insns, p, n, n) == 0:
+        if bpf_filter(self.fcode.bf_insns, p, <u_int>n, <u_int>n) == 0:
             return False
         return True
     def __dealloc__(self):
@@ -301,8 +303,7 @@ cdef class pcap:
         ctx.callback = <void *>callback
         ctx.args = <void *>args
         ctx.got_exc = 0
-        n = pcap_dispatch(self.__pcap, cnt, __pcap_handler,
-                          <unsigned char *>&ctx)
+        n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *>&ctx)
         if ctx.got_exc:
             exc = sys.exc_info()
             raise exc[0], exc[1], exc[2]
@@ -346,7 +347,7 @@ cdef class pcap:
 
     def sendpacket(self, buf):
         """Send a raw network packet on the interface."""
-        ret = pcap_sendpacket(self.__pcap, buf, len(buf))
+        ret = pcap_sendpacket(self.__pcap, buf, <int>len(buf))
         if ret == -1:
             raise OSError, pcap_geterr(self.__pcap)
         return len(buf)
@@ -379,7 +380,7 @@ cdef class pcap:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                         PyBuffer_FromMemory(pkt, hdr.caplen))
             elif n == 0:
-                return None
+                continue
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
