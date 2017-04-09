@@ -71,7 +71,7 @@ cdef extern from "pcap.h":
     int     pcap_stats(pcap_t *p, pcap_stat *ps)
     char   *pcap_geterr(pcap_t *p)
     void    pcap_close(pcap_t *p)
-    int     bpf_filter(bpf_insn *insns, char *buf, u_int len, u_int caplen)
+    int     bpf_filter(bpf_insn *insns, const u_char *buf, u_int len, u_int caplen)
     int     pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
     void    pcap_freealldevs(pcap_if_t *alldevs)
     int     pcap_lookupnet(char *device,
@@ -90,7 +90,7 @@ cdef extern from "pcap_ex.h":
     void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
     int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
     int    pcap_ex_setdirection(pcap_t *p, int direction)
-    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, char **pkt)
+    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, u_char **pkt)
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
                                    int optimize, unsigned int netmask)
@@ -98,23 +98,24 @@ cdef extern from "pcap_ex.h":
 cdef extern from *:
     char *strdup(char *src)
     void  free(void *ptr)
-    
-cdef struct pcap_handler_ctx:
-    void *callback
-    void *args
-    void *exc
+
+cdef class pcap_handler_ctx:
+    cdef:
+        void *callback
+        void *args
+        object exc
 
 cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt):
-    cdef pcap_handler_ctx *ctx
-    cdef int gil
-    ctx = <pcap_handler_ctx *>arg
-    gil = PyGILState_Ensure()
+    cdef pcap_handler_ctx ctx = <pcap_handler_ctx><void*>arg
+    cdef int gil = PyGILState_Ensure()
     try:
-        (<object>ctx.callback)(hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-                               PyBuffer_FromMemory(<char *>pkt, hdr.caplen),
-                               *(<object>ctx.args))
+        (<object>ctx.callback)(
+            hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
+            PyBuffer_FromMemory(<char *>pkt, hdr.caplen),
+            *(<object>ctx.args)
+        )
     except:
-        ctx.exc = PyCObject_AsVoidPtr(sys.exc_info())
+        ctx.exc = sys.exc_info()
     PyGILState_Release(gil)
 
 DLT_NULL =	0
@@ -148,29 +149,34 @@ dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
           DLT_LOOP:4, DLT_RAW:0, DLT_LINUX_SLL:16 }
 
+
 cdef class bpf:
     """bpf(filter, dlt=DLT_RAW) -> BPF filter object"""
+
     cdef bpf_program fcode
+
     def __init__(self, char *filter, dlt=DLT_RAW):
         if pcap_ex_compile_nopcap(65535, dlt, &self.fcode, filter, 1, 0) < 0:
             raise IOError, 'bad filter'
+
     def filter(self, buf):
         """Return boolean match for buf against our filter."""
-        cdef char *p
+        cdef u_char *p
         cdef Py_ssize_t n
-        if PyObject_AsCharBuffer(buf, &p, &n) < 0:
+        if PyObject_AsCharBuffer(buf, <const char**>&p, &n) < 0:
             raise TypeError
         if bpf_filter(self.fcode.bf_insns, p, <u_int>n, <u_int>n) == 0:
             return False
         return True
     def __dealloc__(self):
         pcap_freecode(&self.fcode)
-            
+
+
 cdef class pcap:
     """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False)  -> packet capture object
-    
+
     Open a handle to a packet capture descriptor.
-    
+
     Keyword arguments:
     name      -- name of a network interface or dumpfile to open,
                  or None to open the first available up interface
@@ -178,7 +184,7 @@ cdef class pcap:
     promisc   -- boolean to specify promiscuous mode sniffing
     timeout_ms -- requests for the next packet will return None if the timeout
                   (in milliseconds) is reached and no packets were received
-                  (Default: no timeout)  
+                  (Default: no timeout)
     immediate -- disable buffering, if possible
     """
     cdef pcap_t *__pcap
@@ -186,33 +192,33 @@ cdef class pcap:
     cdef char *__filter
     cdef char __ebuf[256]
     cdef int __dloff
-    
+
     def __init__(self, name=None, snaplen=65535, promisc=True,
                  timeout_ms=0, immediate=False):
         global dltoff
         cdef char *p
-        
+
         if not name:
             p = pcap_ex_lookupdev(self.__ebuf)
             if p == NULL:
                 raise OSError, self.__ebuf
         else:
             p = name
-            
+
         self.__pcap = pcap_open_offline(p, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_open_live(pcap_ex_name(p), snaplen, promisc,
                                          timeout_ms, self.__ebuf)
         if not self.__pcap:
             raise OSError, self.__ebuf
-        
+
         self.__name = strdup(p)
         self.__filter = strdup("")
         try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError: pass
         if immediate and pcap_ex_immediate(self.__pcap) < 0:
             raise OSError, "couldn't enable immediate mode"
-    
+
     property name:
         """Network interface or dumpfile name."""
         def __get__(self):
@@ -222,7 +228,7 @@ cdef class pcap:
         """Maximum number of bytes to capture for each packet."""
         def __get__(self):
             return pcap_snapshot(self.__pcap)
-        
+
     property dloff:
         """Datalink offset (length of layer-2 frame header)."""
         def __get__(self):
@@ -232,16 +238,16 @@ cdef class pcap:
         """Current packet capture filter."""
         def __get__(self):
             return self.__filter
-    
+
     property fd:
         """File descriptor (or Win32 HANDLE) for capture handle."""
         def __get__(self):
             return pcap_ex_fileno(self.__pcap)
-        
+
     def fileno(self):
         """Return file descriptor (or Win32 HANDLE) for capture handle."""
         return pcap_ex_fileno(self.__pcap)
-    
+
     def setfilter(self, value, optimize=1):
         """Set BPF-format packet capture filter."""
         cdef bpf_program fcode
@@ -252,7 +258,7 @@ cdef class pcap:
         if pcap_setfilter(self.__pcap, &fcode) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         pcap_freecode(&fcode)
-		
+
     def setdirection(self, direction):
         """Set capture direction."""
         ret = pcap_ex_setdirection(self.__pcap, direction)
@@ -263,7 +269,7 @@ cdef class pcap:
     def setnonblock(self, nonblock=True):
         """Set non-blocking capture mode."""
         pcap_ex_setnonblock(self.__pcap, nonblock, self.__ebuf)
-    
+
     def getnonblock(self):
         """Return non-blocking capture mode as boolean."""
         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
@@ -272,26 +278,26 @@ cdef class pcap:
         elif ret:
             return True
         return False
-    
+
     def datalink(self):
         """Return datalink type (DLT_* values)."""
         return pcap_datalink(self.__pcap)
-    
+
     def __add_pkts(self, ts, pkt, pkts):
         pkts.append((ts, pkt))
-    
+
     def readpkts(self):
         """Return a list of (timestamp, packet) tuples received in one buffer."""
         pkts = []
         self.dispatch(-1, self.__add_pkts, pkts)
         return pkts
-    
+
     def dispatch(self, cnt, callback, *args):
         """Collect and process packets with a user callback,
         return the number of packets processed, or 0 for a savefile.
-        
+
         Arguments:
-        
+
         cnt      -- number of packets to process;
                     or 0 to process all packets until an error occurs,
                     EOF is reached, or the read times out;
@@ -299,23 +305,21 @@ cdef class pcap:
         callback -- function with (timestamp, pkt, *args) prototype
         *args    -- optional arguments passed to callback on execution
         """
-        cdef pcap_handler_ctx ctx
+        cdef pcap_handler_ctx ctx = pcap_handler_ctx()
         cdef int n
 
         ctx.callback = <void *>callback
         ctx.args = <void *>args
-        ctx.exc = NULL
-        n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *>&ctx)
+        n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
         if ctx.exc:
-            exc = PyCObject_FromVoidPtr(ctx.exc, NULL)
-            raise exc[0], exc[1], exc[2]
+            raise ctx.exc[0], ctx.exc[1], ctx.exc[2]
         return n
 
     def loop(self, cnt, callback, *args):
         """Processing packets with a user callback during a loop.
         The loop can be exited when cnt value is reached
         or with an exception, including KeyboardInterrupt.
-        
+
         Arguments:
 
         cnt      -- number of packets to process;
@@ -325,7 +329,7 @@ cdef class pcap:
         *args    -- optional arguments passed to callback on execution
         """
         cdef pcap_pkthdr *hdr
-        cdef char *pkt
+        cdef u_char *pkt
         cdef int n
         cdef int i
         i = 1
@@ -336,7 +340,7 @@ cdef class pcap:
             Py_END_ALLOW_THREADS
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                         PyBuffer_FromMemory(pkt, hdr.caplen), *args)
+                         PyBuffer_FromMemory(<char*>pkt, hdr.caplen), *args)
             elif n == 0:
                 continue
             elif n == -1:
@@ -353,11 +357,11 @@ cdef class pcap:
         if ret == -1:
             raise OSError, pcap_geterr(self.__pcap)
         return len(buf)
-    
+
     def geterr(self):
         """Return the last error message associated with this handle."""
         return pcap_geterr(self.__pcap)
-    
+
     def stats(self):
         """Return a 3-tuple of the total number of packets received,
         dropped, and dropped by the interface."""
@@ -372,7 +376,7 @@ cdef class pcap:
 
     def __next__(self):
         cdef pcap_pkthdr *hdr
-        cdef char *pkt
+        cdef u_char *pkt
         cdef int n
         while 1:
             Py_BEGIN_ALLOW_THREADS
@@ -380,14 +384,14 @@ cdef class pcap:
             Py_END_ALLOW_THREADS
             if n == 1:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                        PyBuffer_FromMemory(pkt, hdr.caplen))
+                        PyBuffer_FromMemory(<char*>pkt, hdr.caplen))
             elif n == 0:
                 continue
             elif n == -1:
                 raise KeyboardInterrupt
             elif n == -2:
                 raise StopIteration
-    
+
     def __dealloc__(self):
         if self.__name:
             free(self.__name)

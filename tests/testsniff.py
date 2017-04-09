@@ -32,7 +32,7 @@ def loop(pc, decode_fn):
 
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:], 'i:h:l')
+    opts, args = getopt.getopt(sys.argv[1:], 'i:hl')
     name = None
     use_loop = False
     for o, a in opts:

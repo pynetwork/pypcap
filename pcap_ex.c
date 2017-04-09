@@ -290,7 +290,7 @@ pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
 	char ebuf[PCAP_ERRBUF_SIZE];
 	int ret = -1;
 	
-	_mktemp(path);
+	mktemp(path);
 	if ((f = fopen(path, "w")) != NULL) {
 		hdr.magic = 0xa1b2c3d4;
 		hdr.version_major = PCAP_VERSION_MAJOR;
@@ -306,7 +306,7 @@ pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
 			ret = pcap_compile(pc, fp, str, optimize, netmask);
 			pcap_close(pc);
 		}
-		_unlink(path);
+		unlink(path);
 	}
 	return (ret);
 #endif

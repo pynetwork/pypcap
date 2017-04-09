@@ -9,7 +9,7 @@ the current tcpdump.org version, and the WinPcap port for Windows.
 Example use:
 
 >>> import pcap
->>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True)
+>>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
 >>> addr = lambda pkt, offset: '.'.join(str(ord(pkt[i])) for i in xrange(offset, offset + 4)).ljust(16)
 >>> for ts, pkt in sniffer:
 ...     print ts, '\tSRC', addr(pkt, sniffer.dloff + 12), '\tDST', addr(pkt, sniffer.dloff + 16)
