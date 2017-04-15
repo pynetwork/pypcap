@@ -19,13 +19,12 @@ __version__ = '1.1'
 import sys
 import struct
 
+from libc.stdlib cimport free
+from libc.string cimport strdup
+
 cdef extern from "Python.h":
     object PyBuffer_FromMemory(char *s, int len)
     int    PyObject_AsCharBuffer(object obj, char **buffer, Py_ssize_t *buffer_len)
-    int    PyGILState_Ensure()
-    void   PyGILState_Release(int gil)
-    void   Py_BEGIN_ALLOW_THREADS()
-    void   Py_END_ALLOW_THREADS()
 
 cdef extern from "pcap.h":
     struct bpf_insn:
@@ -88,14 +87,10 @@ cdef extern from "pcap_ex.h":
     void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
     int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
     int    pcap_ex_setdirection(pcap_t *p, int direction)
-    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, u_char **pkt)
+    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, u_char **pkt) nogil
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
                                    int optimize, unsigned int netmask)
-
-cdef extern from *:
-    char *strdup(char *src)
-    void  free(void *ptr)
 
 cdef class pcap_handler_ctx:
     cdef:
@@ -103,9 +98,8 @@ cdef class pcap_handler_ctx:
         void *args
         object exc
 
-cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt):
+cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt) with gil:
     cdef pcap_handler_ctx ctx = <pcap_handler_ctx><void*>arg
-    cdef int gil = PyGILState_Ensure()
     try:
         (<object>ctx.callback)(
             hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
@@ -114,7 +108,6 @@ cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
         )
     except:
         ctx.exc = sys.exc_info()
-    PyGILState_Release(gil)
 
 DLT_NULL =	0
 DLT_EN10MB =	1
@@ -333,9 +326,8 @@ cdef class pcap:
         i = 1
         pcap_ex_setup(self.__pcap)
         while 1:
-            Py_BEGIN_ALLOW_THREADS
-            n = pcap_ex_next(self.__pcap, &hdr, &pkt)
-            Py_END_ALLOW_THREADS
+            with nogil:
+                n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
                 callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                          PyBuffer_FromMemory(<char*>pkt, hdr.caplen), *args)
@@ -377,9 +369,8 @@ cdef class pcap:
         cdef u_char *pkt
         cdef int n
         while 1:
-            Py_BEGIN_ALLOW_THREADS
-            n = pcap_ex_next(self.__pcap, &hdr, &pkt)
-            Py_END_ALLOW_THREADS
+            with nogil:
+                n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
                 return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
                         PyBuffer_FromMemory(<char*>pkt, hdr.caplen))
