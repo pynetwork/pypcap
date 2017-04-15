@@ -13,9 +13,35 @@ Checkout the Code
     git clone https://github.com/pynetwork/pypcap.git
 
 
+Development notes
+-----------------
+
+Regenerating C code
+~~~~~~~~~~~~~~~~~~~
+
+The project uses Cython to generate the C code, it's recommended to install it from sources: https://github.com/cython/cython
+
+To regenerate code please use::
+
+    cython pcap.pyx
+
+
+Building docs
+~~~~~~~~~~~~~
+
+To build docs you need the following additional dependencies::
+
+    pip install sphinx mock sphinxcontrib.napoleon
+
+
+Please use `build_sphinx` task to regenerate the docs::
+
+    python setup.py build_sphinx
+
+
 Become a Developer
 ------------------
-pypcap uses the 'GitHub Flow' model: `GitHub Flow <http://scottchacon.com/2011/08/31/github-flow.html>`_ 
+pypcap uses the 'GitHub Flow' model: `GitHub Flow <http://scottchacon.com/2011/08/31/github-flow.html>`_
 
 - To work on something new, create a descriptively named branch off of master (ie: my-awesome)
 - Commit to that branch locally and regularly push your work to the same named branch on the server

@@ -29,6 +29,7 @@
 #ifndef DL_EXPORT
   #define DL_EXPORT(t) t
 #endif
+#define __PYX_COMMA ,
 #ifndef HAVE_LONG_LONG
   #if PY_VERSION_HEX >= 0x03030000 || (PY_MAJOR_VERSION == 2 && PY_VERSION_HEX >= 0x02070000)
     #define HAVE_LONG_LONG
@@ -1061,6 +1062,7 @@ static const char __pyx_k_dispatch[] = "dispatch";
 static const char __pyx_k_exc_info[] = "exc_info";
 static const char __pyx_k_nonblock[] = "nonblock";
 static const char __pyx_k_optimize[] = "optimize";
+static const char __pyx_k_pcap_pyx[] = "pcap.pyx";
 static const char __pyx_k_platform[] = "platform";
 static const char __pyx_k_DLT_CHAOS[] = "DLT_CHAOS";
 static const char __pyx_k_DLT_EN3MB[] = "DLT_EN3MB";
@@ -1089,7 +1091,6 @@ static const char __pyx_k_Copyright_c_2004_Dug_Song[] = "Copyright (c) 2004 Dug 
 static const char __pyx_k_Dug_Song_dugsong_monkey_org[] = "Dug Song <dugsong@monkey.org>";
 static const char __pyx_k_couldn_t_enable_immediate_mode[] = "couldn't enable immediate mode";
 static const char __pyx_k_http_monkey_org_dugsong_pypcap[] = "http://monkey.org/~dugsong/pypcap/";
-static const char __pyx_k_Users_nuald_Documents_workspace[] = "/Users/nuald/Documents/workspace/pypcap/pcap.pyx";
 static const char __pyx_k_packet_capture_library_This_modu[] = "packet capture library\n\nThis module provides a high level interface to packet capture systems.\nAll packets on the network, even those destined for other hosts, are\naccessible through this mechanism.\n";
 static PyObject *__pyx_kp_s_1_1;
 static PyObject *__pyx_kp_s_BSD_license;
@@ -1121,7 +1122,6 @@ static PyObject *__pyx_n_s_PCAP_D_INOUT;
 static PyObject *__pyx_n_s_PCAP_D_OUT;
 static PyObject *__pyx_n_s_StopIteration;
 static PyObject *__pyx_n_s_TypeError;
-static PyObject *__pyx_kp_s_Users_nuald_Documents_workspace;
 static PyObject *__pyx_n_s_add_pkts;
 static PyObject *__pyx_n_s_append;
 static PyObject *__pyx_n_s_author;
@@ -1159,6 +1159,7 @@ static PyObject *__pyx_n_s_optimize;
 static PyObject *__pyx_n_s_p;
 static PyObject *__pyx_n_s_pack;
 static PyObject *__pyx_n_s_pcap;
+static PyObject *__pyx_kp_s_pcap_pyx;
 static PyObject *__pyx_n_s_pkt;
 static PyObject *__pyx_n_s_pkts;
 static PyObject *__pyx_n_s_platform;
@@ -5775,7 +5776,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_PCAP_D_OUT, __pyx_k_PCAP_D_OUT, sizeof(__pyx_k_PCAP_D_OUT), 0, 0, 1, 1},
   {&__pyx_n_s_StopIteration, __pyx_k_StopIteration, sizeof(__pyx_k_StopIteration), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
-  {&__pyx_kp_s_Users_nuald_Documents_workspace, __pyx_k_Users_nuald_Documents_workspace, sizeof(__pyx_k_Users_nuald_Documents_workspace), 0, 0, 1, 0},
   {&__pyx_n_s_add_pkts, __pyx_k_add_pkts, sizeof(__pyx_k_add_pkts), 0, 0, 1, 1},
   {&__pyx_n_s_append, __pyx_k_append, sizeof(__pyx_k_append), 0, 0, 1, 1},
   {&__pyx_n_s_author, __pyx_k_author, sizeof(__pyx_k_author), 0, 0, 1, 1},
@@ -5813,6 +5813,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_p, __pyx_k_p, sizeof(__pyx_k_p), 0, 0, 1, 1},
   {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
   {&__pyx_n_s_pcap, __pyx_k_pcap, sizeof(__pyx_k_pcap), 0, 0, 1, 1},
+  {&__pyx_kp_s_pcap_pyx, __pyx_k_pcap_pyx, sizeof(__pyx_k_pcap_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_pkt, __pyx_k_pkt, sizeof(__pyx_k_pkt), 0, 0, 1, 1},
   {&__pyx_n_s_pkts, __pyx_k_pkts, sizeof(__pyx_k_pkts), 0, 0, 1, 1},
   {&__pyx_n_s_platform, __pyx_k_platform, sizeof(__pyx_k_platform), 0, 0, 1, 1},
@@ -5867,7 +5868,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__3 = PyTuple_Pack(2, __pyx_n_s_foo, __pyx_n_s_foo); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 401, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_nuald_Documents_workspace, __pyx_n_s_ex_name, 401, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 401, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_ex_name, 401, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 401, __pyx_L1_error)
 
   /* "pcap.pyx":404
  *     return pcap_ex_name(foo)
@@ -5879,7 +5880,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__5 = PyTuple_Pack(2, __pyx_n_s_p, __pyx_n_s_ebuf); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 404, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_nuald_Documents_workspace, __pyx_n_s_lookupdev, 404, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 404, __pyx_L1_error)
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupdev, 404, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 404, __pyx_L1_error)
 
   /* "pcap.pyx":413
  *     return p
@@ -5891,7 +5892,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__7 = PyTuple_Pack(5, __pyx_n_s_devs, __pyx_n_s_curr, __pyx_n_s_ebuf, __pyx_n_s_status, __pyx_n_s_retval); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(0, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_nuald_Documents_workspace, __pyx_n_s_findalldevs, 413, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 413, __pyx_L1_error)
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(0, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_findalldevs, 413, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 413, __pyx_L1_error)
 
   /* "pcap.pyx":434
  *     return retval
@@ -5903,7 +5904,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__9 = PyTuple_Pack(6, __pyx_n_s_dev, __pyx_n_s_dev, __pyx_n_s_netp, __pyx_n_s_maskp, __pyx_n_s_ebuf, __pyx_n_s_status); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 434, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_nuald_Documents_workspace, __pyx_n_s_lookupnet, 434, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupnet, 434, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 434, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6683,7 +6684,7 @@ static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, P
     assert(!PyErr_Occurred());
     return (*((__Pyx_PyCFunctionFast)meth)) (self, args, nargs, NULL);
 }
-#endif  // CYTHON_FAST_PYCCALL
+#endif
 
 /* PyFunctionFastCall */
     #if CYTHON_FAST_PYCALL
@@ -6802,8 +6803,8 @@ done:
     Py_LeaveRecursiveCall();
     return result;
 }
-#endif  // CPython < 3.6
-#endif  // CYTHON_FAST_PYCALL
+#endif
+#endif
 
 /* PyObjectCallMethO */
     #if CYTHON_COMPILING_IN_CPYTHON
@@ -8181,6 +8182,8 @@ raise_neg_overflow:
         #endif
         if (!*t->p)
             return -1;
+        if (PyObject_Hash(*t->p) == -1)
+            PyErr_Clear();
         ++t;
     }
     return 0;

@@ -69,11 +69,27 @@ Visit https://github.com/pynetwork/pypcap for help!
    :target: https://travis-ci.org/pynetwork/pypcap
 
 
+Development notes
+-----------------
+
+Regenerating C code
+~~~~~~~~~~~~~~~~~~~
+
+The project uses Cython to generate the C code, it's recommended to install it from sources: https://github.com/cython/cython
+
+To regenerate code please use::
+
+    cython pcap.pyx
+
+
 Building docs
--------------
+~~~~~~~~~~~~~
 
-To build docs you need the following additional dependencies:
+To build docs you need the following additional dependencies::
 
-```
-pip install sphinx mock sphinxcontrib.napoleon
-```
+    pip install sphinx mock sphinxcontrib.napoleon
+
+
+Please use `build_sphinx` task to regenerate the docs::
+
+    python setup.py build_sphinx
