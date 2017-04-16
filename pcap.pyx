@@ -19,12 +19,15 @@ __version__ = '1.1'
 import sys
 import struct
 
+from cython cimport view
 from libc.stdlib cimport free
 from libc.string cimport strdup
 
 cdef extern from "Python.h":
-    object PyBuffer_FromMemory(char *s, int len)
     int    PyObject_AsCharBuffer(object obj, char **buffer, Py_ssize_t *buffer_len)
+
+ctypedef unsigned int u_int
+ctypedef unsigned char u_char
 
 cdef extern from "pcap.h":
     struct bpf_insn:
@@ -40,7 +43,7 @@ cdef extern from "pcap.h":
         unsigned int ps_ifdrop
     struct pcap_pkthdr:
         bpf_timeval ts
-        unsigned int caplen
+        u_int caplen
     ctypedef struct pcap_t:
         int __xxx
     ctypedef struct pcap_if_t # hack for win32
@@ -48,8 +51,6 @@ cdef extern from "pcap.h":
         pcap_if_t *next
         char *name
 
-ctypedef unsigned int u_int
-ctypedef unsigned char u_char
 ctypedef void (*pcap_handler)(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
 
 cdef extern from "pcap.h":
@@ -98,12 +99,18 @@ cdef class pcap_handler_ctx:
         void *args
         object exc
 
+
+cdef object get_buffer(const u_char *pkt, u_int len):
+    cdef view.array pkt_view = <char[:len]><char *>pkt
+    return pkt_view.memview
+
+
 cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt) with gil:
     cdef pcap_handler_ctx ctx = <pcap_handler_ctx><void*>arg
     try:
         (<object>ctx.callback)(
-            hdr.ts.tv_sec + (hdr.ts.tv_usec/1000000.0),
-            PyBuffer_FromMemory(<char *>pkt, hdr.caplen),
+            hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+            get_buffer(pkt, hdr.caplen),
             *(<object>ctx.args)
         )
     except:
@@ -322,15 +329,17 @@ cdef class pcap:
         cdef pcap_pkthdr *hdr
         cdef u_char *pkt
         cdef int n
-        cdef int i
-        i = 1
+        cdef int i = 1
         pcap_ex_setup(self.__pcap)
         while 1:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                callback(hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                         PyBuffer_FromMemory(<char*>pkt, hdr.caplen), *args)
+                callback(
+                    hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                    get_buffer(pkt, hdr.caplen),
+                    *args
+                )
             elif n == 0:
                 continue
             elif n == -1:
@@ -372,8 +381,10 @@ cdef class pcap:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                return (hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
-                        PyBuffer_FromMemory(<char*>pkt, hdr.caplen))
+                return (
+                    hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                    get_buffer(pkt, hdr.caplen),
+                )
             elif n == 0:
                 continue
             elif n == -1:
