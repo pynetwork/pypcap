@@ -163,9 +163,8 @@ cdef class bpf:
         cdef Py_ssize_t n
         if PyObject_AsCharBuffer(buf, <const char**>&p, &n) < 0:
             raise TypeError
-        if bpf_filter(self.fcode.bf_insns, p, <u_int>n, <u_int>n) == 0:
-            return False
-        return True
+        return bpf_filter(self.fcode.bf_insns, p, <u_int>n, <u_int>n) != 0
+
     def __dealloc__(self):
         pcap_freecode(&self.fcode)
 
@@ -213,8 +212,10 @@ cdef class pcap:
 
         self.__name = strdup(p)
         self.__filter = strdup("")
-        try: self.__dloff = dltoff[pcap_datalink(self.__pcap)]
-        except KeyError: pass
+        try:
+            self.__dloff = dltoff[pcap_datalink(self.__pcap)]
+        except KeyError:
+            pass
         if immediate and pcap_ex_immediate(self.__pcap) < 0:
             raise OSError, "couldn't enable immediate mode"
 
@@ -261,10 +262,7 @@ cdef class pcap:
 
     def setdirection(self, direction):
         """Set capture direction."""
-        ret = pcap_ex_setdirection(self.__pcap, direction)
-        if ret == 0:
-            return True
-        return False
+        return pcap_ex_setdirection(self.__pcap, direction) == 0
 
     def setnonblock(self, nonblock=True):
         """Set non-blocking capture mode."""
@@ -275,9 +273,7 @@ cdef class pcap:
         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
         if ret < 0:
             raise OSError, self.__ebuf
-        elif ret:
-            return True
-        return False
+        return ret != 0
 
     def datalink(self):
         """Return datalink type (DLT_* values)."""
