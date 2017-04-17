@@ -5555,7 +5555,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:             # <<<<<<<<<<<<<<
  *         raise OSError, ebuf
- *     return p
+ *     return p.decode('UTF-8')
  */
   __pyx_t_1 = ((__pyx_v_p == NULL) != 0);
   if (__pyx_t_1) {
@@ -5564,7 +5564,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:
  *         raise OSError, ebuf             # <<<<<<<<<<<<<<
- *     return p
+ *     return p.decode('UTF-8')
  * 
  */
     __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
@@ -5578,19 +5578,19 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:             # <<<<<<<<<<<<<<
  *         raise OSError, ebuf
- *     return p
+ *     return p.decode('UTF-8')
  */
   }
 
   /* "pcap.pyx":411
  *     if p == NULL:
  *         raise OSError, ebuf
- *     return p             # <<<<<<<<<<<<<<
+ *     return p.decode('UTF-8')             # <<<<<<<<<<<<<<
  * 
  * def findalldevs():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 411, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_c_string(__pyx_v_p, 0, strlen(__pyx_v_p), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 411, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -5616,7 +5616,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
 }
 
 /* "pcap.pyx":413
- *     return p
+ *     return p.decode('UTF-8')
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""
@@ -5649,8 +5649,9 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  pcap_if_t *__pyx_t_5;
+  char *__pyx_t_4;
+  int __pyx_t_5;
+  pcap_if_t *__pyx_t_6;
   __Pyx_RefNannySetupContext("findalldevs", 0);
 
   /* "pcap.pyx":419
@@ -5750,7 +5751,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  *         return retval
  *     curr = devs             # <<<<<<<<<<<<<<
  *     while 1:
- *         retval.append(curr.name)
+ *         retval.append(curr.name.decode('UTF-8'))
  */
   __pyx_v_curr = __pyx_v_devs;
 
@@ -5758,7 +5759,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  *         return retval
  *     curr = devs
  *     while 1:             # <<<<<<<<<<<<<<
- *         retval.append(curr.name)
+ *         retval.append(curr.name.decode('UTF-8'))
  *         if not curr.next:
  */
   while (1) {
@@ -5766,18 +5767,19 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
     /* "pcap.pyx":427
  *     curr = devs
  *     while 1:
- *         retval.append(curr.name)             # <<<<<<<<<<<<<<
+ *         retval.append(curr.name.decode('UTF-8'))             # <<<<<<<<<<<<<<
  *         if not curr.next:
  *             break
  */
-    __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_curr->name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __pyx_t_4 = __pyx_v_curr->name;
+    __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_4, 0, strlen(__pyx_t_4), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_retval, __pyx_t_2); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 427, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_retval, __pyx_t_2); if (unlikely(__pyx_t_5 == -1)) __PYX_ERR(0, 427, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
     /* "pcap.pyx":428
  *     while 1:
- *         retval.append(curr.name)
+ *         retval.append(curr.name.decode('UTF-8'))
  *         if not curr.next:             # <<<<<<<<<<<<<<
  *             break
  *         curr = curr.next
@@ -5786,7 +5788,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
     if (__pyx_t_1) {
 
       /* "pcap.pyx":429
- *         retval.append(curr.name)
+ *         retval.append(curr.name.decode('UTF-8'))
  *         if not curr.next:
  *             break             # <<<<<<<<<<<<<<
  *         curr = curr.next
@@ -5796,7 +5798,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
 
       /* "pcap.pyx":428
  *     while 1:
- *         retval.append(curr.name)
+ *         retval.append(curr.name.decode('UTF-8'))
  *         if not curr.next:             # <<<<<<<<<<<<<<
  *             break
  *         curr = curr.next
@@ -5810,8 +5812,8 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  *     pcap_freealldevs(devs)
  *     return retval
  */
-    __pyx_t_5 = __pyx_v_curr->next;
-    __pyx_v_curr = __pyx_t_5;
+    __pyx_t_6 = __pyx_v_curr->next;
+    __pyx_v_curr = __pyx_t_6;
   }
   __pyx_L6_break:;
 
@@ -5837,7 +5839,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   goto __pyx_L0;
 
   /* "pcap.pyx":413
- *     return p
+ *     return p.decode('UTF-8')
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""
@@ -19141,7 +19143,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupdev, 404, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 404, __pyx_L1_error)
 
   /* "pcap.pyx":413
- *     return p
+ *     return p.decode('UTF-8')
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""
@@ -19806,7 +19808,7 @@ PyMODINIT_FUNC PyInit_pcap(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "pcap.pyx":413
- *     return p
+ *     return p.decode('UTF-8')
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""

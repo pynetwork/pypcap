@@ -408,7 +408,7 @@ def lookupdev():
     p = pcap_ex_lookupdev(ebuf)
     if p == NULL:
         raise OSError, ebuf
-    return p
+    return p.decode('UTF-8')
 
 def findalldevs():
     """Return a list of capture devices."""
@@ -424,7 +424,7 @@ def findalldevs():
         return retval
     curr = devs
     while 1:
-        retval.append(curr.name)
+        retval.append(curr.name.decode('UTF-8'))
         if not curr.next:
             break
         curr = curr.next
