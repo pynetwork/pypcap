@@ -1,8 +1,4 @@
-.DS_Store
-.coverage
-*.so
-*.egg-info/
 build/
 dist/
-.tox/
-tests/__pycache__/
+*.egg-info/
+.DS_Store
