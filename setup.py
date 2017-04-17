@@ -8,12 +8,14 @@ import re
 PACKAGE = "pypcap"
 VERSION = "1.1.6.dev0"
 
+
 def recursive_search_dirs(dirs, target_files):
     """Recursive search directories"""
     for d in dirs:
         r = recursive_search(d, target_files)
         if r:
             return r
+
 
 def recursive_search(path, target_files):
     """Recursively search for files"""
@@ -22,18 +24,21 @@ def recursive_search(path, target_files):
             if filename in target_files:
                 return os.path.join(root, filename)
 
+
 def get_extension():
     # A list of all the possible search directories
     dirs = ['/usr', sys.prefix] + glob.glob('/opt/libpcap*') + \
         glob.glob('../libpcap*') + glob.glob('../wpdpack*') + \
-        glob.glob('/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*')
+        glob.glob('/Applications/Xcode.app/Contents/Developer/Platforms/' +
+                  'MacOSX.platform/Developer/SDKs/*')
 
     for d in dirs:
-        # This makes sure that we first search inside of */include/pcap
-        search_dirs = [os.path.join(d, 'usr', 'include', 'pcap'),
-                    os.path.join(d, 'include', 'pcap'),
-                    os.path.join(d, 'local', 'include', 'pcap'),
-                    d]
+        search_dirs = [
+            os.path.join(d, 'local', 'include'),
+            os.path.join(d, 'usr', 'include'),
+            os.path.join(d, 'include'),
+            d
+        ]
 
         pcap_h = recursive_search_dirs(search_dirs, ['pcap.h'])
         if pcap_h:
@@ -47,9 +52,21 @@ def get_extension():
     include_dirs = [os.path.dirname(pcap_h)]
 
     # This logic will use the path 'd' that the pcap.h was found in
-    lib_sub_dirs = [os.path.join(d, sub_dir) \
-            for sub_dir in ('lib', 'lib64', \
-            'lib/x86_64-linux-gnu', 'lib/i386-linux-gnu', '')]
+    is_64bits = sys.maxsize > 2**32
+    priority_libs = (
+        'lib64',
+        'lib/x64',  # wpdpack
+        'lib/x86_64-linux-gnu'
+    ) if is_64bits else tuple()
+
+    lib_sub_dirs = [
+        os.path.join(d, sub_dir)
+        for sub_dir in priority_libs + (
+            'lib',
+            'lib/i386-linux-gnu',
+            ''
+        )
+    ]
 
     # For Mac OSX the default system pcap lib is in /usr/lib
     lib_sub_dirs.append('/usr/lib')
@@ -65,6 +82,7 @@ def get_extension():
     print("Found libraries in %s" % lib_file_path)
 
     lib_file = os.path.basename(lib_file_path)
+    lib_path = os.path.dirname(lib_file_path)
 
     extra_compile_args = []
     if re.match(r"libpcap\.(a|so|dylib)", lib_file):
@@ -90,12 +108,12 @@ def get_extension():
             print("found pcap_setdirection")
             define_macros.append(('HAVE_PCAP_SETDIRECTION', 1))
 
-
     ext = Extension(
         name='pcap',
         sources=['pcap.c', 'pcap_ex.c'],
         include_dirs=include_dirs,
         define_macros=define_macros,
+        library_dirs=[lib_path, ],
         libraries=list(libraries),
         extra_compile_args=extra_compile_args
     )
