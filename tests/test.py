@@ -1,4 +1,6 @@
+import binascii
 import os
+import struct
 
 # Local imports
 import pcap
@@ -61,7 +63,13 @@ def test_pcap_dispatch():
 
 
 def test_pcap_readpkts():
-    assert len(pcap.pcap(relative_file('test.pcap')).readpkts()) == 6
+    pkts = pcap.pcap(relative_file('test.pcap')).readpkts()
+    assert len(pkts) == 6
+    buf = pkts[0][1]
+    (dst, src, length) = struct.unpack('>6s6sH', buf[:14])
+    assert binascii.hexlify(dst).decode('utf-8') == '000d602dc861'
+    assert binascii.hexlify(src).decode('utf-8') == '0002b3056f15'
+    assert length == 2048
 
 
 if __name__ == '__main__':
