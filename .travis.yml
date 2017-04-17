@@ -1,3 +1,4 @@
+dist: trusty
 language: python
 python: 2.7
 env:
@@ -5,6 +6,7 @@ env:
     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
     - TOXENV=py27
+    - TOXENV=py36
     - TOXENV=pypy
     - TOXENV=docs
 before_install:
