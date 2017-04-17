@@ -27,15 +27,15 @@ int
 pcap_ex_immediate(pcap_t *pcap)
 {
 #ifdef _WIN32
-    return pcap_setmintocopy(pcap, 1);
+	return pcap_setmintocopy(pcap, 1);
 #elif defined BIOCIMMEDIATE
-    int n = 1;
-    return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
+	int n = 1;
+	return ioctl(pcap_fileno(pcap), BIOCIMMEDIATE, &n);
 #elif defined __APPLE__ /* XXX On OSX Yosemite (10.10.3) BIOCIMMEDIATE is not defined) */
-    int n = 1;
-    return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
+	int n = 1;
+	return ioctl(pcap_fileno(pcap), _IOW('B',112, u_int), &n);
 #else
-    return 0;
+	return 0;
 #endif
 }
 
@@ -44,7 +44,7 @@ pcap_ex_immediate(pcap_t *pcap)
 static int
 _pcap_ex_findalldevs(pcap_if_t **dst, char *ebuf)
 {
-        pcap_if_t *pifs, *cur, *prev, *next;
+	pcap_if_t *pifs, *cur, *prev, *next;
 	int ret;
 	
 	if ((ret = pcap_findalldevs(&pifs, ebuf)) != -1) {
@@ -68,13 +68,13 @@ pcap_ex_name(char *name)
 	 * WinPcap native interface name.
 	 */
 	static char pcap_name[256];
-        pcap_if_t *pifs, *pif;
+	pcap_if_t *pifs, *pif;
 	char ebuf[128];
 	int idx, i = 0;
 
 	/* XXX - according to the WinPcap FAQ, no loopback support??? */
-        if (strncmp(name, "eth", 3) != 0 || sscanf(name+3, "%u", &idx) != 1 ||
-	    _pcap_ex_findalldevs(&pifs, ebuf) == -1) {
+	if (strncmp(name, "eth", 3) != 0 || sscanf(name+3, "%u", &idx) != 1 ||
+		_pcap_ex_findalldevs(&pifs, ebuf) == -1) {
 		return (name);
 	}
 	for (pif = pifs; pif != NULL; pif = pif->next) {
@@ -96,50 +96,25 @@ char *
 pcap_ex_lookupdev(char *ebuf)
 {
 #ifdef _WIN32
-	/* XXX - holy poo this sux */
-	static char _ifname[8];
-	MIB_IPADDRTABLE *ipaddrs;
-	DWORD i, dsz, outip;
 	pcap_if_t *pifs, *pif;
 	struct pcap_addr *pa;
 	char *name = NULL;
-	int idx;
-	
-	/* Find our primary IP address. */
-	ipaddrs = malloc((dsz = sizeof(*ipaddrs)));
-	while (GetIpAddrTable(ipaddrs, &dsz, 0) == ERROR_INSUFFICIENT_BUFFER) {
-		free(ipaddrs);
-		ipaddrs = malloc(dsz);
+
+	// Get all available devices.
+	if (_pcap_ex_findalldevs(&pifs, ebuf) == -1) {
+		return NULL;
 	}
-	outip = 0;
-	for (i = 0; i < ipaddrs->dwNumEntries; i++) {
-		if (ipaddrs->table[i].dwAddr != 0 &&
-		    ipaddrs->table[i].dwAddr != 0x100007f
-#if 0
-		    /* XXX -no wType/MIB_IPADDR_PRIMARY in w32api/iprtrmib.h */
-		    && ipaddrs->table[i].unused2 & 0x01
-#endif
-		    ) {
-			outip = ipaddrs->table[i].dwAddr;
-			break;
-		}
-	}
-	free(ipaddrs);
-	if (outip == 0) {
-		/* XXX - default to first Ethernet interface. */
-		return ("eth0");
-	}
-	/* Find matching pcap interface by IP. */
-	if (_pcap_ex_findalldevs(&pifs, ebuf) == -1)
-		return (name);
-	
-	for (pif = pifs, idx = 0; pif != NULL && name == NULL;
-	    pif = pif->next, idx++) {
+
+	// Get first not 0.0.0.0 or 127.0.0.1 device
+	for (pif = pifs; pif != NULL; pif = pif->next) {
 		for (pa = pif->addresses; pa != NULL; pa = pa->next) {
-			if (pa->addr->sa_family == AF_INET &&
-			    ((struct sockaddr_in *)pa->addr)->sin_addr.S_un.S_addr == outip) {
-				sprintf(_ifname, "eth%d", idx);
-				name = _ifname;
+			struct sockaddr_in *addrStruct = (struct sockaddr_in *)pa->addr;
+			u_long addr = addrStruct->sin_addr.S_un.S_addr;
+			if (addrStruct->sin_family == AF_INET &&
+				addr != 0 && // 0.0.0.0
+				addr != 0x100007f // 127.0.0.1
+			) {
+				name = pif->name;
 				break;
 			}
 		}
@@ -204,7 +179,7 @@ int
 pcap_ex_setdirection(pcap_t *pcap, int direction)
 {
 #ifdef HAVE_PCAP_SETDIRECTION
-    return (pcap_setdirection(pcap, (pcap_direction_t) direction));
+	return (pcap_setdirection(pcap, (pcap_direction_t) direction));
 #else
 	return (-2);
 #endif
@@ -271,7 +246,7 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 
 int
 pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
-    int optimize, unsigned int netmask)
+	int optimize, unsigned int netmask)
 {
 #ifdef HAVE_PCAP_COMPILE_NOPCAP
   #ifdef __NetBSD__
