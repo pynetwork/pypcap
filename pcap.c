@@ -1956,7 +1956,7 @@ static PyObject *__pyx_codeobj__30;
  * 
  * cdef object get_buffer(const u_char *pkt, u_int len):             # <<<<<<<<<<<<<<
  *     cdef view.array pkt_view = <char[:len]><char *>pkt
- *     return pkt_view.memview
+ *     return <bytes>pkt_view.memview
  */
 
 static PyObject *__pyx_f_4pcap_get_buffer(__pyx_t_4pcap_u_char const *__pyx_v_pkt, CYTHON_UNUSED __pyx_t_4pcap_u_int __pyx_v_len) {
@@ -1973,7 +1973,7 @@ static PyObject *__pyx_f_4pcap_get_buffer(__pyx_t_4pcap_u_char const *__pyx_v_pk
  * 
  * cdef object get_buffer(const u_char *pkt, u_int len):
  *     cdef view.array pkt_view = <char[:len]><char *>pkt             # <<<<<<<<<<<<<<
- *     return pkt_view.memview
+ *     return <bytes>pkt_view.memview
  * 
  */
   __pyx_t_1 = ((char *)__pyx_v_pkt);
@@ -1997,15 +1997,16 @@ static PyObject *__pyx_f_4pcap_get_buffer(__pyx_t_4pcap_u_char const *__pyx_v_pk
   /* "pcap.pyx":105
  * cdef object get_buffer(const u_char *pkt, u_int len):
  *     cdef view.array pkt_view = <char[:len]><char *>pkt
- *     return pkt_view.memview             # <<<<<<<<<<<<<<
+ *     return <bytes>pkt_view.memview             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_pkt_view), __pyx_n_s_memview); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_INCREF(((PyObject*)__pyx_t_4));
   __pyx_r = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   goto __pyx_L0;
 
   /* "pcap.pyx":103
@@ -2013,7 +2014,7 @@ static PyObject *__pyx_f_4pcap_get_buffer(__pyx_t_4pcap_u_char const *__pyx_v_pk
  * 
  * cdef object get_buffer(const u_char *pkt, u_int len):             # <<<<<<<<<<<<<<
  *     cdef view.array pkt_view = <char[:len]><char *>pkt
- *     return pkt_view.memview
+ *     return <bytes>pkt_view.memview
  */
 
   /* function exit code */

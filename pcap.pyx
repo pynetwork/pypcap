@@ -102,7 +102,7 @@ cdef class pcap_handler_ctx:
 
 cdef object get_buffer(const u_char *pkt, u_int len):
     cdef view.array pkt_view = <char[:len]><char *>pkt
-    return pkt_view.memview
+    return <bytes>pkt_view.memview
 
 
 cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt) with gil:
