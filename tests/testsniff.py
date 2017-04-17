@@ -22,12 +22,14 @@ Available devices:"""
 
 def iter(pc, decode_fn):
     for ts, pkt in pc:
-        print ts, repr(decode_fn(pkt))
+        msg = '%d %r' % (ts, decode_fn(pkt))
+        print(msg)
 
 
 def loop(pc, decode_fn):
     def cb(ts, pkt, *args):
-        print ts, repr(decode_fn(pkt))
+        msg = '%d %r' % (ts, decode_fn(pkt))
+        print(msg)
     pc.loop(0, cb)
 
 
@@ -51,7 +53,7 @@ def main():
         pcap.DLT_EN10MB: dpkt.ethernet.Ethernet
     }[pc.datalink()]
 
-    print 'listening on %s: %s' % (pc.name, pc.filter)
+    print('listening on %s: %s' % (pc.name, pc.filter))
     try:
         if use_loop:
             loop(pc, decode)
@@ -59,8 +61,8 @@ def main():
             iter(pc, decode)
     except KeyboardInterrupt:
         nrecv, ndrop, nifdrop = pc.stats()
-        print '\n%d packets received by filter' % nrecv
-        print '%d packets dropped by kernel' % ndrop
+        print('\n%d packets received by filter' % nrecv)
+        print('%d packets dropped by kernel' % ndrop)
 
 if __name__ == '__main__':
     main()

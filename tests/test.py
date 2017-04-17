@@ -36,7 +36,7 @@ def test_pcap_properties():
 def test_pcap_errors():
     p = pcap.pcap(relative_file('test.pcap'))
     try:
-        print p.stats()
+        print(p.stats())
     except OSError:
         pass
     assert p.geterr() != '', 'pcap_geterr'

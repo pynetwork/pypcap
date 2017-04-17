@@ -201,7 +201,8 @@ cdef class pcap:
             if p == NULL:
                 raise OSError, self.__ebuf
         else:
-            p = name
+            py_byte_name = name.encode('UTF-8')
+            p = py_byte_name
 
         self.__pcap = pcap_open_offline(p, self.__ebuf)
         if not self.__pcap:
@@ -220,7 +221,7 @@ cdef class pcap:
     property name:
         """Network interface or dumpfile name."""
         def __get__(self):
-            return self.__name
+            return self.__name.decode('UTF-8')
 
     property snaplen:
         """Maximum number of bytes to capture for each packet."""
@@ -235,7 +236,7 @@ cdef class pcap:
     property filter:
         """Current packet capture filter."""
         def __get__(self):
-            return self.__filter
+            return self.__filter.decode('UTF-8')
 
     property fd:
         """File descriptor (or Win32 HANDLE) for capture handle."""
@@ -250,7 +251,8 @@ cdef class pcap:
         """Set BPF-format packet capture filter."""
         cdef bpf_program fcode
         free(self.__filter)
-        self.__filter = strdup(value)
+        py_byte_value = value.encode('UTF-8')
+        self.__filter = strdup(py_byte_value)
         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
             raise OSError, pcap_geterr(self.__pcap)
         if pcap_setfilter(self.__pcap, &fcode) < 0:
