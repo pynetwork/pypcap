@@ -5,6 +5,9 @@ help:
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
 
+cython:
+	cython pcap.pyx
+
 clean: clean-build clean-pyc
 
 clean-build:
