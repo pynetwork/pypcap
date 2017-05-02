@@ -1,4 +1,4 @@
-# pypcap-1.1.6 [UNRELEASED]
+# pypcap-1.1.6 [2017-05-02]
 
 - fix for finding libpcap on macOS
 
