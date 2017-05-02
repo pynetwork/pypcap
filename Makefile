@@ -1,9 +1,20 @@
-.PHONY: help clean clean-pyc clean-build list test test-all coverage docs release sdist
+VERSION = 1.1.6
+
+.PHONY: help clean clean-pyc clean-build list test test-all coverage docs release sdist upload
 
 help:
 	@echo "clean - remove all build/python artifacts"
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
+
+sdist:
+	python setup.py sdist
+
+sign:
+	gpg --no-version --detach-sign --armor --local-user 0x702287F4 dist/pypcap-${VERSION}.tar.gz
+
+upload:
+	twine upload -r pypi dist/pypcap-${VERSION}.tar.gz dist/pypcap-${VERSION}.tar.gz.asc
 
 cython:
 	cython pcap.pyx
