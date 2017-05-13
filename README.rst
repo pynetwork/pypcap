@@ -6,14 +6,14 @@ Python PCAP module
 This is a simplified object-oriented Python wrapper for libpcap -
 the current tcpdump.org version, and the WinPcap port for Windows.
 
-Example use:
+Example use::
 
->>> import pcap
->>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
->>> addr = lambda pkt, offset: '.'.join(str(ord(pkt[i])) for i in range(offset, offset + 4))
->>> for ts, pkt in sniffer:
-...     print('%d\tSRC %-16s\tDST %-16s' % (ts, addr(pkt, sniffer.dloff + 12), addr(pkt, sniffer.dloff + 16)))
-...
+    >>> import pcap
+    >>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
+    >>> addr = lambda pkt, offset: '.'.join(str(ord(pkt[i])) for i in range(offset, offset + 4))
+    >>> for ts, pkt in sniffer:
+    ...     print('%d\tSRC %-16s\tDST %-16s' % (ts, addr(pkt, sniffer.dloff + 12), addr(pkt, sniffer.dloff + 16)))
+    ...
 
 
 Windows notes
@@ -88,7 +88,6 @@ Building docs
 To build docs you need the following additional dependencies::
 
     pip install sphinx mock sphinxcontrib.napoleon
-
 
 Please use `build_sphinx` task to regenerate the docs::
 

@@ -1508,7 +1508,6 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k_p[] = "p";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_ts[] = "ts";
-static const char __pyx_k_1_1[] = "1.1";
 static const char __pyx_k_cnt[] = "cnt";
 static const char __pyx_k_dev[] = "dev";
 static const char __pyx_k_dlt[] = "dlt";
@@ -1534,6 +1533,7 @@ static const char __pyx_k_size[] = "size";
 static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_1_1_6[] = "1.1.6";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_UTF_8[] = "UTF-8";
 static const char __pyx_k_class[] = "__class__";
@@ -1628,7 +1628,6 @@ static const char __pyx_k_Dug_Song_dugsong_monkey_org[] = "Dug Song <dugsong@mon
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_couldn_t_enable_immediate_mode[] = "couldn't enable immediate mode";
-static const char __pyx_k_http_monkey_org_dugsong_pypcap[] = "http://monkey.org/~dugsong/pypcap/";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_Buffer_view_does_not_expose_stri[] = "Buffer view does not expose strides";
 static const char __pyx_k_Can_only_create_a_buffer_that_is[] = "Can only create a buffer that is contiguous in memory.";
@@ -1638,9 +1637,10 @@ static const char __pyx_k_Invalid_mode_expected_c_or_fortr[] = "Invalid mode, ex
 static const char __pyx_k_Out_of_bounds_on_buffer_access_a[] = "Out of bounds on buffer access (axis %d)";
 static const char __pyx_k_Unable_to_convert_item_to_object[] = "Unable to convert item to object";
 static const char __pyx_k_got_differing_extents_in_dimensi[] = "got differing extents in dimension %d (got %d and %d)";
+static const char __pyx_k_https_github_com_pynetwork_pypca[] = "https://github.com/pynetwork/pypcap";
 static const char __pyx_k_packet_capture_library_This_modu[] = "packet capture library\n\nThis module provides a high level interface to packet capture systems.\nAll packets on the network, even those destined for other hosts, are\naccessible through this mechanism.\n";
 static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
-static PyObject *__pyx_kp_s_1_1;
+static PyObject *__pyx_kp_s_1_1_6;
 static PyObject *__pyx_n_s_ASCII;
 static PyObject *__pyx_kp_s_BSD_license;
 static PyObject *__pyx_kp_s_Buffer_view_does_not_expose_stri;
@@ -1725,7 +1725,7 @@ static PyObject *__pyx_n_s_format;
 static PyObject *__pyx_n_s_fortran;
 static PyObject *__pyx_n_u_fortran;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
-static PyObject *__pyx_kp_s_http_monkey_org_dugsong_pypcap;
+static PyObject *__pyx_kp_s_https_github_com_pynetwork_pypca;
 static PyObject *__pyx_n_s_id;
 static PyObject *__pyx_n_s_immediate;
 static PyObject *__pyx_n_s_import;
@@ -18775,7 +18775,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_s_1_1, __pyx_k_1_1, sizeof(__pyx_k_1_1), 0, 0, 1, 0},
+  {&__pyx_kp_s_1_1_6, __pyx_k_1_1_6, sizeof(__pyx_k_1_1_6), 0, 0, 1, 0},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},
   {&__pyx_kp_s_BSD_license, __pyx_k_BSD_license, sizeof(__pyx_k_BSD_license), 0, 0, 1, 0},
   {&__pyx_kp_s_Buffer_view_does_not_expose_stri, __pyx_k_Buffer_view_does_not_expose_stri, sizeof(__pyx_k_Buffer_view_does_not_expose_stri), 0, 0, 1, 0},
@@ -18860,7 +18860,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
   {&__pyx_n_u_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 1, 0, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
-  {&__pyx_kp_s_http_monkey_org_dugsong_pypcap, __pyx_k_http_monkey_org_dugsong_pypcap, sizeof(__pyx_k_http_monkey_org_dugsong_pypcap), 0, 0, 1, 0},
+  {&__pyx_kp_s_https_github_com_pynetwork_pypca, __pyx_k_https_github_com_pynetwork_pypca, sizeof(__pyx_k_https_github_com_pynetwork_pypca), 0, 0, 1, 0},
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
   {&__pyx_n_s_immediate, __pyx_k_immediate, sizeof(__pyx_k_immediate), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -19413,7 +19413,7 @@ PyMODINIT_FUNC PyInit_pcap(void)
  * __author__ = 'Dug Song <dugsong@monkey.org>'
  * __copyright__ = 'Copyright (c) 2004 Dug Song'             # <<<<<<<<<<<<<<
  * __license__ = 'BSD license'
- * __url__ = 'http://monkey.org/~dugsong/pypcap/'
+ * __url__ = 'https://github.com/pynetwork/pypcap'
  */
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_copyright, __pyx_kp_s_Copyright_c_2004_Dug_Song) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
 
@@ -19421,31 +19421,31 @@ PyMODINIT_FUNC PyInit_pcap(void)
  * __author__ = 'Dug Song <dugsong@monkey.org>'
  * __copyright__ = 'Copyright (c) 2004 Dug Song'
  * __license__ = 'BSD license'             # <<<<<<<<<<<<<<
- * __url__ = 'http://monkey.org/~dugsong/pypcap/'
- * __version__ = '1.1'
+ * __url__ = 'https://github.com/pynetwork/pypcap'
+ * __version__ = '1.1.6'
  */
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_license, __pyx_kp_s_BSD_license) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
 
   /* "pcap.pyx":16
  * __copyright__ = 'Copyright (c) 2004 Dug Song'
  * __license__ = 'BSD license'
- * __url__ = 'http://monkey.org/~dugsong/pypcap/'             # <<<<<<<<<<<<<<
- * __version__ = '1.1'
+ * __url__ = 'https://github.com/pynetwork/pypcap'             # <<<<<<<<<<<<<<
+ * __version__ = '1.1.6'
  * 
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_url, __pyx_kp_s_http_monkey_org_dugsong_pypcap) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_url, __pyx_kp_s_https_github_com_pynetwork_pypca) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "pcap.pyx":17
  * __license__ = 'BSD license'
- * __url__ = 'http://monkey.org/~dugsong/pypcap/'
- * __version__ = '1.1'             # <<<<<<<<<<<<<<
+ * __url__ = 'https://github.com/pynetwork/pypcap'
+ * __version__ = '1.1.6'             # <<<<<<<<<<<<<<
  * 
  * import sys
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_1_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_1_1_6) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
 
   /* "pcap.pyx":19
- * __version__ = '1.1'
+ * __version__ = '1.1.6'
  * 
  * import sys             # <<<<<<<<<<<<<<
  * import struct

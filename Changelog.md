@@ -1,22 +1,30 @@
-pypcap-1.1.5:
+# pypcap-1.1.6 [2017-05-02]
+
+- fix for finding libpcap on macOS
+
+- drop workaround for missing `pcap_file()`
+
+- make setup.py importable
+
+# pypcap-1.1.5 [2016-04-22]
 
 - fix for immediate mode on linux (#12)
 
-pypcap-1.1.4:
+# pypcap-1.1.4 [2015-09-07]
 
 - fix for immediate mode on Mac OS X 10.10
 
-pypcap-1.1.3:
+# pypcap-1.1.3 [2015-05-18]
 
 - minor bugfixing
 
-pypcap-1.1.2:
+# pypcap-1.1.2 [2015-05-18]
 
 - setdirection() support - from Eddi Linder
 
 - make it possible to install without pyrex
 
-pypcap-1.1.1:
+# pypcap-1.1.1 [2013-02-27]
 
 - honor 'immediate' flag to disable buffering under Windows - by Kosma Moczek
 
@@ -31,7 +39,7 @@ pypcap-1.1.1:
 
 - better support for installing on Fedora, Ubuntu and Mac OS X
 
-pypcap-1.1:
+# pypcap-1.1
 
 - better lookupdev() on win32, as requested by Zack Payton
   <zack@tek-pros.com>
