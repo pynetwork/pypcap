@@ -1,16 +1,19 @@
+dist: trusty
 language: python
-python: 2.7
 env:
   global:
     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
     - TOXENV=py27
+    - TOXENV=py35
     - TOXENV=pypy
     - TOXENV=docs
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libpcap-dev
   - python --version
+  - python3 --version
+  - pypy --version
   - virtualenv --version
   - pip --version
   - uname -a

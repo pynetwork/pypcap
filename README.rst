@@ -9,10 +9,10 @@ the current tcpdump.org version, and the WinPcap port for Windows.
 Example use::
 
     >>> import pcap
-    >>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True)
-    >>> addr = lambda pkt, offset: '.'.join(str(ord(pkt[i])) for i in xrange(offset, offset + 4)).ljust(16)
+    >>> sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
+    >>> addr = lambda pkt, offset: '.'.join(str(ord(pkt[i])) for i in range(offset, offset + 4))
     >>> for ts, pkt in sniffer:
-    ...     print ts, '\tSRC', addr(pkt, sniffer.dloff + 12), '\tDST', addr(pkt, sniffer.dloff + 16)
+    ...     print('%d\tSRC %-16s\tDST %-16s' % (ts, addr(pkt, sniffer.dloff + 12), addr(pkt, sniffer.dloff + 16)))
     ...
 
 
@@ -69,16 +69,26 @@ Visit https://github.com/pynetwork/pypcap for help!
    :target: https://travis-ci.org/pynetwork/pypcap
 
 
+Development notes
+-----------------
+
+Regenerating C code
+~~~~~~~~~~~~~~~~~~~
+
+The project uses Cython to generate the C code, it's recommended to install it from sources: https://github.com/cython/cython
+
+To regenerate code please use::
+
+    cython pcap.pyx
+
+
 Building docs
--------------
+~~~~~~~~~~~~~
 
 To build docs you need the following additional dependencies::
 
     pip install sphinx mock sphinxcontrib.napoleon
 
-Building bindings
------------------
+Please use `build_sphinx` task to regenerate the docs::
 
-To build the C bindings you should ensure you have cython installed and then you should run::
-
-    cython pcap.pyx
+    python setup.py build_sphinx
