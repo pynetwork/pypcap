@@ -115,6 +115,21 @@ def test_pcap_overwritten():
         assert len(set(p[:] for p in packets_b)) > 1
 
 
+def test_unicode():
+    path = relative_file('test.pcap')
+    p = pcap.pcap(path)
+    assert isinstance(p.name, str)
+
+    f = 'icmp[icmptype] != icmp-echo'
+    p.setfilter(f)
+    assert isinstance(p.filter, str)
+
+    devs = pcap.findalldevs()
+    for name in devs:
+        assert isinstance(name, str)
+    isinstance(pcap.lookupdev(), str)
+
+
 if __name__ == '__main__':
     test_pcap_iter()
     test_pcap_properties()
@@ -122,3 +137,4 @@ if __name__ == '__main__':
     test_pcap_dispatch()
     test_pcap_readpkts()
     test_pcap_overwritten()
+    test_unicode()
