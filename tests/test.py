@@ -127,7 +127,11 @@ def test_unicode():
     devs = pcap.findalldevs()
     for name in devs:
         assert isinstance(name, str)
-    isinstance(pcap.lookupdev(), str)
+    try:
+        isinstance(pcap.lookupdev(), str)
+    except OSError:
+        # skip if no devices are detected
+        pass
 
 
 if __name__ == '__main__':
