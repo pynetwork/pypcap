@@ -1,6 +1,7 @@
 import binascii
 import os
 import struct
+from threading import Thread
 
 # Local imports
 import pcap
@@ -72,9 +73,52 @@ def test_pcap_readpkts():
     assert length == 2048
 
 
+class PktsThread(Thread):
+    def __init__(self, name):
+        Thread.__init__(self)
+        self.name = name
+        self.pkts = {}
+
+    def run(self):
+        self.pkts = pcap.pcap(relative_file(self.name))
+
+
+def test_pcap_overwritten():
+
+    for repetitions in range(1000):
+        thread_pkts_a = PktsThread('test.pcap')
+        thread_pkts_b = PktsThread('arp.pcap')
+        thread_pkts_a.start()
+        thread_pkts_b.start()
+        thread_pkts_a.join()
+        thread_pkts_b.join()
+        packets_a = [x[1] for x in thread_pkts_a.pkts]
+        packets_a_copy = [t[1] for t in pcap.pcap(relative_file('test.pcap'))]
+        # debug only
+        # if packets_a != packets_a_copy:
+        #    import pdb; pdb.set_trace()
+        packets_b = [x[1] for x in thread_pkts_b.pkts]
+        packets_b_copy = [t[1] for t in pcap.pcap(relative_file('arp.pcap'))]
+
+        # two pcaps to check cross-influence (overwriting)
+        assert all(
+            packets_a[i][:] == packets_a_copy[i][:]
+            for i in range(len(packets_a))
+        )
+        assert all(
+            packets_b[i][:] == packets_b_copy[i][:]
+            for i in range(len(packets_b))
+        )
+
+        # single pcap to check if a single buffer isn't reused
+        assert len(set(p[:] for p in packets_a)) > 1
+        assert len(set(p[:] for p in packets_b)) > 1
+
+
 if __name__ == '__main__':
     test_pcap_iter()
     test_pcap_properties()
     test_pcap_errors()
     test_pcap_dispatch()
     test_pcap_readpkts()
+    test_pcap_overwritten()
