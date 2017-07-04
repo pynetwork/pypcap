@@ -222,7 +222,7 @@ cdef class pcap:
     property name:
         """Network interface or dumpfile name."""
         def __get__(self):
-            return self.__name.decode('UTF-8')
+            return str(self.__name.decode('UTF-8'))
 
     property snaplen:
         """Maximum number of bytes to capture for each packet."""
@@ -237,7 +237,7 @@ cdef class pcap:
     property filter:
         """Current packet capture filter."""
         def __get__(self):
-            return self.__filter.decode('UTF-8')
+            return str(self.__filter.decode('UTF-8'))
 
     property fd:
         """File descriptor (or Win32 HANDLE) for capture handle."""
@@ -408,7 +408,7 @@ def lookupdev():
     p = pcap_ex_lookupdev(ebuf)
     if p == NULL:
         raise OSError, ebuf
-    return p.decode('UTF-8')
+    return str(p.decode('UTF-8'))
 
 def findalldevs():
     """Return a list of capture devices."""
@@ -424,7 +424,7 @@ def findalldevs():
         return retval
     curr = devs
     while 1:
-        retval.append(curr.name.decode('UTF-8'))
+        retval.append(str(curr.name.decode('UTF-8')))
         if not curr.next:
             break
         curr = curr.next
