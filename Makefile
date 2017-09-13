@@ -1,4 +1,4 @@
-VERSION = 1.1.6
+VERSION = 1.2.0rc1
 
 .PHONY: help clean clean-pyc clean-build list test test-all coverage docs release sdist upload
 
