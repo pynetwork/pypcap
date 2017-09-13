@@ -5,7 +5,7 @@ env:
     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
     - TOXENV=py27
-    - TOXENV=py35
+    - TOXENV=py34
     - TOXENV=pypy
     - TOXENV=docs
 before_install:
