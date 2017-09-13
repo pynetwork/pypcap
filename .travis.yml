@@ -13,7 +13,6 @@ before_install:
   - sudo apt-get install -qq libpcap-dev
   - python --version
   - python3 --version
-  - pypy --version
   - virtualenv --version
   - pip --version
   - uname -a
