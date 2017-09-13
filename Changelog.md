@@ -1,3 +1,9 @@
+# pypcap 1.2.0-rc.1 [2017-09-13]
+
+Adds:
+
+- Python3 support
+
 # pypcap-1.1.6 [2017-05-02]
 
 - fix for finding libpcap on macOS
