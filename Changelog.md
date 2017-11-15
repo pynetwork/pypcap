@@ -1,3 +1,13 @@
+# pypcap 1.2.0 [2017-11-15]
+
+Added:
+
+- Python3 support
+
+Fixes:
+
+- Bug in iteration of packets (see: https://github.com/pynetwork/pypcap/issues/49)
+
 # pypcap 1.2.0-rc.1 [2017-09-13]
 
 Adds:
