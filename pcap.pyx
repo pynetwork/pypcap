@@ -54,6 +54,8 @@ cdef extern from "pcap.h":
 ctypedef void (*pcap_handler)(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
 
 cdef extern from "pcap.h":
+    pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
+                           int to_ms, char *errbuf)
     pcap_t *pcap_open_offline(char *fname, char *errbuf)
     pcap_t *pcap_create(char *source, char *errbuf)
     int     pcap_set_snaplen(pcap_t *p, int snaplen)
