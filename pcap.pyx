@@ -57,6 +57,13 @@ cdef extern from "pcap.h":
     pcap_t *pcap_open_live(char *device, int snaplen, int promisc,
                            int to_ms, char *errbuf)
     pcap_t *pcap_open_offline(char *fname, char *errbuf)
+    pcap_t *pcap_create(char *source, char *errbuf)
+    int     pcap_set_snaplen(pcap_t *p, int snaplen)
+    int     pcap_set_promisc(pcap_t *p, int promisc)
+    int     pcap_set_timeout(pcap_t *p, int to_ms)
+    int     pcap_set_immediate_mode(pcap_t *p, int immediate_mode)
+    int     pcap_set_rfmon(pcap_t *p, int rfmon)
+    int     pcap_activate(pcap_t *p)
     int     pcap_compile(pcap_t *p, bpf_program *fp, char *str, int optimize,
                          unsigned int netmask)
     int     pcap_setfilter(pcap_t *p, bpf_program *fp)
@@ -191,7 +198,7 @@ cdef class pcap:
     cdef int __dloff
 
     def __init__(self, name=None, snaplen=65535, promisc=True,
-                 timeout_ms=0, immediate=False):
+                 timeout_ms=0, immediate=False, rfmon=False):
         global dltoff
         cdef char *p
 
@@ -205,8 +212,26 @@ cdef class pcap:
 
         self.__pcap = pcap_open_offline(p, self.__ebuf)
         if not self.__pcap:
-            self.__pcap = pcap_open_live(pcap_ex_name(p), snaplen, promisc,
-                                         timeout_ms, self.__ebuf)
+            self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
+            passing = True
+            def check_return(ret, descrip):
+                if ret != 0:
+                    raise OSError, "%s failed to execute" % descrip
+            check_return(pcap_set_snaplen(self.__pcap, snaplen),
+                         "Set snaplength")
+            check_return(pcap_set_promisc(self.__pcap, promisc),
+                         "Set promiscuous mode")
+            check_return(pcap_set_timeout(self.__pcap, timeout_ms),
+                         "Set timeout")
+            check_return(pcap_set_immediate_mode(self.__pcap, immediate),
+                         "Set immediate mode")
+            check_return(pcap_set_rfmon(self.__pcap, rfmon),
+                         "Set monitor mode")
+            if pcap_activate(self.__pcap) != 0:
+                raise OSError, ("Activateing packet capture failed. "
+                                "Error returned by packet capture library "
+                                "was %s" % pcap_geterr(self.__pcap))
+
         if not self.__pcap:
             raise OSError, self.__ebuf
 
@@ -247,6 +272,11 @@ cdef class pcap:
     def fileno(self):
         """Return file descriptor (or Win32 HANDLE) for capture handle."""
         return pcap_ex_fileno(self.__pcap)
+
+    def close(self):
+        """Explicitly close the underlying pcap handle"""
+        pcap_close(self.__pcap)
+        self.__pcap = NULL
 
     def setfilter(self, value, optimize=1):
         """Set BPF-format packet capture filter."""
