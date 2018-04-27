@@ -1,3 +1,9 @@
+# pypcap 1.2.1 [2018-XX-XX]
+
+Added:
+
+- Support create / activate paradigm for pcap objects, and RFMON. See: https://github.com/pynetwork/pypcap/pull/67
+
 # pypcap 1.2.0 [2017-11-15]
 
 Added:
