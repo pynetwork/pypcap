@@ -1,4 +1,4 @@
-# pypcap 1.2.1 [2018-XX-XX]
+# pypcap 1.2.1 [2018-04-28]
 
 Added:
 
