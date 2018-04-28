@@ -6,7 +6,7 @@ import sys
 import re
 
 PACKAGE = "pypcap"
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 
 
 def recursive_search_dirs(dirs, target_files):
