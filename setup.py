@@ -93,6 +93,11 @@ def find_lib_path_and_file(prefix):
 
 
 def find_define_macros(pcap_h):
+    alternative = os.path.join(os.path.dirname(pcap_h), 'pcap', 'pcap.h')
+    if os.path.exists(alternative):
+        # Read pcap/pcap.h as well
+        for macro in find_define_macros(alternative):
+            yield macro
     with open(pcap_h, 'r',
               encoding='utf-8',
               errors='surrogateescape') as fi:
