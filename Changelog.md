@@ -1,3 +1,11 @@
+# pypcap 1.2.2 [2018-05-15]
+
+Fixes:
+
+- Issue with setup.py on Windows 10: https://github.com/pynetwork/pypcap/issues/70
+
+- Issue with setup.py on macOS 10.13.4: https://github.com/pynetwork/pypcap/issues/68
+
 # pypcap 1.2.1 [2018-04-28]
 
 Added:
