@@ -1654,7 +1654,7 @@ static const char __pyx_k_size[] = "size";
 static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
-static const char __pyx_k_1_2_1[] = "1.2.1";
+static const char __pyx_k_1_2_2[] = "1.2.2";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_UTF_8[] = "UTF-8";
 static const char __pyx_k_class[] = "__class__";
@@ -1792,7 +1792,7 @@ static const char __pyx_k_packet_capture_library_This_modu[] = "packet capture l
 static const char __pyx_k_self_args_self_callback_cannot_b[] = "self.args,self.callback cannot be converted to a Python object for pickling";
 static const char __pyx_k_self_fcode_cannot_be_converted_t[] = "self.fcode cannot be converted to a Python object for pickling";
 static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
-static PyObject *__pyx_kp_s_1_2_1;
+static PyObject *__pyx_kp_s_1_2_2;
 static PyObject *__pyx_n_s_ASCII;
 static PyObject *__pyx_kp_s_Activateing_packet_capture_faile;
 static PyObject *__pyx_kp_s_BSD_license;
@@ -21252,7 +21252,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_s_1_2_1, __pyx_k_1_2_1, sizeof(__pyx_k_1_2_1), 0, 0, 1, 0},
+  {&__pyx_kp_s_1_2_2, __pyx_k_1_2_2, sizeof(__pyx_k_1_2_2), 0, 0, 1, 0},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},
   {&__pyx_kp_s_Activateing_packet_capture_faile, __pyx_k_Activateing_packet_capture_faile, sizeof(__pyx_k_Activateing_packet_capture_faile), 0, 0, 1, 0},
   {&__pyx_kp_s_BSD_license, __pyx_k_BSD_license, sizeof(__pyx_k_BSD_license), 0, 0, 1, 0},
@@ -22008,7 +22008,7 @@ PyMODINIT_FUNC PyInit_pcap(void)
  * __copyright__ = 'Copyright (c) 2004 Dug Song'
  * __license__ = 'BSD license'             # <<<<<<<<<<<<<<
  * __url__ = 'https://github.com/pynetwork/pypcap'
- * __version__ = '1.2.1'
+ * __version__ = '1.2.2'
  */
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_license, __pyx_kp_s_BSD_license) < 0) __PYX_ERR(1, 15, __pyx_L1_error)
 
@@ -22016,7 +22016,7 @@ PyMODINIT_FUNC PyInit_pcap(void)
  * __copyright__ = 'Copyright (c) 2004 Dug Song'
  * __license__ = 'BSD license'
  * __url__ = 'https://github.com/pynetwork/pypcap'             # <<<<<<<<<<<<<<
- * __version__ = '1.2.1'
+ * __version__ = '1.2.2'
  * 
  */
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_url, __pyx_kp_s_https_github_com_pynetwork_pypca) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
@@ -22024,14 +22024,14 @@ PyMODINIT_FUNC PyInit_pcap(void)
   /* "pcap.pyx":17
  * __license__ = 'BSD license'
  * __url__ = 'https://github.com/pynetwork/pypcap'
- * __version__ = '1.2.1'             # <<<<<<<<<<<<<<
+ * __version__ = '1.2.2'             # <<<<<<<<<<<<<<
  * 
  * import sys
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_1_2_1) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_1_2_2) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
 
   /* "pcap.pyx":19
- * __version__ = '1.2.1'
+ * __version__ = '1.2.2'
  * 
  * import sys             # <<<<<<<<<<<<<<
  * import struct
