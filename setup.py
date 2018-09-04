@@ -33,6 +33,7 @@ def find_prefix_and_pcap_h():
         glob.glob('../libpcap*'),
         glob.glob('../wpdpack*'),
         glob.glob('/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*'),
+        glob.glob('/Library/Developer/CommandLineTools/SDKs/*'),
     ))
 
     # Find 'pcap.h'
