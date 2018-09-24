@@ -115,6 +115,42 @@ def test_pcap_overwritten():
         assert len(set(p[:] for p in packets_b)) > 1
 
 
+class loop_ctx():
+    def __init__(self, orig_data):
+        self.cnt = 0
+        self.orig_data = orig_data
+        self.exception = None
+
+    def loop_cb(self, timestamp, data):
+        try:
+            assert(data == self.orig_data[self.cnt])
+            self.cnt += 1
+        except AssertionError as e:
+            self.exception = e
+
+def test_pcap_loop_overwritten():
+    pkts_a = [x[1] for x in pcap.pcap(relative_file('test.pcap'))]
+    pkts_b = [x[1] for x in pcap.pcap(relative_file('arp.pcap'))]
+
+    for rep in range(100):
+        loop_pkts_a = []
+        loop_pkts_b = []
+        pcap_a = pcap.pcap(relative_file('test.pcap'))
+        pcap_b = pcap.pcap(relative_file('arp.pcap'))
+        loop_ctx_a = loop_ctx(pkts_a)
+        loop_ctx_b = loop_ctx(pkts_b)
+        thread_a = Thread(target=pcap_a.loop, args=(0, loop_ctx_a.loop_cb))
+        thread_b = Thread(target=pcap_b.loop, args=(0, loop_ctx_b.loop_cb))
+        thread_a.start()
+        thread_b.start()
+        thread_a.join()
+        thread_b.join()
+        if loop_ctx_a.exception:
+            raise loop_ctx_a.exception
+        if loop_ctx_b.exception:
+            raise loop_ctx_b.exception
+
+
 def test_unicode():
     path = relative_file('test.pcap')
     p = pcap.pcap(path)
@@ -141,4 +177,5 @@ if __name__ == '__main__':
     test_pcap_dispatch()
     test_pcap_readpkts()
     test_pcap_overwritten()
+    test_pcap_loop_overwritten()
     test_unicode()
