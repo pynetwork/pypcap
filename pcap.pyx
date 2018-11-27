@@ -108,6 +108,8 @@ cdef extern from "pcap_ex.h":
 cdef class pcap_handler_ctx:
     cdef:
         double scale
+        long long scale_ns
+        bint timestamp_in_ns
         void *callback
         void *args
         object exc
@@ -121,11 +123,18 @@ cdef object get_buffer(const u_char *pkt, u_int len):
 cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt) with gil:
     cdef pcap_handler_ctx ctx = <pcap_handler_ctx><void*>arg
     try:
-        (<object>ctx.callback)(
-            hdr.ts.tv_sec + (hdr.ts.tv_usec * ctx.scale),
-            get_buffer(pkt, hdr.caplen),
-            *(<object>ctx.args)
-        )
+        if ctx.timestamp_in_ns:
+            (<object>ctx.callback)(
+                (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * ctx.scale_ns),
+                get_buffer(pkt, hdr.caplen),
+                *(<object>ctx.args)
+            )
+        else:
+            (<object>ctx.callback)(
+                hdr.ts.tv_sec + (hdr.ts.tv_usec * ctx.scale),
+                get_buffer(pkt, hdr.caplen),
+                *(<object>ctx.args)
+            )
     except:
         ctx.exc = sys.exc_info()
 
@@ -200,6 +209,7 @@ cdef class pcap:
                   (Default: no timeout)
     immediate -- disable buffering, if possible
     precision -- select micro-second or nano-second precision
+    timestamp_in_ns -- report timestamps in nanoseconds
     """
     cdef pcap_t *__pcap
     cdef char *__name
@@ -207,10 +217,13 @@ cdef class pcap:
     cdef char __ebuf[256]
     cdef int __dloff
     cdef double __precision_scale
+    cdef long long __precision_scale_ns
+    cdef bint __timestamp_in_ns
 
     def __init__(self, name=None, snaplen=65535, promisc=True,
                  timeout_ms=0, immediate=False, rfmon=False,
-                 precision=PCAP_TSTAMP_PRECISION_MICRO):
+                 precision=PCAP_TSTAMP_PRECISION_MICRO,
+                 timestamp_in_ns=False):
         global dltoff
         cdef char *p
 
@@ -251,11 +264,14 @@ cdef class pcap:
 
         self.__name = strdup(p)
         self.__filter = strdup("")
+        self.__timestamp_in_ns = timestamp_in_ns
         precision = pcap_ex_get_tstamp_precision(self.__pcap)
         if precision == PCAP_TSTAMP_PRECISION_MICRO:
             self.__precision_scale = 1e-6
+            self.__precision_scale_ns = 1000
         elif precision == PCAP_TSTAMP_PRECISION_NANO:
             self.__precision_scale = 1e-9
+            self.__precision_scale_ns = 1
         else:
             raise OSError, "couldn't determine timestamp precision"
         try:
@@ -294,6 +310,11 @@ cdef class pcap:
         """Precision of timestamps"""
         def __get__(self):
             return pcap_ex_get_tstamp_precision(self.__pcap)
+
+    property timestamp_in_ns:
+        """Whether timestamps are returned in nanosecond units"""
+        def __get__(self):
+            return self.__timestamp_in_ns
 
     def fileno(self):
         """Return file descriptor (or Win32 HANDLE) for capture handle."""
@@ -361,6 +382,8 @@ cdef class pcap:
         cdef int n
 
         ctx.scale = self.__precision_scale
+        ctx.scale_ns = self.__precision_scale_ns
+        ctx.timestamp_in_ns = self.__timestamp_in_ns
         ctx.callback = <void *>callback
         ctx.args = <void *>args
         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
@@ -386,16 +409,25 @@ cdef class pcap:
         cdef int n
         cdef int i = 1
         cdef double scale = self.__precision_scale
+        cdef long long scale_ns = self.__precision_scale_ns
+        cdef bint timestamp_in_ns = self.__timestamp_in_ns
         pcap_ex_setup(self.__pcap)
         while 1:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                callback(
-                    hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
-                    get_buffer(pkt, hdr.caplen),
-                    *args
-                )
+                if timestamp_in_ns:
+                    callback(
+                        (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),
+                        get_buffer(pkt, hdr.caplen),
+                        *args
+                    )
+                else:
+                    callback(
+                        hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
+                        get_buffer(pkt, hdr.caplen),
+                        *args
+                    )
             elif n == 0:
                 continue
             elif n == -1:
@@ -434,14 +466,20 @@ cdef class pcap:
         cdef u_char *pkt
         cdef int n
         cdef double scale = self.__precision_scale
+        cdef long long scale_ns = self.__precision_scale_ns
+        cdef bint timestamp_in_ns = self.__timestamp_in_ns
+        cdef double timestamp
+        cdef long long timestamp_ns
         while 1:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
-                return (
-                    hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
-                    get_buffer(pkt, hdr.caplen),
-                )
+                if timestamp_in_ns:
+                    timestamp_ns = (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns)
+                    return (timestamp_ns, get_buffer(pkt, hdr.caplen))
+                else:
+                    timestamp = hdr.ts.tv_sec + (hdr.ts.tv_usec * scale)
+                    return (timestamp, get_buffer(pkt, hdr.caplen))
             elif n == 0:
                 continue
             elif n == -1:
