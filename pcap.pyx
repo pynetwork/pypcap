@@ -99,9 +99,15 @@ cdef extern from "pcap_ex.h":
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
                                    int optimize, unsigned int netmask)
+    int     pcap_ex_get_tstamp_precision(pcap_t *p)
+    int     pcap_ex_set_tstamp_precision(pcap_t *p, int tstamp_precision)
+    pcap_t *pcap_ex_open_offline_with_tstamp_precision(char *fname,
+                                                       unsigned int precision,
+                                                       char *errbuf)
 
 cdef class pcap_handler_ctx:
     cdef:
+        double scale
         void *callback
         void *args
         object exc
@@ -116,7 +122,7 @@ cdef void __pcap_handler(u_char *arg, const pcap_pkthdr *hdr, const u_char *pkt)
     cdef pcap_handler_ctx ctx = <pcap_handler_ctx><void*>arg
     try:
         (<object>ctx.callback)(
-            hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+            hdr.ts.tv_sec + (hdr.ts.tv_usec * ctx.scale),
             get_buffer(pkt, hdr.caplen),
             *(<object>ctx.args)
         )
@@ -150,6 +156,9 @@ PCAP_D_INOUT = 0
 PCAP_D_IN = 1
 PCAP_D_OUT = 2
 
+PCAP_TSTAMP_PRECISION_MICRO = 0
+PCAP_TSTAMP_PRECISION_NANO = 1
+
 dltoff = { DLT_NULL:4, DLT_EN10MB:14, DLT_IEEE802:22, DLT_ARCNET:6,
           DLT_SLIP:16, DLT_PPP:4, DLT_FDDI:21, DLT_PFLOG:48, DLT_PFSYNC:4,
           DLT_LOOP:4, DLT_RAW:0, DLT_LINUX_SLL:16 }
@@ -177,7 +186,7 @@ cdef class bpf:
 
 
 cdef class pcap:
-    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False)  -> packet capture object
+    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, precision=PCAP_TSTAMP_PRECISION_MICRO)  -> packet capture object
 
     Open a handle to a packet capture descriptor.
 
@@ -190,15 +199,18 @@ cdef class pcap:
                   (in milliseconds) is reached and no packets were received
                   (Default: no timeout)
     immediate -- disable buffering, if possible
+    precision -- select micro-second or nano-second precision
     """
     cdef pcap_t *__pcap
     cdef char *__name
     cdef char *__filter
     cdef char __ebuf[256]
     cdef int __dloff
+    cdef double __precision_scale
 
     def __init__(self, name=None, snaplen=65535, promisc=True,
-                 timeout_ms=0, immediate=False, rfmon=False):
+                 timeout_ms=0, immediate=False, rfmon=False,
+                 precision=PCAP_TSTAMP_PRECISION_MICRO):
         global dltoff
         cdef char *p
 
@@ -210,7 +222,7 @@ cdef class pcap:
             py_byte_name = name.encode('UTF-8')
             p = py_byte_name
 
-        self.__pcap = pcap_open_offline(p, self.__ebuf)
+        self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
             passing = True
@@ -227,6 +239,8 @@ cdef class pcap:
                          "Set immediate mode")
             check_return(pcap_set_rfmon(self.__pcap, rfmon),
                          "Set monitor mode")
+            check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),
+                         "Set timestamp precision")
             if pcap_activate(self.__pcap) != 0:
                 raise OSError, ("Activateing packet capture failed. "
                                 "Error returned by packet capture library "
@@ -237,6 +251,13 @@ cdef class pcap:
 
         self.__name = strdup(p)
         self.__filter = strdup("")
+        precision = pcap_ex_get_tstamp_precision(self.__pcap)
+        if precision == PCAP_TSTAMP_PRECISION_MICRO:
+            self.__precision_scale = 1e-6
+        elif precision == PCAP_TSTAMP_PRECISION_NANO:
+            self.__precision_scale = 1e-9
+        else:
+            raise OSError, "couldn't determine timestamp precision"
         try:
             self.__dloff = dltoff[pcap_datalink(self.__pcap)]
         except KeyError:
@@ -268,6 +289,11 @@ cdef class pcap:
         """File descriptor (or Win32 HANDLE) for capture handle."""
         def __get__(self):
             return pcap_ex_fileno(self.__pcap)
+
+    property precision:
+        """Precision of timestamps"""
+        def __get__(self):
+            return pcap_ex_get_tstamp_precision(self.__pcap)
 
     def fileno(self):
         """Return file descriptor (or Win32 HANDLE) for capture handle."""
@@ -334,6 +360,7 @@ cdef class pcap:
         cdef pcap_handler_ctx ctx = pcap_handler_ctx()
         cdef int n
 
+        ctx.scale = self.__precision_scale
         ctx.callback = <void *>callback
         ctx.args = <void *>args
         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
@@ -358,13 +385,14 @@ cdef class pcap:
         cdef u_char *pkt
         cdef int n
         cdef int i = 1
+        cdef double scale = self.__precision_scale
         pcap_ex_setup(self.__pcap)
         while 1:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
                 callback(
-                    hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                    hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
                     get_buffer(pkt, hdr.caplen),
                     *args
                 )
@@ -405,12 +433,13 @@ cdef class pcap:
         cdef pcap_pkthdr *hdr
         cdef u_char *pkt
         cdef int n
+        cdef double scale = self.__precision_scale
         while 1:
             with nogil:
                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
             if n == 1:
                 return (
-                    hdr.ts.tv_sec + (hdr.ts.tv_usec / 1000000.0),
+                    hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
                     get_buffer(pkt, hdr.caplen),
                 )
             elif n == 0:

@@ -8,12 +8,13 @@ import pcap
 
 
 def usage():
-    sys.stderr.write('Usage: %s [-i device] [-l] [pattern]' % sys.argv[0])
+    sys.stderr.write('Usage: %s [-i device] [-l] [-n] [pattern]' % sys.argv[0])
     sys.stderr.write("""
 Options:
 
 \t-i device - Use the specific device.
 \t-l - Use pcap.loop() method.
+\t-n - Use nanosecond precision.
 
 Available devices:""")
     sys.stderr.write('\t' + '\n\t'.join(pcap.findalldevs()))
@@ -22,30 +23,33 @@ Available devices:""")
 
 def iter(pc, decode_fn):
     for ts, pkt in pc:
-        msg = '%d %r' % (ts, decode_fn(pkt))
+        msg = '%.9f %r' % (ts, decode_fn(pkt))
         print(msg)
 
 
 def loop(pc, decode_fn):
     def cb(ts, pkt, *args):
-        msg = '%d %r' % (ts, decode_fn(pkt))
+        msg = '%.9f %r' % (ts, decode_fn(pkt))
         print(msg)
     pc.loop(0, cb)
 
 
 def main():
-    opts, args = getopt.getopt(sys.argv[1:], 'i:hl')
+    opts, args = getopt.getopt(sys.argv[1:], 'i:hln')
     name = None
     use_loop = False
+    precision = pcap.PCAP_TSTAMP_PRECISION_MICRO
     for o, a in opts:
         if o == '-i':
             name = a
         elif o == '-l':
             use_loop = True
+        elif o == '-n':
+            precision = pcap.PCAP_TSTAMP_PRECISION_NANO
         else:
             usage()
 
-    pc = pcap.pcap(name, timeout_ms=50)
+    pc = pcap.pcap(name, timeout_ms=50, precision=precision)
     pc.setfilter(' '.join(args))
     decode = {
         pcap.DLT_LOOP: dpkt.loopback.Loopback,

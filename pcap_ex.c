@@ -16,6 +16,12 @@
 #include <pcap.h>
 #include "pcap_ex.h"
 
+#ifndef HAVE_PCAP_TSTAMP_PRECISION
+# define PCAP_TSTAMP_PRECISION_MICRO 0
+# define PCAP_TSTAMP_PRECISION_NANO 1
+# define PCAP_ERROR_TSTAMP_PRECISION_NOTSUP -12
+#endif
+
 /* XXX - hack around older Python versions */
 #include "patchlevel.h"
 #if PY_VERSION_HEX < 0x02030000
@@ -200,6 +206,38 @@ pcap_ex_getnonblock(pcap_t *pcap, char *ebuf)
 	return (pcap_getnonblock(pcap, ebuf));
 #else
 	return (0);
+#endif
+}
+
+int
+pcap_ex_get_tstamp_precision(pcap_t *pcap)
+{
+#ifdef HAVE_PCAP_TSTAMP_PRECISION
+	return (pcap_get_tstamp_precision(pcap));
+#else
+	return (PCAP_TSTAMP_PRECISION_MICRO);
+#endif
+}
+
+int pcap_ex_set_tstamp_precision(pcap_t *pcap, int tstamp_precision)
+{
+#ifdef HAVE_PCAP_TSTAMP_PRECISION
+	return (pcap_set_tstamp_precision(pcap, tstamp_precision));
+#else
+	if (tstamp_precision == PCAP_TSTAMP_PRECISION_MICRO)
+		return (0);
+	else
+		return PCAP_ERROR_TSTAMP_PRECISION_NOTSUP;
+#endif
+}
+
+pcap_t *pcap_ex_open_offline_with_tstamp_precision(char *fname,
+          unsigned int precision, char *errbuf)
+{
+#ifdef HAVE_PCAP_TSTAMP_PRECISION
+	return (pcap_open_offline_with_tstamp_precision(fname, precision, errbuf));
+#else
+	return (pcap_open_offline(fname, errbuf));
 #endif
 }
 

@@ -115,6 +115,9 @@ def find_define_macros(pcap_h):
             elif 'pcap_setdirection(' in line:
                 print("found pcap_setdirection")
                 yield ('HAVE_PCAP_SETDIRECTION', 1)
+            elif 'pcap_get_tstamp_precision(' in line:
+                print("found pcap_get_tstamp_precision function")
+                yield ('HAVE_PCAP_TSTAMP_PRECISION', 1)
 
 
 def get_extension():
