@@ -195,7 +195,7 @@ cdef class bpf:
 
 
 cdef class pcap:
-    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, precision=PCAP_TSTAMP_PRECISION_MICRO)  -> packet capture object
+    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, timestamp_in_ns=False)  -> packet capture object
 
     Open a handle to a packet capture descriptor.
 
@@ -208,8 +208,7 @@ cdef class pcap:
                   (in milliseconds) is reached and no packets were received
                   (Default: no timeout)
     immediate -- disable buffering, if possible
-    precision -- select micro-second or nano-second precision
-    timestamp_in_ns -- report timestamps in nanoseconds
+    timestamp_in_ns -- report timestamps in integer nanoseconds
     """
     cdef pcap_t *__pcap
     cdef char *__name
@@ -222,7 +221,6 @@ cdef class pcap:
 
     def __init__(self, name=None, snaplen=65535, promisc=True,
                  timeout_ms=0, immediate=False, rfmon=False,
-                 precision=PCAP_TSTAMP_PRECISION_MICRO,
                  timestamp_in_ns=False):
         global dltoff
         cdef char *p
@@ -235,7 +233,8 @@ cdef class pcap:
             py_byte_name = name.encode('UTF-8')
             p = py_byte_name
 
-        self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
+        self.__pcap = pcap_ex_open_offline_with_tstamp_precision(
+            p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)
         if not self.__pcap:
             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
             passing = True
@@ -252,8 +251,8 @@ cdef class pcap:
                          "Set immediate mode")
             check_return(pcap_set_rfmon(self.__pcap, rfmon),
                          "Set monitor mode")
-            check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),
-                         "Set timestamp precision")
+            # Ask for nano-second precision, but don't fail if not available.
+            pcap_ex_set_tstamp_precision(self.__pcap, PCAP_TSTAMP_PRECISION_NANO)
             if pcap_activate(self.__pcap) != 0:
                 raise OSError, ("Activateing packet capture failed. "
                                 "Error returned by packet capture library "

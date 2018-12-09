@@ -1005,7 +1005,7 @@ struct __pyx_obj_4pcap_bpf {
  * 
  * 
  * cdef class pcap:             # <<<<<<<<<<<<<<
- *     """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, precision=PCAP_TSTAMP_PRECISION_MICRO)  -> packet capture object
+ *     """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, timestamp_in_ns=False)  -> packet capture object
  * 
  */
 struct __pyx_obj_4pcap_pcap {
@@ -1977,7 +1977,6 @@ static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_immediate[] = "immediate";
 static const char __pyx_k_lookupdev[] = "lookupdev";
 static const char __pyx_k_lookupnet[] = "lookupnet";
-static const char __pyx_k_precision[] = "precision";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_DLT_ARCNET[] = "DLT_ARCNET";
@@ -2025,7 +2024,6 @@ static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
-static const char __pyx_k_Set_timestamp_precision[] = "Set timestamp precision";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '%s'";
 static const char __pyx_k_Copyright_c_2004_Dug_Song[] = "Copyright (c) 2004 Dug Song";
@@ -2113,7 +2111,6 @@ static PyObject *__pyx_kp_s_Set_monitor_mode;
 static PyObject *__pyx_kp_s_Set_promiscuous_mode;
 static PyObject *__pyx_kp_s_Set_snaplength;
 static PyObject *__pyx_kp_s_Set_timeout;
-static PyObject *__pyx_kp_s_Set_timestamp_precision;
 static PyObject *__pyx_n_s_StopIteration;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_UTF_8;
@@ -2197,7 +2194,6 @@ static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_pkt;
 static PyObject *__pyx_n_s_pkts;
 static PyObject *__pyx_n_s_platform;
-static PyObject *__pyx_n_s_precision;
 static PyObject *__pyx_n_s_promisc;
 static PyObject *__pyx_n_s_pyx_PickleError;
 static PyObject *__pyx_n_s_pyx_checksum;
@@ -2252,7 +2248,7 @@ static void __pyx_pf_4pcap_3bpf_4__dealloc__(struct __pyx_obj_4pcap_bpf *__pyx_v
 static PyObject *__pyx_pf_4pcap_3bpf_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_4pcap_bpf *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pcap_3bpf_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_4pcap_bpf *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_4pcap_4pcap_8__init___check_return(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ret, PyObject *__pyx_v_descrip); /* proto */
-static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_snaplen, PyObject *__pyx_v_promisc, PyObject *__pyx_v_timeout_ms, PyObject *__pyx_v_immediate, PyObject *__pyx_v_rfmon, PyObject *__pyx_v_precision, PyObject *__pyx_v_timestamp_in_ns); /* proto */
+static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_snaplen, PyObject *__pyx_v_promisc, PyObject *__pyx_v_timeout_ms, PyObject *__pyx_v_immediate, PyObject *__pyx_v_rfmon, PyObject *__pyx_v_timestamp_in_ns); /* proto */
 static PyObject *__pyx_pf_4pcap_4pcap_4name___get__(struct __pyx_obj_4pcap_pcap *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pcap_4pcap_7snaplen___get__(struct __pyx_obj_4pcap_pcap *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pcap_4pcap_5dloff___get__(struct __pyx_obj_4pcap_pcap *__pyx_v_self); /* proto */
@@ -2357,14 +2353,14 @@ static PyObject *__pyx_int_65535;
 static PyObject *__pyx_int_184977713;
 static PyObject *__pyx_int_neg_1;
 static PyObject *__pyx_k__3;
-static PyObject *__pyx_k__6;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
-static PyObject *__pyx_tuple__7;
+static PyObject *__pyx_tuple__6;
+static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_slice__25;
+static PyObject *__pyx_slice__24;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
@@ -2379,27 +2375,26 @@ static PyObject *__pyx_tuple__20;
 static PyObject *__pyx_tuple__21;
 static PyObject *__pyx_tuple__22;
 static PyObject *__pyx_tuple__23;
-static PyObject *__pyx_tuple__24;
+static PyObject *__pyx_tuple__25;
 static PyObject *__pyx_tuple__26;
 static PyObject *__pyx_tuple__27;
 static PyObject *__pyx_tuple__28;
 static PyObject *__pyx_tuple__29;
-static PyObject *__pyx_tuple__30;
-static PyObject *__pyx_tuple__32;
-static PyObject *__pyx_tuple__34;
-static PyObject *__pyx_tuple__36;
+static PyObject *__pyx_tuple__31;
+static PyObject *__pyx_tuple__33;
+static PyObject *__pyx_tuple__35;
+static PyObject *__pyx_tuple__37;
 static PyObject *__pyx_tuple__38;
 static PyObject *__pyx_tuple__39;
 static PyObject *__pyx_tuple__40;
 static PyObject *__pyx_tuple__41;
 static PyObject *__pyx_tuple__42;
-static PyObject *__pyx_tuple__43;
-static PyObject *__pyx_codeobj__8;
-static PyObject *__pyx_codeobj__31;
-static PyObject *__pyx_codeobj__33;
-static PyObject *__pyx_codeobj__35;
-static PyObject *__pyx_codeobj__37;
-static PyObject *__pyx_codeobj__44;
+static PyObject *__pyx_codeobj__7;
+static PyObject *__pyx_codeobj__30;
+static PyObject *__pyx_codeobj__32;
+static PyObject *__pyx_codeobj__34;
+static PyObject *__pyx_codeobj__36;
+static PyObject *__pyx_codeobj__43;
 /* Late includes */
 
 /* "(tree fragment)":1
@@ -3266,12 +3261,12 @@ static PyObject *__pyx_pf_4pcap_3bpf_8__setstate_cython__(CYTHON_UNUSED struct _
   return __pyx_r;
 }
 
-/* "pcap.pyx":223
+/* "pcap.pyx":222
  *     cdef bint __timestamp_in_ns
  * 
  *     def __init__(self, name=None, snaplen=65535, promisc=True,             # <<<<<<<<<<<<<<
  *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
+ *                  timestamp_in_ns=False):
  */
 
 /* Python wrapper */
@@ -3283,44 +3278,40 @@ static int __pyx_pw_4pcap_4pcap_1__init__(PyObject *__pyx_v_self, PyObject *__py
   PyObject *__pyx_v_timeout_ms = 0;
   PyObject *__pyx_v_immediate = 0;
   PyObject *__pyx_v_rfmon = 0;
-  PyObject *__pyx_v_precision = 0;
   PyObject *__pyx_v_timestamp_in_ns = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_name,&__pyx_n_s_snaplen,&__pyx_n_s_promisc,&__pyx_n_s_timeout_ms,&__pyx_n_s_immediate,&__pyx_n_s_rfmon,&__pyx_n_s_precision,&__pyx_n_s_timestamp_in_ns,0};
-    PyObject* values[8] = {0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_name,&__pyx_n_s_snaplen,&__pyx_n_s_promisc,&__pyx_n_s_timeout_ms,&__pyx_n_s_immediate,&__pyx_n_s_rfmon,&__pyx_n_s_timestamp_in_ns,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     values[0] = ((PyObject *)Py_None);
     values[1] = ((PyObject *)__pyx_int_65535);
     values[2] = ((PyObject *)Py_True);
     values[3] = ((PyObject *)__pyx_int_0);
 
-    /* "pcap.pyx":224
+    /* "pcap.pyx":223
  * 
  *     def __init__(self, name=None, snaplen=65535, promisc=True,
  *                  timeout_ms=0, immediate=False, rfmon=False,             # <<<<<<<<<<<<<<
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
  *                  timestamp_in_ns=False):
+ *         global dltoff
  */
     values[4] = ((PyObject *)Py_False);
     values[5] = ((PyObject *)Py_False);
-    values[6] = __pyx_k__6;
 
-    /* "pcap.pyx":226
+    /* "pcap.pyx":224
+ *     def __init__(self, name=None, snaplen=65535, promisc=True,
  *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
  *                  timestamp_in_ns=False):             # <<<<<<<<<<<<<<
  *         global dltoff
  *         cdef char *p
  */
-    values[7] = ((PyObject *)Py_False);
+    values[6] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
-        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
-        CYTHON_FALLTHROUGH;
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
@@ -3378,23 +3369,15 @@ static int __pyx_pw_4pcap_4pcap_1__init__(PyObject *__pyx_v_self, PyObject *__py
         CYTHON_FALLTHROUGH;
         case  6:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_precision);
-          if (value) { values[6] = value; kw_args--; }
-        }
-        CYTHON_FALLTHROUGH;
-        case  7:
-        if (kw_args > 0) {
           PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_timestamp_in_ns);
-          if (value) { values[7] = value; kw_args--; }
+          if (value) { values[6] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 223, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 222, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
-        CYTHON_FALLTHROUGH;
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
@@ -3419,25 +3402,24 @@ static int __pyx_pw_4pcap_4pcap_1__init__(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_timeout_ms = values[3];
     __pyx_v_immediate = values[4];
     __pyx_v_rfmon = values[5];
-    __pyx_v_precision = values[6];
-    __pyx_v_timestamp_in_ns = values[7];
+    __pyx_v_timestamp_in_ns = values[6];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 223, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 222, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pcap.pcap.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_4pcap_4pcap___init__(((struct __pyx_obj_4pcap_pcap *)__pyx_v_self), __pyx_v_name, __pyx_v_snaplen, __pyx_v_promisc, __pyx_v_timeout_ms, __pyx_v_immediate, __pyx_v_rfmon, __pyx_v_precision, __pyx_v_timestamp_in_ns);
+  __pyx_r = __pyx_pf_4pcap_4pcap___init__(((struct __pyx_obj_4pcap_pcap *)__pyx_v_self), __pyx_v_name, __pyx_v_snaplen, __pyx_v_promisc, __pyx_v_timeout_ms, __pyx_v_immediate, __pyx_v_rfmon, __pyx_v_timestamp_in_ns);
 
-  /* "pcap.pyx":223
+  /* "pcap.pyx":222
  *     cdef bint __timestamp_in_ns
  * 
  *     def __init__(self, name=None, snaplen=65535, promisc=True,             # <<<<<<<<<<<<<<
  *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
+ *                  timestamp_in_ns=False):
  */
 
   /* function exit code */
@@ -3445,7 +3427,7 @@ static int __pyx_pw_4pcap_4pcap_1__init__(PyObject *__pyx_v_self, PyObject *__py
   return __pyx_r;
 }
 
-/* "pcap.pyx":242
+/* "pcap.pyx":241
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
  *             def check_return(ret, descrip):             # <<<<<<<<<<<<<<
@@ -3485,11 +3467,11 @@ static PyObject *__pyx_pw_4pcap_4pcap_8__init___1check_return(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_descrip)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("check_return", 1, 2, 2, 1); __PYX_ERR(1, 242, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("check_return", 1, 2, 2, 1); __PYX_ERR(1, 241, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "check_return") < 0)) __PYX_ERR(1, 242, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "check_return") < 0)) __PYX_ERR(1, 241, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3502,7 +3484,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_8__init___1check_return(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("check_return", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 242, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("check_return", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 241, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pcap.pcap.__init__.check_return", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3522,33 +3504,33 @@ static PyObject *__pyx_pf_4pcap_4pcap_8__init___check_return(CYTHON_UNUSED PyObj
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("check_return", 0);
 
-  /* "pcap.pyx":243
+  /* "pcap.pyx":242
  *             passing = True
  *             def check_return(ret, descrip):
  *                 if ret != 0:             # <<<<<<<<<<<<<<
  *                     raise OSError, "%s failed to execute" % descrip
  *             check_return(pcap_set_snaplen(self.__pcap, snaplen),
  */
-  __pyx_t_1 = __Pyx_PyInt_NeObjC(__pyx_v_ret, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 243, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_NeObjC(__pyx_v_ret, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 243, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 242, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (unlikely(__pyx_t_2)) {
 
-    /* "pcap.pyx":244
+    /* "pcap.pyx":243
  *             def check_return(ret, descrip):
  *                 if ret != 0:
  *                     raise OSError, "%s failed to execute" % descrip             # <<<<<<<<<<<<<<
  *             check_return(pcap_set_snaplen(self.__pcap, snaplen),
  *                          "Set snaplength")
  */
-    __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s_failed_to_execute, __pyx_v_descrip); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 244, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s_failed_to_execute, __pyx_v_descrip); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 243, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_1, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(1, 244, __pyx_L1_error)
+    __PYX_ERR(1, 243, __pyx_L1_error)
 
-    /* "pcap.pyx":243
+    /* "pcap.pyx":242
  *             passing = True
  *             def check_return(ret, descrip):
  *                 if ret != 0:             # <<<<<<<<<<<<<<
@@ -3557,7 +3539,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_8__init___check_return(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "pcap.pyx":242
+  /* "pcap.pyx":241
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
  *             def check_return(ret, descrip):             # <<<<<<<<<<<<<<
@@ -3578,19 +3560,20 @@ static PyObject *__pyx_pf_4pcap_4pcap_8__init___check_return(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "pcap.pyx":223
+/* "pcap.pyx":222
  *     cdef bint __timestamp_in_ns
  * 
  *     def __init__(self, name=None, snaplen=65535, promisc=True,             # <<<<<<<<<<<<<<
  *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
+ *                  timestamp_in_ns=False):
  */
 
-static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_snaplen, PyObject *__pyx_v_promisc, PyObject *__pyx_v_timeout_ms, PyObject *__pyx_v_immediate, PyObject *__pyx_v_rfmon, PyObject *__pyx_v_precision, PyObject *__pyx_v_timestamp_in_ns) {
+static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_snaplen, PyObject *__pyx_v_promisc, PyObject *__pyx_v_timeout_ms, PyObject *__pyx_v_immediate, PyObject *__pyx_v_rfmon, PyObject *__pyx_v_timestamp_in_ns) {
   char *__pyx_v_p;
   PyObject *__pyx_v_py_byte_name = NULL;
   CYTHON_UNUSED int __pyx_v_passing;
   PyObject *__pyx_v_check_return = 0;
+  int __pyx_v_precision;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -3605,20 +3588,19 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_INCREF(__pyx_v_precision);
 
-  /* "pcap.pyx":230
+  /* "pcap.pyx":228
  *         cdef char *p
  * 
  *         if not name:             # <<<<<<<<<<<<<<
  *             p = pcap_ex_lookupdev(self.__ebuf)
  *             if p == NULL:
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_name); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 230, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_name); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 228, __pyx_L1_error)
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "pcap.pyx":231
+    /* "pcap.pyx":229
  * 
  *         if not name:
  *             p = pcap_ex_lookupdev(self.__ebuf)             # <<<<<<<<<<<<<<
@@ -3627,7 +3609,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_p = pcap_ex_lookupdev(__pyx_v_self->__pyx___ebuf);
 
-    /* "pcap.pyx":232
+    /* "pcap.pyx":230
  *         if not name:
  *             p = pcap_ex_lookupdev(self.__ebuf)
  *             if p == NULL:             # <<<<<<<<<<<<<<
@@ -3637,20 +3619,20 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     __pyx_t_2 = ((__pyx_v_p == NULL) != 0);
     if (unlikely(__pyx_t_2)) {
 
-      /* "pcap.pyx":233
+      /* "pcap.pyx":231
  *             p = pcap_ex_lookupdev(self.__ebuf)
  *             if p == NULL:
  *                 raise OSError, self.__ebuf             # <<<<<<<<<<<<<<
  *         else:
  *             py_byte_name = name.encode('UTF-8')
  */
-      __pyx_t_3 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 233, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 231, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_3, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __PYX_ERR(1, 233, __pyx_L1_error)
+      __PYX_ERR(1, 231, __pyx_L1_error)
 
-      /* "pcap.pyx":232
+      /* "pcap.pyx":230
  *         if not name:
  *             p = pcap_ex_lookupdev(self.__ebuf)
  *             if p == NULL:             # <<<<<<<<<<<<<<
@@ -3659,7 +3641,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     }
 
-    /* "pcap.pyx":230
+    /* "pcap.pyx":228
  *         cdef char *p
  * 
  *         if not name:             # <<<<<<<<<<<<<<
@@ -3669,7 +3651,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     goto __pyx_L3;
   }
 
-  /* "pcap.pyx":235
+  /* "pcap.pyx":233
  *                 raise OSError, self.__ebuf
  *         else:
  *             py_byte_name = name.encode('UTF-8')             # <<<<<<<<<<<<<<
@@ -3677,7 +3659,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  * 
  */
   /*else*/ {
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_name, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 235, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_name, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -3691,37 +3673,48 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     }
     __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_kp_s_UTF_8) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_kp_s_UTF_8);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 235, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_py_byte_name = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pcap.pyx":236
+    /* "pcap.pyx":234
  *         else:
  *             py_byte_name = name.encode('UTF-8')
  *             p = py_byte_name             # <<<<<<<<<<<<<<
  * 
- *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
+ *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_py_byte_name); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(1, 236, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_py_byte_name); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(1, 234, __pyx_L1_error)
     __pyx_v_p = __pyx_t_6;
   }
   __pyx_L3:;
 
-  /* "pcap.pyx":238
- *             p = py_byte_name
+  /* "pcap.pyx":237
  * 
- *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)             # <<<<<<<<<<<<<<
+ *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(
+ *             p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)             # <<<<<<<<<<<<<<
  *         if not self.__pcap:
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  */
-  __pyx_t_7 = __Pyx_PyInt_As_unsigned_int(__pyx_v_precision); if (unlikely((__pyx_t_7 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(1, 238, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PCAP_TSTAMP_PRECISION_NANO); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 237, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_int(__pyx_t_3); if (unlikely((__pyx_t_7 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(1, 237, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "pcap.pyx":236
+ *             p = py_byte_name
+ * 
+ *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(             # <<<<<<<<<<<<<<
+ *             p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)
+ *         if not self.__pcap:
+ */
   __pyx_v_self->__pyx___pcap = pcap_ex_open_offline_with_tstamp_precision(__pyx_v_p, __pyx_t_7, __pyx_v_self->__pyx___ebuf);
 
-  /* "pcap.pyx":239
- * 
- *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
+  /* "pcap.pyx":238
+ *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(
+ *             p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)
  *         if not self.__pcap:             # <<<<<<<<<<<<<<
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
@@ -3729,8 +3722,8 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
   __pyx_t_2 = ((!(__pyx_v_self->__pyx___pcap != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "pcap.pyx":240
- *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
+    /* "pcap.pyx":239
+ *             p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)
  *         if not self.__pcap:
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)             # <<<<<<<<<<<<<<
  *             passing = True
@@ -3738,7 +3731,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_self->__pyx___pcap = pcap_create(pcap_ex_name(__pyx_v_p), __pyx_v_self->__pyx___ebuf);
 
-    /* "pcap.pyx":241
+    /* "pcap.pyx":240
  *         if not self.__pcap:
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True             # <<<<<<<<<<<<<<
@@ -3747,111 +3740,109 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_passing = 1;
 
-    /* "pcap.pyx":242
+    /* "pcap.pyx":241
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
  *             def check_return(ret, descrip):             # <<<<<<<<<<<<<<
  *                 if ret != 0:
  *                     raise OSError, "%s failed to execute" % descrip
  */
-    __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_4pcap_4pcap_8__init___1check_return, 0, __pyx_n_s_init___locals_check_return, NULL, __pyx_n_s_pcap, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 242, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_4pcap_4pcap_8__init___1check_return, 0, __pyx_n_s_init___locals_check_return, NULL, __pyx_n_s_pcap, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 241, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_check_return = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pcap.pyx":245
+    /* "pcap.pyx":244
  *                 if ret != 0:
  *                     raise OSError, "%s failed to execute" % descrip
  *             check_return(pcap_set_snaplen(self.__pcap, snaplen),             # <<<<<<<<<<<<<<
  *                          "Set snaplength")
  *             check_return(pcap_set_promisc(self.__pcap, promisc),
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_snaplen); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 245, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_snaplen(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 245, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_snaplen); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 244, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_snaplen(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_snaplength); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 245, __pyx_L1_error)
+    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_snaplength); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "pcap.pyx":247
+    /* "pcap.pyx":246
  *             check_return(pcap_set_snaplen(self.__pcap, snaplen),
  *                          "Set snaplength")
  *             check_return(pcap_set_promisc(self.__pcap, promisc),             # <<<<<<<<<<<<<<
  *                          "Set promiscuous mode")
  *             check_return(pcap_set_timeout(self.__pcap, timeout_ms),
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_promisc); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 247, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyInt_From_int(pcap_set_promisc(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_promisc); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 246, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(pcap_set_promisc(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_4, __pyx_kp_s_Set_promiscuous_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_3 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_4, __pyx_kp_s_Set_promiscuous_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pcap.pyx":249
+    /* "pcap.pyx":248
  *             check_return(pcap_set_promisc(self.__pcap, promisc),
  *                          "Set promiscuous mode")
  *             check_return(pcap_set_timeout(self.__pcap, timeout_ms),             # <<<<<<<<<<<<<<
  *                          "Set timeout")
  *             check_return(pcap_set_immediate_mode(self.__pcap, immediate),
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_timeout_ms); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 249, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_timeout(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 249, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_timeout_ms); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 248, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_timeout(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 248, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_timeout); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 249, __pyx_L1_error)
+    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_timeout); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 248, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "pcap.pyx":251
+    /* "pcap.pyx":250
  *             check_return(pcap_set_timeout(self.__pcap, timeout_ms),
  *                          "Set timeout")
  *             check_return(pcap_set_immediate_mode(self.__pcap, immediate),             # <<<<<<<<<<<<<<
  *                          "Set immediate mode")
  *             check_return(pcap_set_rfmon(self.__pcap, rfmon),
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_immediate); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 251, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyInt_From_int(pcap_set_immediate_mode(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 251, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_immediate); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 250, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(pcap_set_immediate_mode(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_4, __pyx_kp_s_Set_immediate_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 251, __pyx_L1_error)
+    __pyx_t_3 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_4, __pyx_kp_s_Set_immediate_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pcap.pyx":253
+    /* "pcap.pyx":252
  *             check_return(pcap_set_immediate_mode(self.__pcap, immediate),
  *                          "Set immediate mode")
  *             check_return(pcap_set_rfmon(self.__pcap, rfmon),             # <<<<<<<<<<<<<<
  *                          "Set monitor mode")
- *             check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),
+ *             # Ask for nano-second precision, but don't fail if not available.
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_rfmon); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 253, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_rfmon(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 253, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_rfmon); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 252, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_int(pcap_set_rfmon(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_monitor_mode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 253, __pyx_L1_error)
+    __pyx_t_4 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_3, __pyx_kp_s_Set_monitor_mode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "pcap.pyx":255
- *             check_return(pcap_set_rfmon(self.__pcap, rfmon),
  *                          "Set monitor mode")
- *             check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),             # <<<<<<<<<<<<<<
- *                          "Set timestamp precision")
+ *             # Ask for nano-second precision, but don't fail if not available.
+ *             pcap_ex_set_tstamp_precision(self.__pcap, PCAP_TSTAMP_PRECISION_NANO)             # <<<<<<<<<<<<<<
  *             if pcap_activate(self.__pcap) != 0:
+ *                 raise OSError, ("Activateing packet capture failed. "
  */
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_precision); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 255, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyInt_From_int(pcap_ex_set_tstamp_precision(__pyx_v_self->__pyx___pcap, __pyx_t_8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 255, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PCAP_TSTAMP_PRECISION_NANO); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 255, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __pyx_pf_4pcap_4pcap_8__init___check_return(__pyx_v_check_return, __pyx_t_4, __pyx_kp_s_Set_timestamp_precision); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 255, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 255, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    (void)(pcap_ex_set_tstamp_precision(__pyx_v_self->__pyx___pcap, __pyx_t_8));
 
-    /* "pcap.pyx":257
- *             check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),
- *                          "Set timestamp precision")
+    /* "pcap.pyx":256
+ *             # Ask for nano-second precision, but don't fail if not available.
+ *             pcap_ex_set_tstamp_precision(self.__pcap, PCAP_TSTAMP_PRECISION_NANO)
  *             if pcap_activate(self.__pcap) != 0:             # <<<<<<<<<<<<<<
  *                 raise OSError, ("Activateing packet capture failed. "
  *                                 "Error returned by packet capture library "
@@ -3859,41 +3850,41 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     __pyx_t_2 = ((pcap_activate(__pyx_v_self->__pyx___pcap) != 0) != 0);
     if (unlikely(__pyx_t_2)) {
 
-      /* "pcap.pyx":260
+      /* "pcap.pyx":259
  *                 raise OSError, ("Activateing packet capture failed. "
  *                                 "Error returned by packet capture library "
  *                                 "was %s" % pcap_geterr(self.__pcap))             # <<<<<<<<<<<<<<
  * 
  *         if not self.__pcap:
  */
-      __pyx_t_3 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 260, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Activateing_packet_capture_faile, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 260, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 259, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_4, 0, 0);
+      __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_Activateing_packet_capture_faile, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 259, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __PYX_ERR(1, 258, __pyx_L1_error)
+      __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_3, 0, 0);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __PYX_ERR(1, 257, __pyx_L1_error)
 
-      /* "pcap.pyx":257
- *             check_return(pcap_ex_set_tstamp_precision(self.__pcap, precision),
- *                          "Set timestamp precision")
+      /* "pcap.pyx":256
+ *             # Ask for nano-second precision, but don't fail if not available.
+ *             pcap_ex_set_tstamp_precision(self.__pcap, PCAP_TSTAMP_PRECISION_NANO)
  *             if pcap_activate(self.__pcap) != 0:             # <<<<<<<<<<<<<<
  *                 raise OSError, ("Activateing packet capture failed. "
  *                                 "Error returned by packet capture library "
  */
     }
 
-    /* "pcap.pyx":239
- * 
- *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(p, precision, self.__ebuf)
+    /* "pcap.pyx":238
+ *         self.__pcap = pcap_ex_open_offline_with_tstamp_precision(
+ *             p, PCAP_TSTAMP_PRECISION_NANO, self.__ebuf)
  *         if not self.__pcap:             # <<<<<<<<<<<<<<
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
  */
   }
 
-  /* "pcap.pyx":262
+  /* "pcap.pyx":261
  *                                 "was %s" % pcap_geterr(self.__pcap))
  * 
  *         if not self.__pcap:             # <<<<<<<<<<<<<<
@@ -3903,20 +3894,20 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
   __pyx_t_2 = ((!(__pyx_v_self->__pyx___pcap != 0)) != 0);
   if (unlikely(__pyx_t_2)) {
 
-    /* "pcap.pyx":263
+    /* "pcap.pyx":262
  * 
  *         if not self.__pcap:
  *             raise OSError, self.__ebuf             # <<<<<<<<<<<<<<
  * 
  *         self.__name = strdup(p)
  */
-    __pyx_t_4 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 263, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_4, 0, 0);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(1, 263, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 262, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_3, 0, 0);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __PYX_ERR(1, 262, __pyx_L1_error)
 
-    /* "pcap.pyx":262
+    /* "pcap.pyx":261
  *                                 "was %s" % pcap_geterr(self.__pcap))
  * 
  *         if not self.__pcap:             # <<<<<<<<<<<<<<
@@ -3925,7 +3916,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
   }
 
-  /* "pcap.pyx":265
+  /* "pcap.pyx":264
  *             raise OSError, self.__ebuf
  * 
  *         self.__name = strdup(p)             # <<<<<<<<<<<<<<
@@ -3934,7 +3925,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
   __pyx_v_self->__pyx___name = strdup(__pyx_v_p);
 
-  /* "pcap.pyx":266
+  /* "pcap.pyx":265
  * 
  *         self.__name = strdup(p)
  *         self.__filter = strdup("")             # <<<<<<<<<<<<<<
@@ -3943,44 +3934,44 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
   __pyx_v_self->__pyx___filter = strdup(((char const *)""));
 
-  /* "pcap.pyx":267
+  /* "pcap.pyx":266
  *         self.__name = strdup(p)
  *         self.__filter = strdup("")
  *         self.__timestamp_in_ns = timestamp_in_ns             # <<<<<<<<<<<<<<
  *         precision = pcap_ex_get_tstamp_precision(self.__pcap)
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_timestamp_in_ns); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 267, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_timestamp_in_ns); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 266, __pyx_L1_error)
   __pyx_v_self->__pyx___timestamp_in_ns = __pyx_t_2;
 
-  /* "pcap.pyx":268
+  /* "pcap.pyx":267
  *         self.__filter = strdup("")
  *         self.__timestamp_in_ns = timestamp_in_ns
  *         precision = pcap_ex_get_tstamp_precision(self.__pcap)             # <<<<<<<<<<<<<<
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:
  *             self.__precision_scale = 1e-6
  */
-  __pyx_t_4 = __Pyx_PyInt_From_int(pcap_ex_get_tstamp_precision(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 268, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF_SET(__pyx_v_precision, __pyx_t_4);
-  __pyx_t_4 = 0;
+  __pyx_v_precision = pcap_ex_get_tstamp_precision(__pyx_v_self->__pyx___pcap);
 
-  /* "pcap.pyx":269
+  /* "pcap.pyx":268
  *         self.__timestamp_in_ns = timestamp_in_ns
  *         precision = pcap_ex_get_tstamp_precision(self.__pcap)
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:             # <<<<<<<<<<<<<<
  *             self.__precision_scale = 1e-6
  *             self.__precision_scale_ns = 1000
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PCAP_TSTAMP_PRECISION_MICRO); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 269, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_precision); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 268, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PCAP_TSTAMP_PRECISION_MICRO); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_v_precision, __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 269, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 269, __pyx_L1_error)
+  __pyx_t_5 = PyObject_RichCompare(__pyx_t_3, __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 268, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 268, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (__pyx_t_2) {
 
-    /* "pcap.pyx":270
+    /* "pcap.pyx":269
  *         precision = pcap_ex_get_tstamp_precision(self.__pcap)
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:
  *             self.__precision_scale = 1e-6             # <<<<<<<<<<<<<<
@@ -3989,7 +3980,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_self->__pyx___precision_scale = 1e-6;
 
-    /* "pcap.pyx":271
+    /* "pcap.pyx":270
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:
  *             self.__precision_scale = 1e-6
  *             self.__precision_scale_ns = 1000             # <<<<<<<<<<<<<<
@@ -3998,7 +3989,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_self->__pyx___precision_scale_ns = 0x3E8;
 
-    /* "pcap.pyx":269
+    /* "pcap.pyx":268
  *         self.__timestamp_in_ns = timestamp_in_ns
  *         precision = pcap_ex_get_tstamp_precision(self.__pcap)
  *         if precision == PCAP_TSTAMP_PRECISION_MICRO:             # <<<<<<<<<<<<<<
@@ -4008,22 +3999,25 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     goto __pyx_L8;
   }
 
-  /* "pcap.pyx":272
+  /* "pcap.pyx":271
  *             self.__precision_scale = 1e-6
  *             self.__precision_scale_ns = 1000
  *         elif precision == PCAP_TSTAMP_PRECISION_NANO:             # <<<<<<<<<<<<<<
  *             self.__precision_scale = 1e-9
  *             self.__precision_scale_ns = 1
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_PCAP_TSTAMP_PRECISION_NANO); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 272, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyObject_RichCompare(__pyx_v_precision, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 272, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 272, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_precision); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 271, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PCAP_TSTAMP_PRECISION_NANO); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 271, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 271, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 271, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(__pyx_t_2)) {
 
-    /* "pcap.pyx":273
+    /* "pcap.pyx":272
  *             self.__precision_scale_ns = 1000
  *         elif precision == PCAP_TSTAMP_PRECISION_NANO:
  *             self.__precision_scale = 1e-9             # <<<<<<<<<<<<<<
@@ -4032,7 +4026,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_self->__pyx___precision_scale = 1e-9;
 
-    /* "pcap.pyx":274
+    /* "pcap.pyx":273
  *         elif precision == PCAP_TSTAMP_PRECISION_NANO:
  *             self.__precision_scale = 1e-9
  *             self.__precision_scale_ns = 1             # <<<<<<<<<<<<<<
@@ -4041,7 +4035,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
     __pyx_v_self->__pyx___precision_scale_ns = 1;
 
-    /* "pcap.pyx":272
+    /* "pcap.pyx":271
  *             self.__precision_scale = 1e-6
  *             self.__precision_scale_ns = 1000
  *         elif precision == PCAP_TSTAMP_PRECISION_NANO:             # <<<<<<<<<<<<<<
@@ -4051,7 +4045,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     goto __pyx_L8;
   }
 
-  /* "pcap.pyx":276
+  /* "pcap.pyx":275
  *             self.__precision_scale_ns = 1
  *         else:
  *             raise OSError, "couldn't determine timestamp precision"             # <<<<<<<<<<<<<<
@@ -4060,11 +4054,11 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
   /*else*/ {
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_kp_s_couldn_t_determine_timestamp_pre, 0, 0);
-    __PYX_ERR(1, 276, __pyx_L1_error)
+    __PYX_ERR(1, 275, __pyx_L1_error)
   }
   __pyx_L8:;
 
-  /* "pcap.pyx":277
+  /* "pcap.pyx":276
  *         else:
  *             raise OSError, "couldn't determine timestamp precision"
  *         try:             # <<<<<<<<<<<<<<
@@ -4080,24 +4074,24 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     __Pyx_XGOTREF(__pyx_t_11);
     /*try:*/ {
 
-      /* "pcap.pyx":278
+      /* "pcap.pyx":277
  *             raise OSError, "couldn't determine timestamp precision"
  *         try:
  *             self.__dloff = dltoff[pcap_datalink(self.__pcap)]             # <<<<<<<<<<<<<<
  *         except KeyError:
  *             pass
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_dltoff); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 278, __pyx_L9_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_8 = pcap_datalink(__pyx_v_self->__pyx___pcap);
-      __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_4, __pyx_t_8, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 278, __pyx_L9_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_dltoff); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 277, __pyx_L9_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 278, __pyx_L9_error)
+      __pyx_t_8 = pcap_datalink(__pyx_v_self->__pyx___pcap);
+      __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_3, __pyx_t_8, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 277, __pyx_L9_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 277, __pyx_L9_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_self->__pyx___dloff = __pyx_t_8;
 
-      /* "pcap.pyx":277
+      /* "pcap.pyx":276
  *         else:
  *             raise OSError, "couldn't determine timestamp precision"
  *         try:             # <<<<<<<<<<<<<<
@@ -4111,10 +4105,10 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     goto __pyx_L14_try_end;
     __pyx_L9_error:;
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "pcap.pyx":279
+    /* "pcap.pyx":278
  *         try:
  *             self.__dloff = dltoff[pcap_datalink(self.__pcap)]
  *         except KeyError:             # <<<<<<<<<<<<<<
@@ -4129,7 +4123,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     goto __pyx_L11_except_error;
     __pyx_L11_except_error:;
 
-    /* "pcap.pyx":277
+    /* "pcap.pyx":276
  *         else:
  *             raise OSError, "couldn't determine timestamp precision"
  *         try:             # <<<<<<<<<<<<<<
@@ -4149,14 +4143,14 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
     __pyx_L14_try_end:;
   }
 
-  /* "pcap.pyx":281
+  /* "pcap.pyx":280
  *         except KeyError:
  *             pass
  *         if immediate and pcap_ex_immediate(self.__pcap) < 0:             # <<<<<<<<<<<<<<
  *             raise OSError, "couldn't enable immediate mode"
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_immediate); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 281, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_immediate); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 280, __pyx_L1_error)
   if (__pyx_t_1) {
   } else {
     __pyx_t_2 = __pyx_t_1;
@@ -4167,7 +4161,7 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
   __pyx_L16_bool_binop_done:;
   if (unlikely(__pyx_t_2)) {
 
-    /* "pcap.pyx":282
+    /* "pcap.pyx":281
  *             pass
  *         if immediate and pcap_ex_immediate(self.__pcap) < 0:
  *             raise OSError, "couldn't enable immediate mode"             # <<<<<<<<<<<<<<
@@ -4175,9 +4169,9 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  *     property name:
  */
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_kp_s_couldn_t_enable_immediate_mode, 0, 0);
-    __PYX_ERR(1, 282, __pyx_L1_error)
+    __PYX_ERR(1, 281, __pyx_L1_error)
 
-    /* "pcap.pyx":281
+    /* "pcap.pyx":280
  *         except KeyError:
  *             pass
  *         if immediate and pcap_ex_immediate(self.__pcap) < 0:             # <<<<<<<<<<<<<<
@@ -4186,12 +4180,12 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
  */
   }
 
-  /* "pcap.pyx":223
+  /* "pcap.pyx":222
  *     cdef bint __timestamp_in_ns
  * 
  *     def __init__(self, name=None, snaplen=65535, promisc=True,             # <<<<<<<<<<<<<<
  *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,
+ *                  timestamp_in_ns=False):
  */
 
   /* function exit code */
@@ -4206,12 +4200,11 @@ static int __pyx_pf_4pcap_4pcap___init__(struct __pyx_obj_4pcap_pcap *__pyx_v_se
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_py_byte_name);
   __Pyx_XDECREF(__pyx_v_check_return);
-  __Pyx_XDECREF(__pyx_v_precision);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pcap.pyx":286
+/* "pcap.pyx":285
  *     property name:
  *         """Network interface or dumpfile name."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4240,7 +4233,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4name___get__(struct __pyx_obj_4pcap_pcap 
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":287
+  /* "pcap.pyx":286
  *         """Network interface or dumpfile name."""
  *         def __get__(self):
  *             return str(self.__name.decode('UTF-8'))             # <<<<<<<<<<<<<<
@@ -4249,16 +4242,16 @@ static PyObject *__pyx_pf_4pcap_4pcap_4name___get__(struct __pyx_obj_4pcap_pcap 
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_v_self->__pyx___name;
-  __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_1, 0, strlen(__pyx_t_1), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 287, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_1, 0, strlen(__pyx_t_1), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 287, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":286
+  /* "pcap.pyx":285
  *     property name:
  *         """Network interface or dumpfile name."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4278,7 +4271,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4name___get__(struct __pyx_obj_4pcap_pcap 
   return __pyx_r;
 }
 
-/* "pcap.pyx":291
+/* "pcap.pyx":290
  *     property snaplen:
  *         """Maximum number of bytes to capture for each packet."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4305,7 +4298,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_7snaplen___get__(struct __pyx_obj_4pcap_pc
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":292
+  /* "pcap.pyx":291
  *         """Maximum number of bytes to capture for each packet."""
  *         def __get__(self):
  *             return pcap_snapshot(self.__pcap)             # <<<<<<<<<<<<<<
@@ -4313,13 +4306,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_7snaplen___get__(struct __pyx_obj_4pcap_pc
  *     property dloff:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_snapshot(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_snapshot(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":291
+  /* "pcap.pyx":290
  *     property snaplen:
  *         """Maximum number of bytes to capture for each packet."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4338,7 +4331,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_7snaplen___get__(struct __pyx_obj_4pcap_pc
   return __pyx_r;
 }
 
-/* "pcap.pyx":296
+/* "pcap.pyx":295
  *     property dloff:
  *         """Datalink offset (length of layer-2 frame header)."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4365,7 +4358,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_5dloff___get__(struct __pyx_obj_4pcap_pcap
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":297
+  /* "pcap.pyx":296
  *         """Datalink offset (length of layer-2 frame header)."""
  *         def __get__(self):
  *             return self.__dloff             # <<<<<<<<<<<<<<
@@ -4373,13 +4366,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_5dloff___get__(struct __pyx_obj_4pcap_pcap
  *     property filter:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx___dloff); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 297, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx___dloff); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 296, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":296
+  /* "pcap.pyx":295
  *     property dloff:
  *         """Datalink offset (length of layer-2 frame header)."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4398,7 +4391,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_5dloff___get__(struct __pyx_obj_4pcap_pcap
   return __pyx_r;
 }
 
-/* "pcap.pyx":301
+/* "pcap.pyx":300
  *     property filter:
  *         """Current packet capture filter."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4427,7 +4420,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6filter___get__(struct __pyx_obj_4pcap_pca
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":302
+  /* "pcap.pyx":301
  *         """Current packet capture filter."""
  *         def __get__(self):
  *             return str(self.__filter.decode('UTF-8'))             # <<<<<<<<<<<<<<
@@ -4436,16 +4429,16 @@ static PyObject *__pyx_pf_4pcap_4pcap_6filter___get__(struct __pyx_obj_4pcap_pca
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_v_self->__pyx___filter;
-  __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_1, 0, strlen(__pyx_t_1), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 302, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_1, 0, strlen(__pyx_t_1), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 302, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":301
+  /* "pcap.pyx":300
  *     property filter:
  *         """Current packet capture filter."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4465,7 +4458,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6filter___get__(struct __pyx_obj_4pcap_pca
   return __pyx_r;
 }
 
-/* "pcap.pyx":306
+/* "pcap.pyx":305
  *     property fd:
  *         """File descriptor (or Win32 HANDLE) for capture handle."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4492,7 +4485,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fd___get__(struct __pyx_obj_4pcap_pcap *_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":307
+  /* "pcap.pyx":306
  *         """File descriptor (or Win32 HANDLE) for capture handle."""
  *         def __get__(self):
  *             return pcap_ex_fileno(self.__pcap)             # <<<<<<<<<<<<<<
@@ -4500,13 +4493,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fd___get__(struct __pyx_obj_4pcap_pcap *_
  *     property precision:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_fileno(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 307, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_fileno(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 306, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":306
+  /* "pcap.pyx":305
  *     property fd:
  *         """File descriptor (or Win32 HANDLE) for capture handle."""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4525,7 +4518,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fd___get__(struct __pyx_obj_4pcap_pcap *_
   return __pyx_r;
 }
 
-/* "pcap.pyx":311
+/* "pcap.pyx":310
  *     property precision:
  *         """Precision of timestamps"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4552,7 +4545,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_9precision___get__(struct __pyx_obj_4pcap_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":312
+  /* "pcap.pyx":311
  *         """Precision of timestamps"""
  *         def __get__(self):
  *             return pcap_ex_get_tstamp_precision(self.__pcap)             # <<<<<<<<<<<<<<
@@ -4560,13 +4553,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_9precision___get__(struct __pyx_obj_4pcap_
  *     property timestamp_in_ns:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_get_tstamp_precision(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 312, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_get_tstamp_precision(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 311, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":311
+  /* "pcap.pyx":310
  *     property precision:
  *         """Precision of timestamps"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4585,7 +4578,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_9precision___get__(struct __pyx_obj_4pcap_
   return __pyx_r;
 }
 
-/* "pcap.pyx":316
+/* "pcap.pyx":315
  *     property timestamp_in_ns:
  *         """Whether timestamps are returned in nanosecond units"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4612,7 +4605,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_15timestamp_in_ns___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "pcap.pyx":317
+  /* "pcap.pyx":316
  *         """Whether timestamps are returned in nanosecond units"""
  *         def __get__(self):
  *             return self.__timestamp_in_ns             # <<<<<<<<<<<<<<
@@ -4620,13 +4613,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_15timestamp_in_ns___get__(struct __pyx_obj
  *     def fileno(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->__pyx___timestamp_in_ns); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 317, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->__pyx___timestamp_in_ns); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 316, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":316
+  /* "pcap.pyx":315
  *     property timestamp_in_ns:
  *         """Whether timestamps are returned in nanosecond units"""
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -4645,7 +4638,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_15timestamp_in_ns___get__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "pcap.pyx":319
+/* "pcap.pyx":318
  *             return self.__timestamp_in_ns
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
@@ -4673,7 +4666,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fileno(struct __pyx_obj_4pcap_pcap *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("fileno", 0);
 
-  /* "pcap.pyx":321
+  /* "pcap.pyx":320
  *     def fileno(self):
  *         """Return file descriptor (or Win32 HANDLE) for capture handle."""
  *         return pcap_ex_fileno(self.__pcap)             # <<<<<<<<<<<<<<
@@ -4681,13 +4674,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fileno(struct __pyx_obj_4pcap_pcap *__pyx
  *     def close(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_fileno(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 321, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_ex_fileno(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 320, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":319
+  /* "pcap.pyx":318
  *             return self.__timestamp_in_ns
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
@@ -4706,7 +4699,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_2fileno(struct __pyx_obj_4pcap_pcap *__pyx
   return __pyx_r;
 }
 
-/* "pcap.pyx":323
+/* "pcap.pyx":322
  *         return pcap_ex_fileno(self.__pcap)
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -4733,7 +4726,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4close(struct __pyx_obj_4pcap_pcap *__pyx_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("close", 0);
 
-  /* "pcap.pyx":325
+  /* "pcap.pyx":324
  *     def close(self):
  *         """Explicitly close the underlying pcap handle"""
  *         pcap_close(self.__pcap)             # <<<<<<<<<<<<<<
@@ -4742,7 +4735,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4close(struct __pyx_obj_4pcap_pcap *__pyx_
  */
   pcap_close(__pyx_v_self->__pyx___pcap);
 
-  /* "pcap.pyx":326
+  /* "pcap.pyx":325
  *         """Explicitly close the underlying pcap handle"""
  *         pcap_close(self.__pcap)
  *         self.__pcap = NULL             # <<<<<<<<<<<<<<
@@ -4751,7 +4744,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4close(struct __pyx_obj_4pcap_pcap *__pyx_
  */
   __pyx_v_self->__pyx___pcap = NULL;
 
-  /* "pcap.pyx":323
+  /* "pcap.pyx":322
  *         return pcap_ex_fileno(self.__pcap)
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -4766,7 +4759,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_4close(struct __pyx_obj_4pcap_pcap *__pyx_
   return __pyx_r;
 }
 
-/* "pcap.pyx":328
+/* "pcap.pyx":327
  *         self.__pcap = NULL
  * 
  *     def setfilter(self, value, optimize=1):             # <<<<<<<<<<<<<<
@@ -4811,7 +4804,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_7setfilter(PyObject *__pyx_v_self, PyObjec
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "setfilter") < 0)) __PYX_ERR(1, 328, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "setfilter") < 0)) __PYX_ERR(1, 327, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4827,7 +4820,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_7setfilter(PyObject *__pyx_v_self, PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("setfilter", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 328, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("setfilter", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 327, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pcap.pcap.setfilter", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4853,7 +4846,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
   int __pyx_t_6;
   __Pyx_RefNannySetupContext("setfilter", 0);
 
-  /* "pcap.pyx":331
+  /* "pcap.pyx":330
  *         """Set BPF-format packet capture filter."""
  *         cdef bpf_program fcode
  *         free(self.__filter)             # <<<<<<<<<<<<<<
@@ -4862,14 +4855,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
  */
   free(__pyx_v_self->__pyx___filter);
 
-  /* "pcap.pyx":332
+  /* "pcap.pyx":331
  *         cdef bpf_program fcode
  *         free(self.__filter)
  *         py_byte_value = value.encode('UTF-8')             # <<<<<<<<<<<<<<
  *         self.__filter = strdup(py_byte_value)
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_value, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 332, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_value, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -4883,47 +4876,47 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_kp_s_UTF_8) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_kp_s_UTF_8);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 332, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_py_byte_value = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pcap.pyx":333
+  /* "pcap.pyx":332
  *         free(self.__filter)
  *         py_byte_value = value.encode('UTF-8')
  *         self.__filter = strdup(py_byte_value)             # <<<<<<<<<<<<<<
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  */
-  __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_py_byte_value); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(1, 333, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_py_byte_value); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(1, 332, __pyx_L1_error)
   __pyx_v_self->__pyx___filter = strdup(__pyx_t_4);
 
-  /* "pcap.pyx":334
+  /* "pcap.pyx":333
  *         py_byte_value = value.encode('UTF-8')
  *         self.__filter = strdup(py_byte_value)
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:             # <<<<<<<<<<<<<<
  *             raise OSError, pcap_geterr(self.__pcap)
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:
  */
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_optimize); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 334, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_optimize); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 333, __pyx_L1_error)
   __pyx_t_6 = ((pcap_compile(__pyx_v_self->__pyx___pcap, (&__pyx_v_fcode), __pyx_v_self->__pyx___filter, __pyx_t_5, 0) < 0) != 0);
   if (unlikely(__pyx_t_6)) {
 
-    /* "pcap.pyx":335
+    /* "pcap.pyx":334
  *         self.__filter = strdup(py_byte_value)
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)             # <<<<<<<<<<<<<<
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  */
-    __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 335, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 334, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_1, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(1, 335, __pyx_L1_error)
+    __PYX_ERR(1, 334, __pyx_L1_error)
 
-    /* "pcap.pyx":334
+    /* "pcap.pyx":333
  *         py_byte_value = value.encode('UTF-8')
  *         self.__filter = strdup(py_byte_value)
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:             # <<<<<<<<<<<<<<
@@ -4932,7 +4925,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
  */
   }
 
-  /* "pcap.pyx":336
+  /* "pcap.pyx":335
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:             # <<<<<<<<<<<<<<
@@ -4942,20 +4935,20 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_6 = ((pcap_setfilter(__pyx_v_self->__pyx___pcap, (&__pyx_v_fcode)) < 0) != 0);
   if (unlikely(__pyx_t_6)) {
 
-    /* "pcap.pyx":337
+    /* "pcap.pyx":336
  *             raise OSError, pcap_geterr(self.__pcap)
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)             # <<<<<<<<<<<<<<
  *         pcap_freecode(&fcode)
  * 
  */
-    __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 337, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 336, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_1, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(1, 337, __pyx_L1_error)
+    __PYX_ERR(1, 336, __pyx_L1_error)
 
-    /* "pcap.pyx":336
+    /* "pcap.pyx":335
  *         if pcap_compile(self.__pcap, &fcode, self.__filter, optimize, 0) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:             # <<<<<<<<<<<<<<
@@ -4964,7 +4957,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
  */
   }
 
-  /* "pcap.pyx":338
+  /* "pcap.pyx":337
  *         if pcap_setfilter(self.__pcap, &fcode) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  *         pcap_freecode(&fcode)             # <<<<<<<<<<<<<<
@@ -4973,7 +4966,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
  */
   pcap_freecode((&__pyx_v_fcode));
 
-  /* "pcap.pyx":328
+  /* "pcap.pyx":327
  *         self.__pcap = NULL
  * 
  *     def setfilter(self, value, optimize=1):             # <<<<<<<<<<<<<<
@@ -4997,7 +4990,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_6setfilter(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":340
+/* "pcap.pyx":339
  *         pcap_freecode(&fcode)
  * 
  *     def setdirection(self, direction):             # <<<<<<<<<<<<<<
@@ -5026,7 +5019,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_8setdirection(struct __pyx_obj_4pcap_pcap 
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("setdirection", 0);
 
-  /* "pcap.pyx":342
+  /* "pcap.pyx":341
  *     def setdirection(self, direction):
  *         """Set capture direction."""
  *         return pcap_ex_setdirection(self.__pcap, direction) == 0             # <<<<<<<<<<<<<<
@@ -5034,14 +5027,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_8setdirection(struct __pyx_obj_4pcap_pcap 
  *     def setnonblock(self, nonblock=True):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_direction); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 342, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyBool_FromLong((pcap_ex_setdirection(__pyx_v_self->__pyx___pcap, __pyx_t_1) == 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 342, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_direction); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 341, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong((pcap_ex_setdirection(__pyx_v_self->__pyx___pcap, __pyx_t_1) == 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":340
+  /* "pcap.pyx":339
  *         pcap_freecode(&fcode)
  * 
  *     def setdirection(self, direction):             # <<<<<<<<<<<<<<
@@ -5060,7 +5053,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_8setdirection(struct __pyx_obj_4pcap_pcap 
   return __pyx_r;
 }
 
-/* "pcap.pyx":344
+/* "pcap.pyx":343
  *         return pcap_ex_setdirection(self.__pcap, direction) == 0
  * 
  *     def setnonblock(self, nonblock=True):             # <<<<<<<<<<<<<<
@@ -5098,7 +5091,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_11setnonblock(PyObject *__pyx_v_self, PyOb
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "setnonblock") < 0)) __PYX_ERR(1, 344, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "setnonblock") < 0)) __PYX_ERR(1, 343, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5112,7 +5105,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_11setnonblock(PyObject *__pyx_v_self, PyOb
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("setnonblock", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 344, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("setnonblock", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 343, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pcap.pcap.setnonblock", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5131,17 +5124,17 @@ static PyObject *__pyx_pf_4pcap_4pcap_10setnonblock(struct __pyx_obj_4pcap_pcap 
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("setnonblock", 0);
 
-  /* "pcap.pyx":346
+  /* "pcap.pyx":345
  *     def setnonblock(self, nonblock=True):
  *         """Set non-blocking capture mode."""
  *         pcap_ex_setnonblock(self.__pcap, nonblock, self.__ebuf)             # <<<<<<<<<<<<<<
  * 
  *     def getnonblock(self):
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_nonblock); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 346, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_nonblock); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 345, __pyx_L1_error)
   pcap_ex_setnonblock(__pyx_v_self->__pyx___pcap, __pyx_t_1, __pyx_v_self->__pyx___ebuf);
 
-  /* "pcap.pyx":344
+  /* "pcap.pyx":343
  *         return pcap_ex_setdirection(self.__pcap, direction) == 0
  * 
  *     def setnonblock(self, nonblock=True):             # <<<<<<<<<<<<<<
@@ -5161,7 +5154,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_10setnonblock(struct __pyx_obj_4pcap_pcap 
   return __pyx_r;
 }
 
-/* "pcap.pyx":348
+/* "pcap.pyx":347
  *         pcap_ex_setnonblock(self.__pcap, nonblock, self.__ebuf)
  * 
  *     def getnonblock(self):             # <<<<<<<<<<<<<<
@@ -5191,7 +5184,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("getnonblock", 0);
 
-  /* "pcap.pyx":350
+  /* "pcap.pyx":349
  *     def getnonblock(self):
  *         """Return non-blocking capture mode as boolean."""
  *         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)             # <<<<<<<<<<<<<<
@@ -5200,7 +5193,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
  */
   __pyx_v_ret = pcap_ex_getnonblock(__pyx_v_self->__pyx___pcap, __pyx_v_self->__pyx___ebuf);
 
-  /* "pcap.pyx":351
+  /* "pcap.pyx":350
  *         """Return non-blocking capture mode as boolean."""
  *         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
  *         if ret < 0:             # <<<<<<<<<<<<<<
@@ -5210,20 +5203,20 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
   __pyx_t_1 = ((__pyx_v_ret < 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pcap.pyx":352
+    /* "pcap.pyx":351
  *         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
  *         if ret < 0:
  *             raise OSError, self.__ebuf             # <<<<<<<<<<<<<<
  *         return ret != 0
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 352, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_self->__pyx___ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 351, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_2, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(1, 352, __pyx_L1_error)
+    __PYX_ERR(1, 351, __pyx_L1_error)
 
-    /* "pcap.pyx":351
+    /* "pcap.pyx":350
  *         """Return non-blocking capture mode as boolean."""
  *         ret = pcap_ex_getnonblock(self.__pcap, self.__ebuf)
  *         if ret < 0:             # <<<<<<<<<<<<<<
@@ -5232,7 +5225,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
  */
   }
 
-  /* "pcap.pyx":353
+  /* "pcap.pyx":352
  *         if ret < 0:
  *             raise OSError, self.__ebuf
  *         return ret != 0             # <<<<<<<<<<<<<<
@@ -5240,13 +5233,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
  *     def datalink(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_ret != 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 353, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_ret != 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":348
+  /* "pcap.pyx":347
  *         pcap_ex_setnonblock(self.__pcap, nonblock, self.__ebuf)
  * 
  *     def getnonblock(self):             # <<<<<<<<<<<<<<
@@ -5265,7 +5258,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_12getnonblock(struct __pyx_obj_4pcap_pcap 
   return __pyx_r;
 }
 
-/* "pcap.pyx":355
+/* "pcap.pyx":354
  *         return ret != 0
  * 
  *     def datalink(self):             # <<<<<<<<<<<<<<
@@ -5293,7 +5286,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_14datalink(struct __pyx_obj_4pcap_pcap *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("datalink", 0);
 
-  /* "pcap.pyx":357
+  /* "pcap.pyx":356
  *     def datalink(self):
  *         """Return datalink type (DLT_* values)."""
  *         return pcap_datalink(self.__pcap)             # <<<<<<<<<<<<<<
@@ -5301,13 +5294,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_14datalink(struct __pyx_obj_4pcap_pcap *__
  *     def __add_pkts(self, ts, pkt, pkts):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_datalink(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 357, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(pcap_datalink(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 356, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":355
+  /* "pcap.pyx":354
  *         return ret != 0
  * 
  *     def datalink(self):             # <<<<<<<<<<<<<<
@@ -5326,7 +5319,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_14datalink(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":359
+/* "pcap.pyx":358
  *         return pcap_datalink(self.__pcap)
  * 
  *     def __add_pkts(self, ts, pkt, pkts):             # <<<<<<<<<<<<<<
@@ -5368,17 +5361,17 @@ static PyObject *__pyx_pw_4pcap_4pcap_17__add_pkts(PyObject *__pyx_v_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pkt)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, 1); __PYX_ERR(1, 359, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, 1); __PYX_ERR(1, 358, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pkts)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, 2); __PYX_ERR(1, 359, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, 2); __PYX_ERR(1, 358, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__add_pkts") < 0)) __PYX_ERR(1, 359, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__add_pkts") < 0)) __PYX_ERR(1, 358, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -5393,7 +5386,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_17__add_pkts(PyObject *__pyx_v_self, PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 359, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__add_pkts", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 358, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pcap.pcap.__add_pkts", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5413,14 +5406,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_16__add_pkts(CYTHON_UNUSED struct __pyx_ob
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("__add_pkts", 0);
 
-  /* "pcap.pyx":360
+  /* "pcap.pyx":359
  * 
  *     def __add_pkts(self, ts, pkt, pkts):
  *         pkts.append((ts, pkt))             # <<<<<<<<<<<<<<
  * 
  *     def readpkts(self):
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 360, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 359, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_ts);
   __Pyx_GIVEREF(__pyx_v_ts);
@@ -5428,10 +5421,10 @@ static PyObject *__pyx_pf_4pcap_4pcap_16__add_pkts(CYTHON_UNUSED struct __pyx_ob
   __Pyx_INCREF(__pyx_v_pkt);
   __Pyx_GIVEREF(__pyx_v_pkt);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_pkt);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_pkts, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(1, 360, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_pkts, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(1, 359, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pcap.pyx":359
+  /* "pcap.pyx":358
  *         return pcap_datalink(self.__pcap)
  * 
  *     def __add_pkts(self, ts, pkt, pkts):             # <<<<<<<<<<<<<<
@@ -5452,7 +5445,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_16__add_pkts(CYTHON_UNUSED struct __pyx_ob
   return __pyx_r;
 }
 
-/* "pcap.pyx":362
+/* "pcap.pyx":361
  *         pkts.append((ts, pkt))
  * 
  *     def readpkts(self):             # <<<<<<<<<<<<<<
@@ -5486,28 +5479,28 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("readpkts", 0);
 
-  /* "pcap.pyx":364
+  /* "pcap.pyx":363
  *     def readpkts(self):
  *         """Return a list of (timestamp, packet) tuples received in one buffer."""
  *         pkts = []             # <<<<<<<<<<<<<<
  *         self.dispatch(-1, self.__add_pkts, pkts)
  *         return pkts
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 364, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 363, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_pkts = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pcap.pyx":365
+  /* "pcap.pyx":364
  *         """Return a list of (timestamp, packet) tuples received in one buffer."""
  *         pkts = []
  *         self.dispatch(-1, self.__add_pkts, pkts)             # <<<<<<<<<<<<<<
  *         return pkts
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_dispatch); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 365, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_dispatch); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pkts); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 365, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pkts); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -5524,7 +5517,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_int_neg_1, __pyx_t_3, __pyx_v_pkts};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 365, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 364, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -5533,14 +5526,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_int_neg_1, __pyx_t_3, __pyx_v_pkts};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 365, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 364, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 365, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -5554,14 +5547,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
     __Pyx_GIVEREF(__pyx_v_pkts);
     PyTuple_SET_ITEM(__pyx_t_6, 2+__pyx_t_5, __pyx_v_pkts);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 365, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pcap.pyx":366
+  /* "pcap.pyx":365
  *         pkts = []
  *         self.dispatch(-1, self.__add_pkts, pkts)
  *         return pkts             # <<<<<<<<<<<<<<
@@ -5573,7 +5566,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
   __pyx_r = __pyx_v_pkts;
   goto __pyx_L0;
 
-  /* "pcap.pyx":362
+  /* "pcap.pyx":361
  *         pkts.append((ts, pkt))
  * 
  *     def readpkts(self):             # <<<<<<<<<<<<<<
@@ -5597,7 +5590,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_18readpkts(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":368
+/* "pcap.pyx":367
  *         return pkts
  * 
  *     def dispatch(self, cnt, callback, *args):             # <<<<<<<<<<<<<<
@@ -5648,12 +5641,12 @@ static PyObject *__pyx_pw_4pcap_4pcap_21dispatch(PyObject *__pyx_v_self, PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_callback)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("dispatch", 0, 2, 2, 1); __PYX_ERR(1, 368, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("dispatch", 0, 2, 2, 1); __PYX_ERR(1, 367, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t used_pos_args = (pos_args < 2) ? pos_args : 2;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, used_pos_args, "dispatch") < 0)) __PYX_ERR(1, 368, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, used_pos_args, "dispatch") < 0)) __PYX_ERR(1, 367, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) < 2) {
       goto __pyx_L5_argtuple_error;
@@ -5666,7 +5659,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_21dispatch(PyObject *__pyx_v_self, PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("dispatch", 0, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 368, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("dispatch", 0, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 367, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_args); __pyx_v_args = 0;
   __Pyx_AddTraceback("pcap.pcap.dispatch", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -5695,19 +5688,19 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("dispatch", 0);
 
-  /* "pcap.pyx":381
+  /* "pcap.pyx":380
  *         *args    -- optional arguments passed to callback on execution
  *         """
  *         cdef pcap_handler_ctx ctx = pcap_handler_ctx()             # <<<<<<<<<<<<<<
  *         cdef int n
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_4pcap_pcap_handler_ctx)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 381, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_4pcap_pcap_handler_ctx)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 380, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ctx = ((struct __pyx_obj_4pcap_pcap_handler_ctx *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pcap.pyx":384
+  /* "pcap.pyx":383
  *         cdef int n
  * 
  *         ctx.scale = self.__precision_scale             # <<<<<<<<<<<<<<
@@ -5717,7 +5710,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_2 = __pyx_v_self->__pyx___precision_scale;
   __pyx_v_ctx->scale = __pyx_t_2;
 
-  /* "pcap.pyx":385
+  /* "pcap.pyx":384
  * 
  *         ctx.scale = self.__precision_scale
  *         ctx.scale_ns = self.__precision_scale_ns             # <<<<<<<<<<<<<<
@@ -5727,7 +5720,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_3 = __pyx_v_self->__pyx___precision_scale_ns;
   __pyx_v_ctx->scale_ns = __pyx_t_3;
 
-  /* "pcap.pyx":386
+  /* "pcap.pyx":385
  *         ctx.scale = self.__precision_scale
  *         ctx.scale_ns = self.__precision_scale_ns
  *         ctx.timestamp_in_ns = self.__timestamp_in_ns             # <<<<<<<<<<<<<<
@@ -5737,7 +5730,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_4 = __pyx_v_self->__pyx___timestamp_in_ns;
   __pyx_v_ctx->timestamp_in_ns = __pyx_t_4;
 
-  /* "pcap.pyx":387
+  /* "pcap.pyx":386
  *         ctx.scale_ns = self.__precision_scale_ns
  *         ctx.timestamp_in_ns = self.__timestamp_in_ns
  *         ctx.callback = <void *>callback             # <<<<<<<<<<<<<<
@@ -5746,7 +5739,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
  */
   __pyx_v_ctx->callback = ((void *)__pyx_v_callback);
 
-  /* "pcap.pyx":388
+  /* "pcap.pyx":387
  *         ctx.timestamp_in_ns = self.__timestamp_in_ns
  *         ctx.callback = <void *>callback
  *         ctx.args = <void *>args             # <<<<<<<<<<<<<<
@@ -5755,46 +5748,46 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
  */
   __pyx_v_ctx->args = ((void *)__pyx_v_args);
 
-  /* "pcap.pyx":389
+  /* "pcap.pyx":388
  *         ctx.callback = <void *>callback
  *         ctx.args = <void *>args
  *         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)             # <<<<<<<<<<<<<<
  *         if ctx.exc:
  *             raise ctx.exc[0], ctx.exc[1], ctx.exc[2]
  */
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_cnt); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 389, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_cnt); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 388, __pyx_L1_error)
   __pyx_v_n = pcap_dispatch(__pyx_v_self->__pyx___pcap, __pyx_t_5, __pyx_f_4pcap___pcap_handler, ((__pyx_t_4pcap_u_char *)((void *)__pyx_v_ctx)));
 
-  /* "pcap.pyx":390
+  /* "pcap.pyx":389
  *         ctx.args = <void *>args
  *         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
  *         if ctx.exc:             # <<<<<<<<<<<<<<
  *             raise ctx.exc[0], ctx.exc[1], ctx.exc[2]
  *         return n
  */
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_ctx->exc); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 390, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_ctx->exc); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 389, __pyx_L1_error)
   if (unlikely(__pyx_t_4)) {
 
-    /* "pcap.pyx":391
+    /* "pcap.pyx":390
  *         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
  *         if ctx.exc:
  *             raise ctx.exc[0], ctx.exc[1], ctx.exc[2]             # <<<<<<<<<<<<<<
  *         return n
  * 
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 391, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 390, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 391, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 390, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 391, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_ctx->exc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 390, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_Raise(__pyx_t_1, __pyx_t_6, __pyx_t_7, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __PYX_ERR(1, 391, __pyx_L1_error)
+    __PYX_ERR(1, 390, __pyx_L1_error)
 
-    /* "pcap.pyx":390
+    /* "pcap.pyx":389
  *         ctx.args = <void *>args
  *         n = pcap_dispatch(self.__pcap, cnt, __pcap_handler, <u_char *><void*>ctx)
  *         if ctx.exc:             # <<<<<<<<<<<<<<
@@ -5803,7 +5796,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
  */
   }
 
-  /* "pcap.pyx":392
+  /* "pcap.pyx":391
  *         if ctx.exc:
  *             raise ctx.exc[0], ctx.exc[1], ctx.exc[2]
  *         return n             # <<<<<<<<<<<<<<
@@ -5811,13 +5804,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
  *     def loop(self, cnt, callback, *args):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 392, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 391, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":368
+  /* "pcap.pyx":367
  *         return pkts
  * 
  *     def dispatch(self, cnt, callback, *args):             # <<<<<<<<<<<<<<
@@ -5839,7 +5832,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_20dispatch(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":394
+/* "pcap.pyx":393
  *         return n
  * 
  *     def loop(self, cnt, callback, *args):             # <<<<<<<<<<<<<<
@@ -5890,12 +5883,12 @@ static PyObject *__pyx_pw_4pcap_4pcap_23loop(PyObject *__pyx_v_self, PyObject *_
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_callback)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("loop", 0, 2, 2, 1); __PYX_ERR(1, 394, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("loop", 0, 2, 2, 1); __PYX_ERR(1, 393, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t used_pos_args = (pos_args < 2) ? pos_args : 2;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, used_pos_args, "loop") < 0)) __PYX_ERR(1, 394, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, used_pos_args, "loop") < 0)) __PYX_ERR(1, 393, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) < 2) {
       goto __pyx_L5_argtuple_error;
@@ -5908,7 +5901,7 @@ static PyObject *__pyx_pw_4pcap_4pcap_23loop(PyObject *__pyx_v_self, PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("loop", 0, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 394, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("loop", 0, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 393, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_args); __pyx_v_args = 0;
   __Pyx_AddTraceback("pcap.pcap.loop", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -5941,7 +5934,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("loop", 0);
 
-  /* "pcap.pyx":410
+  /* "pcap.pyx":409
  *         cdef u_char *pkt
  *         cdef int n
  *         cdef int i = 1             # <<<<<<<<<<<<<<
@@ -5950,7 +5943,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
   __pyx_v_i = 1;
 
-  /* "pcap.pyx":411
+  /* "pcap.pyx":410
  *         cdef int n
  *         cdef int i = 1
  *         cdef double scale = self.__precision_scale             # <<<<<<<<<<<<<<
@@ -5960,7 +5953,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   __pyx_t_1 = __pyx_v_self->__pyx___precision_scale;
   __pyx_v_scale = __pyx_t_1;
 
-  /* "pcap.pyx":412
+  /* "pcap.pyx":411
  *         cdef int i = 1
  *         cdef double scale = self.__precision_scale
  *         cdef long long scale_ns = self.__precision_scale_ns             # <<<<<<<<<<<<<<
@@ -5970,7 +5963,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   __pyx_t_2 = __pyx_v_self->__pyx___precision_scale_ns;
   __pyx_v_scale_ns = __pyx_t_2;
 
-  /* "pcap.pyx":413
+  /* "pcap.pyx":412
  *         cdef double scale = self.__precision_scale
  *         cdef long long scale_ns = self.__precision_scale_ns
  *         cdef bint timestamp_in_ns = self.__timestamp_in_ns             # <<<<<<<<<<<<<<
@@ -5980,7 +5973,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   __pyx_t_3 = __pyx_v_self->__pyx___timestamp_in_ns;
   __pyx_v_timestamp_in_ns = __pyx_t_3;
 
-  /* "pcap.pyx":414
+  /* "pcap.pyx":413
  *         cdef long long scale_ns = self.__precision_scale_ns
  *         cdef bint timestamp_in_ns = self.__timestamp_in_ns
  *         pcap_ex_setup(self.__pcap)             # <<<<<<<<<<<<<<
@@ -5989,7 +5982,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
   pcap_ex_setup(__pyx_v_self->__pyx___pcap);
 
-  /* "pcap.pyx":415
+  /* "pcap.pyx":414
  *         cdef bint timestamp_in_ns = self.__timestamp_in_ns
  *         pcap_ex_setup(self.__pcap)
  *         while 1:             # <<<<<<<<<<<<<<
@@ -5998,7 +5991,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
   while (1) {
 
-    /* "pcap.pyx":416
+    /* "pcap.pyx":415
  *         pcap_ex_setup(self.__pcap)
  *         while 1:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6013,7 +6006,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
         #endif
         /*try:*/ {
 
-          /* "pcap.pyx":417
+          /* "pcap.pyx":416
  *         while 1:
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)             # <<<<<<<<<<<<<<
@@ -6023,7 +6016,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
           __pyx_v_n = pcap_ex_next(__pyx_v_self->__pyx___pcap, (&__pyx_v_hdr), (&__pyx_v_pkt));
         }
 
-        /* "pcap.pyx":416
+        /* "pcap.pyx":415
  *         pcap_ex_setup(self.__pcap)
  *         while 1:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6042,7 +6035,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
         }
     }
 
-    /* "pcap.pyx":418
+    /* "pcap.pyx":417
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:             # <<<<<<<<<<<<<<
@@ -6052,7 +6045,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
     switch (__pyx_v_n) {
       case 1:
 
-      /* "pcap.pyx":419
+      /* "pcap.pyx":418
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:
  *                 if timestamp_in_ns:             # <<<<<<<<<<<<<<
@@ -6062,34 +6055,34 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
       __pyx_t_3 = (__pyx_v_timestamp_in_ns != 0);
       if (__pyx_t_3) {
 
-        /* "pcap.pyx":421
+        /* "pcap.pyx":420
  *                 if timestamp_in_ns:
  *                     callback(
  *                         (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),             # <<<<<<<<<<<<<<
  *                         get_buffer(pkt, hdr.caplen),
  *                         *args
  */
-        __pyx_t_4 = __Pyx_PyInt_From_PY_LONG_LONG(((__pyx_v_hdr->ts.tv_sec * 1000000000LL) + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale_ns))); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 421, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyInt_From_PY_LONG_LONG(((__pyx_v_hdr->ts.tv_sec * 1000000000LL) + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale_ns))); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 420, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
 
-        /* "pcap.pyx":422
+        /* "pcap.pyx":421
  *                     callback(
  *                         (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),
  *                         get_buffer(pkt, hdr.caplen),             # <<<<<<<<<<<<<<
  *                         *args
  *                     )
  */
-        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 422, __pyx_L1_error)
+        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 421, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
 
-        /* "pcap.pyx":420
+        /* "pcap.pyx":419
  *             if n == 1:
  *                 if timestamp_in_ns:
  *                     callback(             # <<<<<<<<<<<<<<
  *                         (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),
  *                         get_buffer(pkt, hdr.caplen),
  */
-        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 420, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 419, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -6098,30 +6091,30 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
         __pyx_t_4 = 0;
         __pyx_t_5 = 0;
 
-        /* "pcap.pyx":423
+        /* "pcap.pyx":422
  *                         (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),
  *                         get_buffer(pkt, hdr.caplen),
  *                         *args             # <<<<<<<<<<<<<<
  *                     )
  *                 else:
  */
-        __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_v_args); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 420, __pyx_L1_error)
+        __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_v_args); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 419, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "pcap.pyx":420
+        /* "pcap.pyx":419
  *             if n == 1:
  *                 if timestamp_in_ns:
  *                     callback(             # <<<<<<<<<<<<<<
  *                         (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns),
  *                         get_buffer(pkt, hdr.caplen),
  */
-        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_v_callback, __pyx_t_5, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 420, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_v_callback, __pyx_t_5, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 419, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "pcap.pyx":419
+        /* "pcap.pyx":418
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:
  *                 if timestamp_in_ns:             # <<<<<<<<<<<<<<
@@ -6131,7 +6124,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
         goto __pyx_L10;
       }
 
-      /* "pcap.pyx":426
+      /* "pcap.pyx":425
  *                     )
  *                 else:
  *                     callback(             # <<<<<<<<<<<<<<
@@ -6140,34 +6133,34 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
       /*else*/ {
 
-        /* "pcap.pyx":427
+        /* "pcap.pyx":426
  *                 else:
  *                     callback(
  *                         hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),             # <<<<<<<<<<<<<<
  *                         get_buffer(pkt, hdr.caplen),
  *                         *args
  */
-        __pyx_t_6 = PyFloat_FromDouble((__pyx_v_hdr->ts.tv_sec + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale))); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 427, __pyx_L1_error)
+        __pyx_t_6 = PyFloat_FromDouble((__pyx_v_hdr->ts.tv_sec + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale))); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 426, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
 
-        /* "pcap.pyx":428
+        /* "pcap.pyx":427
  *                     callback(
  *                         hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
  *                         get_buffer(pkt, hdr.caplen),             # <<<<<<<<<<<<<<
  *                         *args
  *                     )
  */
-        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 428, __pyx_L1_error)
+        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 427, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
 
-        /* "pcap.pyx":426
+        /* "pcap.pyx":425
  *                     )
  *                 else:
  *                     callback(             # <<<<<<<<<<<<<<
  *                         hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
  *                         get_buffer(pkt, hdr.caplen),
  */
-        __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 426, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 425, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_GIVEREF(__pyx_t_6);
         PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_6);
@@ -6176,32 +6169,32 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
         __pyx_t_6 = 0;
         __pyx_t_5 = 0;
 
-        /* "pcap.pyx":429
+        /* "pcap.pyx":428
  *                         hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
  *                         get_buffer(pkt, hdr.caplen),
  *                         *args             # <<<<<<<<<<<<<<
  *                     )
  *             elif n == 0:
  */
-        __pyx_t_5 = PyNumber_Add(__pyx_t_4, __pyx_v_args); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 426, __pyx_L1_error)
+        __pyx_t_5 = PyNumber_Add(__pyx_t_4, __pyx_v_args); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 425, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-        /* "pcap.pyx":426
+        /* "pcap.pyx":425
  *                     )
  *                 else:
  *                     callback(             # <<<<<<<<<<<<<<
  *                         hdr.ts.tv_sec + (hdr.ts.tv_usec * scale),
  *                         get_buffer(pkt, hdr.caplen),
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_v_callback, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 426, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_v_callback, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 425, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       }
       __pyx_L10:;
 
-      /* "pcap.pyx":418
+      /* "pcap.pyx":417
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:             # <<<<<<<<<<<<<<
@@ -6211,7 +6204,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
       break;
       case 0:
 
-      /* "pcap.pyx":432
+      /* "pcap.pyx":431
  *                     )
  *             elif n == 0:
  *                 continue             # <<<<<<<<<<<<<<
@@ -6220,7 +6213,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
       goto __pyx_L3_continue;
 
-      /* "pcap.pyx":431
+      /* "pcap.pyx":430
  *                         *args
  *                     )
  *             elif n == 0:             # <<<<<<<<<<<<<<
@@ -6230,7 +6223,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
       break;
       case -1L:
 
-      /* "pcap.pyx":434
+      /* "pcap.pyx":433
  *                 continue
  *             elif n == -1:
  *                 raise KeyboardInterrupt             # <<<<<<<<<<<<<<
@@ -6238,9 +6231,9 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  *                 break
  */
       __Pyx_Raise(__pyx_builtin_KeyboardInterrupt, 0, 0, 0);
-      __PYX_ERR(1, 434, __pyx_L1_error)
+      __PYX_ERR(1, 433, __pyx_L1_error)
 
-      /* "pcap.pyx":433
+      /* "pcap.pyx":432
  *             elif n == 0:
  *                 continue
  *             elif n == -1:             # <<<<<<<<<<<<<<
@@ -6250,7 +6243,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
       break;
       case -2L:
 
-      /* "pcap.pyx":436
+      /* "pcap.pyx":435
  *                 raise KeyboardInterrupt
  *             elif n == -2:
  *                 break             # <<<<<<<<<<<<<<
@@ -6259,7 +6252,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
       goto __pyx_L4_break;
 
-      /* "pcap.pyx":435
+      /* "pcap.pyx":434
  *             elif n == -1:
  *                 raise KeyboardInterrupt
  *             elif n == -2:             # <<<<<<<<<<<<<<
@@ -6270,22 +6263,22 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
       default: break;
     }
 
-    /* "pcap.pyx":437
+    /* "pcap.pyx":436
  *             elif n == -2:
  *                 break
  *             if i == cnt:             # <<<<<<<<<<<<<<
  *                 break
  *             i = i + 1
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 437, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 436, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = PyObject_RichCompare(__pyx_t_4, __pyx_v_cnt, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 437, __pyx_L1_error)
+    __pyx_t_5 = PyObject_RichCompare(__pyx_t_4, __pyx_v_cnt, Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 436, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(1, 437, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(1, 436, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     if (__pyx_t_3) {
 
-      /* "pcap.pyx":438
+      /* "pcap.pyx":437
  *                 break
  *             if i == cnt:
  *                 break             # <<<<<<<<<<<<<<
@@ -6294,7 +6287,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
       goto __pyx_L4_break;
 
-      /* "pcap.pyx":437
+      /* "pcap.pyx":436
  *             elif n == -2:
  *                 break
  *             if i == cnt:             # <<<<<<<<<<<<<<
@@ -6303,7 +6296,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
  */
     }
 
-    /* "pcap.pyx":439
+    /* "pcap.pyx":438
  *             if i == cnt:
  *                 break
  *             i = i + 1             # <<<<<<<<<<<<<<
@@ -6315,7 +6308,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   }
   __pyx_L4_break:;
 
-  /* "pcap.pyx":394
+  /* "pcap.pyx":393
  *         return n
  * 
  *     def loop(self, cnt, callback, *args):             # <<<<<<<<<<<<<<
@@ -6338,7 +6331,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_22loop(struct __pyx_obj_4pcap_pcap *__pyx_
   return __pyx_r;
 }
 
-/* "pcap.pyx":441
+/* "pcap.pyx":440
  *             i = i + 1
  * 
  *     def sendpacket(self, buf):             # <<<<<<<<<<<<<<
@@ -6370,18 +6363,18 @@ static PyObject *__pyx_pf_4pcap_4pcap_24sendpacket(struct __pyx_obj_4pcap_pcap *
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("sendpacket", 0);
 
-  /* "pcap.pyx":443
+  /* "pcap.pyx":442
  *     def sendpacket(self, buf):
  *         """Send a raw network packet on the interface."""
  *         ret = pcap_sendpacket(self.__pcap, buf, <int>len(buf))             # <<<<<<<<<<<<<<
  *         if ret == -1:
  *             raise OSError, pcap_geterr(self.__pcap)
  */
-  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_buf); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(1, 443, __pyx_L1_error)
-  __pyx_t_2 = PyObject_Length(__pyx_v_buf); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(1, 443, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsUString(__pyx_v_buf); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(1, 442, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_v_buf); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(1, 442, __pyx_L1_error)
   __pyx_v_ret = pcap_sendpacket(__pyx_v_self->__pyx___pcap, __pyx_t_1, ((int)__pyx_t_2));
 
-  /* "pcap.pyx":444
+  /* "pcap.pyx":443
  *         """Send a raw network packet on the interface."""
  *         ret = pcap_sendpacket(self.__pcap, buf, <int>len(buf))
  *         if ret == -1:             # <<<<<<<<<<<<<<
@@ -6391,20 +6384,20 @@ static PyObject *__pyx_pf_4pcap_4pcap_24sendpacket(struct __pyx_obj_4pcap_pcap *
   __pyx_t_3 = ((__pyx_v_ret == -1L) != 0);
   if (unlikely(__pyx_t_3)) {
 
-    /* "pcap.pyx":445
+    /* "pcap.pyx":444
  *         ret = pcap_sendpacket(self.__pcap, buf, <int>len(buf))
  *         if ret == -1:
  *             raise OSError, pcap_geterr(self.__pcap)             # <<<<<<<<<<<<<<
  *         return len(buf)
  * 
  */
-    __pyx_t_4 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 445, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 444, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_4, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(1, 445, __pyx_L1_error)
+    __PYX_ERR(1, 444, __pyx_L1_error)
 
-    /* "pcap.pyx":444
+    /* "pcap.pyx":443
  *         """Send a raw network packet on the interface."""
  *         ret = pcap_sendpacket(self.__pcap, buf, <int>len(buf))
  *         if ret == -1:             # <<<<<<<<<<<<<<
@@ -6413,7 +6406,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_24sendpacket(struct __pyx_obj_4pcap_pcap *
  */
   }
 
-  /* "pcap.pyx":446
+  /* "pcap.pyx":445
  *         if ret == -1:
  *             raise OSError, pcap_geterr(self.__pcap)
  *         return len(buf)             # <<<<<<<<<<<<<<
@@ -6421,14 +6414,14 @@ static PyObject *__pyx_pf_4pcap_4pcap_24sendpacket(struct __pyx_obj_4pcap_pcap *
  *     def geterr(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyObject_Length(__pyx_v_buf); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(1, 446, __pyx_L1_error)
-  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 446, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_v_buf); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(1, 445, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 445, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":441
+  /* "pcap.pyx":440
  *             i = i + 1
  * 
  *     def sendpacket(self, buf):             # <<<<<<<<<<<<<<
@@ -6447,7 +6440,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_24sendpacket(struct __pyx_obj_4pcap_pcap *
   return __pyx_r;
 }
 
-/* "pcap.pyx":448
+/* "pcap.pyx":447
  *         return len(buf)
  * 
  *     def geterr(self):             # <<<<<<<<<<<<<<
@@ -6475,7 +6468,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_26geterr(struct __pyx_obj_4pcap_pcap *__py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("geterr", 0);
 
-  /* "pcap.pyx":450
+  /* "pcap.pyx":449
  *     def geterr(self):
  *         """Return the last error message associated with this handle."""
  *         return pcap_geterr(self.__pcap)             # <<<<<<<<<<<<<<
@@ -6483,13 +6476,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_26geterr(struct __pyx_obj_4pcap_pcap *__py
  *     def stats(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 450, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 449, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":448
+  /* "pcap.pyx":447
  *         return len(buf)
  * 
  *     def geterr(self):             # <<<<<<<<<<<<<<
@@ -6508,7 +6501,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_26geterr(struct __pyx_obj_4pcap_pcap *__py
   return __pyx_r;
 }
 
-/* "pcap.pyx":452
+/* "pcap.pyx":451
  *         return pcap_geterr(self.__pcap)
  * 
  *     def stats(self):             # <<<<<<<<<<<<<<
@@ -6541,7 +6534,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("stats", 0);
 
-  /* "pcap.pyx":456
+  /* "pcap.pyx":455
  *         dropped, and dropped by the interface."""
  *         cdef pcap_stat pstat
  *         if pcap_stats(self.__pcap, &pstat) < 0:             # <<<<<<<<<<<<<<
@@ -6551,20 +6544,20 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
   __pyx_t_1 = ((pcap_stats(__pyx_v_self->__pyx___pcap, (&__pyx_v_pstat)) < 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pcap.pyx":457
+    /* "pcap.pyx":456
  *         cdef pcap_stat pstat
  *         if pcap_stats(self.__pcap, &pstat) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)             # <<<<<<<<<<<<<<
  *         return (pstat.ps_recv, pstat.ps_drop, pstat.ps_ifdrop)
  * 
  */
-    __pyx_t_2 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 457, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyBytes_FromString(pcap_geterr(__pyx_v_self->__pyx___pcap)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 456, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_2, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(1, 457, __pyx_L1_error)
+    __PYX_ERR(1, 456, __pyx_L1_error)
 
-    /* "pcap.pyx":456
+    /* "pcap.pyx":455
  *         dropped, and dropped by the interface."""
  *         cdef pcap_stat pstat
  *         if pcap_stats(self.__pcap, &pstat) < 0:             # <<<<<<<<<<<<<<
@@ -6573,7 +6566,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
  */
   }
 
-  /* "pcap.pyx":458
+  /* "pcap.pyx":457
  *         if pcap_stats(self.__pcap, &pstat) < 0:
  *             raise OSError, pcap_geterr(self.__pcap)
  *         return (pstat.ps_recv, pstat.ps_drop, pstat.ps_ifdrop)             # <<<<<<<<<<<<<<
@@ -6581,13 +6574,13 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
  *     def __iter__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_recv); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 458, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_recv); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 457, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_drop); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 458, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_drop); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 457, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_ifdrop); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 458, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pstat.ps_ifdrop); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 457, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 458, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 457, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
@@ -6602,7 +6595,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":452
+  /* "pcap.pyx":451
  *         return pcap_geterr(self.__pcap)
  * 
  *     def stats(self):             # <<<<<<<<<<<<<<
@@ -6624,7 +6617,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_28stats(struct __pyx_obj_4pcap_pcap *__pyx
   return __pyx_r;
 }
 
-/* "pcap.pyx":460
+/* "pcap.pyx":459
  *         return (pstat.ps_recv, pstat.ps_drop, pstat.ps_ifdrop)
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -6650,7 +6643,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_30__iter__(struct __pyx_obj_4pcap_pcap *__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iter__", 0);
 
-  /* "pcap.pyx":461
+  /* "pcap.pyx":460
  * 
  *     def __iter__(self):
  *         pcap_ex_setup(self.__pcap)             # <<<<<<<<<<<<<<
@@ -6659,7 +6652,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_30__iter__(struct __pyx_obj_4pcap_pcap *__
  */
   pcap_ex_setup(__pyx_v_self->__pyx___pcap);
 
-  /* "pcap.pyx":462
+  /* "pcap.pyx":461
  *     def __iter__(self):
  *         pcap_ex_setup(self.__pcap)
  *         return self             # <<<<<<<<<<<<<<
@@ -6671,7 +6664,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_30__iter__(struct __pyx_obj_4pcap_pcap *__
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "pcap.pyx":460
+  /* "pcap.pyx":459
  *         return (pstat.ps_recv, pstat.ps_drop, pstat.ps_ifdrop)
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -6686,7 +6679,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_30__iter__(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":464
+/* "pcap.pyx":463
  *         return self
  * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -6726,7 +6719,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("__next__", 0);
 
-  /* "pcap.pyx":468
+  /* "pcap.pyx":467
  *         cdef u_char *pkt
  *         cdef int n
  *         cdef double scale = self.__precision_scale             # <<<<<<<<<<<<<<
@@ -6736,7 +6729,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_1 = __pyx_v_self->__pyx___precision_scale;
   __pyx_v_scale = __pyx_t_1;
 
-  /* "pcap.pyx":469
+  /* "pcap.pyx":468
  *         cdef int n
  *         cdef double scale = self.__precision_scale
  *         cdef long long scale_ns = self.__precision_scale_ns             # <<<<<<<<<<<<<<
@@ -6746,7 +6739,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_2 = __pyx_v_self->__pyx___precision_scale_ns;
   __pyx_v_scale_ns = __pyx_t_2;
 
-  /* "pcap.pyx":470
+  /* "pcap.pyx":469
  *         cdef double scale = self.__precision_scale
  *         cdef long long scale_ns = self.__precision_scale_ns
  *         cdef bint timestamp_in_ns = self.__timestamp_in_ns             # <<<<<<<<<<<<<<
@@ -6756,7 +6749,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
   __pyx_t_3 = __pyx_v_self->__pyx___timestamp_in_ns;
   __pyx_v_timestamp_in_ns = __pyx_t_3;
 
-  /* "pcap.pyx":473
+  /* "pcap.pyx":472
  *         cdef double timestamp
  *         cdef long long timestamp_ns
  *         while 1:             # <<<<<<<<<<<<<<
@@ -6765,7 +6758,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  */
   while (1) {
 
-    /* "pcap.pyx":474
+    /* "pcap.pyx":473
  *         cdef long long timestamp_ns
  *         while 1:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6780,7 +6773,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
         #endif
         /*try:*/ {
 
-          /* "pcap.pyx":475
+          /* "pcap.pyx":474
  *         while 1:
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)             # <<<<<<<<<<<<<<
@@ -6790,7 +6783,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
           __pyx_v_n = pcap_ex_next(__pyx_v_self->__pyx___pcap, (&__pyx_v_hdr), (&__pyx_v_pkt));
         }
 
-        /* "pcap.pyx":474
+        /* "pcap.pyx":473
  *         cdef long long timestamp_ns
  *         while 1:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6809,7 +6802,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
         }
     }
 
-    /* "pcap.pyx":476
+    /* "pcap.pyx":475
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:             # <<<<<<<<<<<<<<
@@ -6819,7 +6812,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
     switch (__pyx_v_n) {
       case 1:
 
-      /* "pcap.pyx":477
+      /* "pcap.pyx":476
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:
  *                 if timestamp_in_ns:             # <<<<<<<<<<<<<<
@@ -6829,7 +6822,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
       __pyx_t_3 = (__pyx_v_timestamp_in_ns != 0);
       if (__pyx_t_3) {
 
-        /* "pcap.pyx":478
+        /* "pcap.pyx":477
  *             if n == 1:
  *                 if timestamp_in_ns:
  *                     timestamp_ns = (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns)             # <<<<<<<<<<<<<<
@@ -6838,7 +6831,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  */
         __pyx_v_timestamp_ns = ((__pyx_v_hdr->ts.tv_sec * 1000000000LL) + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale_ns));
 
-        /* "pcap.pyx":479
+        /* "pcap.pyx":478
  *                 if timestamp_in_ns:
  *                     timestamp_ns = (hdr.ts.tv_sec * 1000000000LL) + (hdr.ts.tv_usec * scale_ns)
  *                     return (timestamp_ns, get_buffer(pkt, hdr.caplen))             # <<<<<<<<<<<<<<
@@ -6846,11 +6839,11 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  *                     timestamp = hdr.ts.tv_sec + (hdr.ts.tv_usec * scale)
  */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_4 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_timestamp_ns); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 479, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_timestamp_ns); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 478, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 479, __pyx_L1_error)
+        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 478, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 479, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 478, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -6862,7 +6855,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
         __pyx_t_6 = 0;
         goto __pyx_L0;
 
-        /* "pcap.pyx":477
+        /* "pcap.pyx":476
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:
  *                 if timestamp_in_ns:             # <<<<<<<<<<<<<<
@@ -6871,7 +6864,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  */
       }
 
-      /* "pcap.pyx":481
+      /* "pcap.pyx":480
  *                     return (timestamp_ns, get_buffer(pkt, hdr.caplen))
  *                 else:
  *                     timestamp = hdr.ts.tv_sec + (hdr.ts.tv_usec * scale)             # <<<<<<<<<<<<<<
@@ -6881,7 +6874,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
       /*else*/ {
         __pyx_v_timestamp = (__pyx_v_hdr->ts.tv_sec + (__pyx_v_hdr->ts.tv_usec * __pyx_v_scale));
 
-        /* "pcap.pyx":482
+        /* "pcap.pyx":481
  *                 else:
  *                     timestamp = hdr.ts.tv_sec + (hdr.ts.tv_usec * scale)
  *                     return (timestamp, get_buffer(pkt, hdr.caplen))             # <<<<<<<<<<<<<<
@@ -6889,11 +6882,11 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  *                 continue
  */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_6 = PyFloat_FromDouble(__pyx_v_timestamp); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 482, __pyx_L1_error)
+        __pyx_t_6 = PyFloat_FromDouble(__pyx_v_timestamp); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 481, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 482, __pyx_L1_error)
+        __pyx_t_5 = __pyx_f_4pcap_get_buffer(__pyx_v_pkt, __pyx_v_hdr->caplen); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 481, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 482, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 481, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_GIVEREF(__pyx_t_6);
         PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_6);
@@ -6906,7 +6899,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
         goto __pyx_L0;
       }
 
-      /* "pcap.pyx":476
+      /* "pcap.pyx":475
  *             with nogil:
  *                 n = pcap_ex_next(self.__pcap, &hdr, &pkt)
  *             if n == 1:             # <<<<<<<<<<<<<<
@@ -6916,7 +6909,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
       break;
       case 0:
 
-      /* "pcap.pyx":484
+      /* "pcap.pyx":483
  *                     return (timestamp, get_buffer(pkt, hdr.caplen))
  *             elif n == 0:
  *                 continue             # <<<<<<<<<<<<<<
@@ -6925,7 +6918,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  */
       goto __pyx_L3_continue;
 
-      /* "pcap.pyx":483
+      /* "pcap.pyx":482
  *                     timestamp = hdr.ts.tv_sec + (hdr.ts.tv_usec * scale)
  *                     return (timestamp, get_buffer(pkt, hdr.caplen))
  *             elif n == 0:             # <<<<<<<<<<<<<<
@@ -6935,7 +6928,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
       break;
       case -1L:
 
-      /* "pcap.pyx":486
+      /* "pcap.pyx":485
  *                 continue
  *             elif n == -1:
  *                 raise KeyboardInterrupt             # <<<<<<<<<<<<<<
@@ -6943,9 +6936,9 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  *                 raise StopIteration
  */
       __Pyx_Raise(__pyx_builtin_KeyboardInterrupt, 0, 0, 0);
-      __PYX_ERR(1, 486, __pyx_L1_error)
+      __PYX_ERR(1, 485, __pyx_L1_error)
 
-      /* "pcap.pyx":485
+      /* "pcap.pyx":484
  *             elif n == 0:
  *                 continue
  *             elif n == -1:             # <<<<<<<<<<<<<<
@@ -6955,7 +6948,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
       break;
       case -2L:
 
-      /* "pcap.pyx":488
+      /* "pcap.pyx":487
  *                 raise KeyboardInterrupt
  *             elif n == -2:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
@@ -6963,9 +6956,9 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
  *     def __dealloc__(self):
  */
       __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-      __PYX_ERR(1, 488, __pyx_L1_error)
+      __PYX_ERR(1, 487, __pyx_L1_error)
 
-      /* "pcap.pyx":487
+      /* "pcap.pyx":486
  *             elif n == -1:
  *                 raise KeyboardInterrupt
  *             elif n == -2:             # <<<<<<<<<<<<<<
@@ -6978,7 +6971,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
     __pyx_L3_continue:;
   }
 
-  /* "pcap.pyx":464
+  /* "pcap.pyx":463
  *         return self
  * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -7001,7 +6994,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_32__next__(struct __pyx_obj_4pcap_pcap *__
   return __pyx_r;
 }
 
-/* "pcap.pyx":490
+/* "pcap.pyx":489
  *                 raise StopIteration
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -7025,7 +7018,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "pcap.pyx":491
+  /* "pcap.pyx":490
  * 
  *     def __dealloc__(self):
  *         if self.__name:             # <<<<<<<<<<<<<<
@@ -7035,7 +7028,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
   __pyx_t_1 = (__pyx_v_self->__pyx___name != 0);
   if (__pyx_t_1) {
 
-    /* "pcap.pyx":492
+    /* "pcap.pyx":491
  *     def __dealloc__(self):
  *         if self.__name:
  *             free(self.__name)             # <<<<<<<<<<<<<<
@@ -7044,7 +7037,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
     free(__pyx_v_self->__pyx___name);
 
-    /* "pcap.pyx":491
+    /* "pcap.pyx":490
  * 
  *     def __dealloc__(self):
  *         if self.__name:             # <<<<<<<<<<<<<<
@@ -7053,7 +7046,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
   }
 
-  /* "pcap.pyx":493
+  /* "pcap.pyx":492
  *         if self.__name:
  *             free(self.__name)
  *         if self.__filter:             # <<<<<<<<<<<<<<
@@ -7063,7 +7056,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
   __pyx_t_1 = (__pyx_v_self->__pyx___filter != 0);
   if (__pyx_t_1) {
 
-    /* "pcap.pyx":494
+    /* "pcap.pyx":493
  *             free(self.__name)
  *         if self.__filter:
  *             free(self.__filter)             # <<<<<<<<<<<<<<
@@ -7072,7 +7065,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
     free(__pyx_v_self->__pyx___filter);
 
-    /* "pcap.pyx":493
+    /* "pcap.pyx":492
  *         if self.__name:
  *             free(self.__name)
  *         if self.__filter:             # <<<<<<<<<<<<<<
@@ -7081,7 +7074,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
   }
 
-  /* "pcap.pyx":495
+  /* "pcap.pyx":494
  *         if self.__filter:
  *             free(self.__filter)
  *         if self.__pcap:             # <<<<<<<<<<<<<<
@@ -7091,7 +7084,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
   __pyx_t_1 = (__pyx_v_self->__pyx___pcap != 0);
   if (__pyx_t_1) {
 
-    /* "pcap.pyx":496
+    /* "pcap.pyx":495
  *             free(self.__filter)
  *         if self.__pcap:
  *             pcap_close(self.__pcap)             # <<<<<<<<<<<<<<
@@ -7100,7 +7093,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
     pcap_close(__pyx_v_self->__pyx___pcap);
 
-    /* "pcap.pyx":495
+    /* "pcap.pyx":494
  *         if self.__filter:
  *             free(self.__filter)
  *         if self.__pcap:             # <<<<<<<<<<<<<<
@@ -7109,7 +7102,7 @@ static void __pyx_pf_4pcap_4pcap_34__dealloc__(struct __pyx_obj_4pcap_pcap *__py
  */
   }
 
-  /* "pcap.pyx":490
+  /* "pcap.pyx":489
  *                 raise StopIteration
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -7152,7 +7145,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_36__reduce_cython__(CYTHON_UNUSED struct _
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("self.__pcap cannot be converted to a Python object for pickling")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7205,7 +7198,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_38__setstate_cython__(CYTHON_UNUSED struct
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("self.__pcap cannot be converted to a Python object for pickling")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7228,7 +7221,7 @@ static PyObject *__pyx_pf_4pcap_4pcap_38__setstate_cython__(CYTHON_UNUSED struct
   return __pyx_r;
 }
 
-/* "pcap.pyx":498
+/* "pcap.pyx":497
  *             pcap_close(self.__pcap)
  * 
  * def ex_name(char *foo):             # <<<<<<<<<<<<<<
@@ -7245,7 +7238,7 @@ static PyObject *__pyx_pw_4pcap_1ex_name(PyObject *__pyx_self, PyObject *__pyx_a
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("ex_name (wrapper)", 0);
   assert(__pyx_arg_foo); {
-    __pyx_v_foo = __Pyx_PyObject_AsWritableString(__pyx_arg_foo); if (unlikely((!__pyx_v_foo) && PyErr_Occurred())) __PYX_ERR(1, 498, __pyx_L3_error)
+    __pyx_v_foo = __Pyx_PyObject_AsWritableString(__pyx_arg_foo); if (unlikely((!__pyx_v_foo) && PyErr_Occurred())) __PYX_ERR(1, 497, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7266,7 +7259,7 @@ static PyObject *__pyx_pf_4pcap_ex_name(CYTHON_UNUSED PyObject *__pyx_self, char
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("ex_name", 0);
 
-  /* "pcap.pyx":499
+  /* "pcap.pyx":498
  * 
  * def ex_name(char *foo):
  *     return pcap_ex_name(foo)             # <<<<<<<<<<<<<<
@@ -7274,13 +7267,13 @@ static PyObject *__pyx_pf_4pcap_ex_name(CYTHON_UNUSED PyObject *__pyx_self, char
  * def lookupdev():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_ex_name(__pyx_v_foo)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 499, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(pcap_ex_name(__pyx_v_foo)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 498, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":498
+  /* "pcap.pyx":497
  *             pcap_close(self.__pcap)
  * 
  * def ex_name(char *foo):             # <<<<<<<<<<<<<<
@@ -7299,7 +7292,7 @@ static PyObject *__pyx_pf_4pcap_ex_name(CYTHON_UNUSED PyObject *__pyx_self, char
   return __pyx_r;
 }
 
-/* "pcap.pyx":501
+/* "pcap.pyx":500
  *     return pcap_ex_name(foo)
  * 
  * def lookupdev():             # <<<<<<<<<<<<<<
@@ -7332,7 +7325,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("lookupdev", 0);
 
-  /* "pcap.pyx":505
+  /* "pcap.pyx":504
  *     cdef char *p
  *     cdef char ebuf[256]
  *     p = pcap_ex_lookupdev(ebuf)             # <<<<<<<<<<<<<<
@@ -7341,7 +7334,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   __pyx_v_p = pcap_ex_lookupdev(__pyx_v_ebuf);
 
-  /* "pcap.pyx":506
+  /* "pcap.pyx":505
  *     cdef char ebuf[256]
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:             # <<<<<<<<<<<<<<
@@ -7351,20 +7344,20 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
   __pyx_t_1 = ((__pyx_v_p == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pcap.pyx":507
+    /* "pcap.pyx":506
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:
  *         raise OSError, ebuf             # <<<<<<<<<<<<<<
  *     return str(p.decode('UTF-8'))
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 507, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 506, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_builtin_OSError, __pyx_t_2, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(1, 507, __pyx_L1_error)
+    __PYX_ERR(1, 506, __pyx_L1_error)
 
-    /* "pcap.pyx":506
+    /* "pcap.pyx":505
  *     cdef char ebuf[256]
  *     p = pcap_ex_lookupdev(ebuf)
  *     if p == NULL:             # <<<<<<<<<<<<<<
@@ -7373,7 +7366,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  */
   }
 
-  /* "pcap.pyx":508
+  /* "pcap.pyx":507
  *     if p == NULL:
  *         raise OSError, ebuf
  *     return str(p.decode('UTF-8'))             # <<<<<<<<<<<<<<
@@ -7381,16 +7374,16 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
  * def findalldevs():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_decode_c_string(__pyx_v_p, 0, strlen(__pyx_v_p), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 508, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_c_string(__pyx_v_p, 0, strlen(__pyx_v_p), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 507, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 508, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 507, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":501
+  /* "pcap.pyx":500
  *     return pcap_ex_name(foo)
  * 
  * def lookupdev():             # <<<<<<<<<<<<<<
@@ -7410,7 +7403,7 @@ static PyObject *__pyx_pf_4pcap_2lookupdev(CYTHON_UNUSED PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "pcap.pyx":510
+/* "pcap.pyx":509
  *     return str(p.decode('UTF-8'))
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
@@ -7449,7 +7442,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   pcap_if_t *__pyx_t_6;
   __Pyx_RefNannySetupContext("findalldevs", 0);
 
-  /* "pcap.pyx":516
+  /* "pcap.pyx":515
  *     cdef char ebuf[256]
  * 
  *     status = pcap_findalldevs(&devs, ebuf)             # <<<<<<<<<<<<<<
@@ -7458,7 +7451,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   __pyx_v_status = pcap_findalldevs((&__pyx_v_devs), __pyx_v_ebuf);
 
-  /* "pcap.pyx":517
+  /* "pcap.pyx":516
  * 
  *     status = pcap_findalldevs(&devs, ebuf)
  *     if status:             # <<<<<<<<<<<<<<
@@ -7468,23 +7461,23 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   __pyx_t_1 = (__pyx_v_status != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pcap.pyx":518
+    /* "pcap.pyx":517
  *     status = pcap_findalldevs(&devs, ebuf)
  *     if status:
  *         raise OSError(ebuf)             # <<<<<<<<<<<<<<
  *     retval = []
  *     if not devs:
  */
-    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 518, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 517, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_OSError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 518, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_OSError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 517, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(1, 518, __pyx_L1_error)
+    __PYX_ERR(1, 517, __pyx_L1_error)
 
-    /* "pcap.pyx":517
+    /* "pcap.pyx":516
  * 
  *     status = pcap_findalldevs(&devs, ebuf)
  *     if status:             # <<<<<<<<<<<<<<
@@ -7493,19 +7486,19 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   }
 
-  /* "pcap.pyx":519
+  /* "pcap.pyx":518
  *     if status:
  *         raise OSError(ebuf)
  *     retval = []             # <<<<<<<<<<<<<<
  *     if not devs:
  *         return retval
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 519, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_retval = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "pcap.pyx":520
+  /* "pcap.pyx":519
  *         raise OSError(ebuf)
  *     retval = []
  *     if not devs:             # <<<<<<<<<<<<<<
@@ -7515,7 +7508,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   __pyx_t_1 = ((!(__pyx_v_devs != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "pcap.pyx":521
+    /* "pcap.pyx":520
  *     retval = []
  *     if not devs:
  *         return retval             # <<<<<<<<<<<<<<
@@ -7527,7 +7520,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
     __pyx_r = __pyx_v_retval;
     goto __pyx_L0;
 
-    /* "pcap.pyx":520
+    /* "pcap.pyx":519
  *         raise OSError(ebuf)
  *     retval = []
  *     if not devs:             # <<<<<<<<<<<<<<
@@ -7536,7 +7529,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   }
 
-  /* "pcap.pyx":522
+  /* "pcap.pyx":521
  *     if not devs:
  *         return retval
  *     curr = devs             # <<<<<<<<<<<<<<
@@ -7545,7 +7538,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   __pyx_v_curr = __pyx_v_devs;
 
-  /* "pcap.pyx":523
+  /* "pcap.pyx":522
  *         return retval
  *     curr = devs
  *     while 1:             # <<<<<<<<<<<<<<
@@ -7554,7 +7547,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   while (1) {
 
-    /* "pcap.pyx":524
+    /* "pcap.pyx":523
  *     curr = devs
  *     while 1:
  *         retval.append(str(curr.name.decode('UTF-8')))             # <<<<<<<<<<<<<<
@@ -7562,15 +7555,15 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  *             break
  */
     __pyx_t_4 = __pyx_v_curr->name;
-    __pyx_t_3 = __Pyx_decode_c_string(__pyx_t_4, 0, strlen(__pyx_t_4), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 524, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_decode_c_string(__pyx_t_4, 0, strlen(__pyx_t_4), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 523, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 524, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 523, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_retval, __pyx_t_2); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 524, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_retval, __pyx_t_2); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 523, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pcap.pyx":525
+    /* "pcap.pyx":524
  *     while 1:
  *         retval.append(str(curr.name.decode('UTF-8')))
  *         if not curr.next:             # <<<<<<<<<<<<<<
@@ -7580,7 +7573,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
     __pyx_t_1 = ((!(__pyx_v_curr->next != 0)) != 0);
     if (__pyx_t_1) {
 
-      /* "pcap.pyx":526
+      /* "pcap.pyx":525
  *         retval.append(str(curr.name.decode('UTF-8')))
  *         if not curr.next:
  *             break             # <<<<<<<<<<<<<<
@@ -7589,7 +7582,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
       goto __pyx_L6_break;
 
-      /* "pcap.pyx":525
+      /* "pcap.pyx":524
  *     while 1:
  *         retval.append(str(curr.name.decode('UTF-8')))
  *         if not curr.next:             # <<<<<<<<<<<<<<
@@ -7598,7 +7591,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
     }
 
-    /* "pcap.pyx":527
+    /* "pcap.pyx":526
  *         if not curr.next:
  *             break
  *         curr = curr.next             # <<<<<<<<<<<<<<
@@ -7610,7 +7603,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   }
   __pyx_L6_break:;
 
-  /* "pcap.pyx":528
+  /* "pcap.pyx":527
  *             break
  *         curr = curr.next
  *     pcap_freealldevs(devs)             # <<<<<<<<<<<<<<
@@ -7619,7 +7612,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
  */
   pcap_freealldevs(__pyx_v_devs);
 
-  /* "pcap.pyx":529
+  /* "pcap.pyx":528
  *         curr = curr.next
  *     pcap_freealldevs(devs)
  *     return retval             # <<<<<<<<<<<<<<
@@ -7631,7 +7624,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   __pyx_r = __pyx_v_retval;
   goto __pyx_L0;
 
-  /* "pcap.pyx":510
+  /* "pcap.pyx":509
  *     return str(p.decode('UTF-8'))
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
@@ -7652,7 +7645,7 @@ static PyObject *__pyx_pf_4pcap_4findalldevs(CYTHON_UNUSED PyObject *__pyx_self)
   return __pyx_r;
 }
 
-/* "pcap.pyx":531
+/* "pcap.pyx":530
  *     return retval
  * 
  * def lookupnet(char *dev):             # <<<<<<<<<<<<<<
@@ -7670,7 +7663,7 @@ static PyObject *__pyx_pw_4pcap_7lookupnet(PyObject *__pyx_self, PyObject *__pyx
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("lookupnet (wrapper)", 0);
   assert(__pyx_arg_dev); {
-    __pyx_v_dev = __Pyx_PyObject_AsWritableString(__pyx_arg_dev); if (unlikely((!__pyx_v_dev) && PyErr_Occurred())) __PYX_ERR(1, 531, __pyx_L3_error)
+    __pyx_v_dev = __Pyx_PyObject_AsWritableString(__pyx_arg_dev); if (unlikely((!__pyx_v_dev) && PyErr_Occurred())) __PYX_ERR(1, 530, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7702,7 +7695,7 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("lookupnet", 0);
 
-  /* "pcap.pyx":540
+  /* "pcap.pyx":539
  *     cdef char ebuf[256]
  * 
  *     status = pcap_lookupnet(dev, &netp, &maskp, ebuf)             # <<<<<<<<<<<<<<
@@ -7711,7 +7704,7 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
  */
   __pyx_v_status = pcap_lookupnet(__pyx_v_dev, (&__pyx_v_netp), (&__pyx_v_maskp), __pyx_v_ebuf);
 
-  /* "pcap.pyx":541
+  /* "pcap.pyx":540
  * 
  *     status = pcap_lookupnet(dev, &netp, &maskp, ebuf)
  *     if status:             # <<<<<<<<<<<<<<
@@ -7721,22 +7714,22 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   __pyx_t_1 = (__pyx_v_status != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pcap.pyx":542
+    /* "pcap.pyx":541
  *     status = pcap_lookupnet(dev, &netp, &maskp, ebuf)
  *     if status:
  *         raise OSError(ebuf)             # <<<<<<<<<<<<<<
  *     return struct.pack('I', netp), struct.pack('I', maskp)
  */
-    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 542, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_ebuf); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 541, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_OSError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 542, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_OSError, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 541, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(1, 542, __pyx_L1_error)
+    __PYX_ERR(1, 541, __pyx_L1_error)
 
-    /* "pcap.pyx":541
+    /* "pcap.pyx":540
  * 
  *     status = pcap_lookupnet(dev, &netp, &maskp, ebuf)
  *     if status:             # <<<<<<<<<<<<<<
@@ -7745,18 +7738,18 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
  */
   }
 
-  /* "pcap.pyx":543
+  /* "pcap.pyx":542
  *     if status:
  *         raise OSError(ebuf)
  *     return struct.pack('I', netp), struct.pack('I', maskp)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_struct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_struct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pack); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pack); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_netp); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_netp); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -7773,7 +7766,7 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_n_s_I, __pyx_t_2};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7782,14 +7775,14 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_n_s_I, __pyx_t_2};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -7800,17 +7793,17 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_struct); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_struct); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_pack); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_pack); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_maskp); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_maskp); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -7827,7 +7820,7 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_n_s_I, __pyx_t_7};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -7836,14 +7829,14 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_n_s_I, __pyx_t_7};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -7854,12 +7847,12 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
     __Pyx_GIVEREF(__pyx_t_7);
     PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_6, __pyx_t_7);
     __pyx_t_7 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 543, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 542, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 543, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 542, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3);
@@ -7871,7 +7864,7 @@ static PyObject *__pyx_pf_4pcap_6lookupnet(CYTHON_UNUSED PyObject *__pyx_self, c
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pcap.pyx":531
+  /* "pcap.pyx":530
  *     return retval
  * 
  * def lookupnet(char *dev):             # <<<<<<<<<<<<<<
@@ -8092,7 +8085,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if itemsize <= 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8124,7 +8117,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if not isinstance(format, bytes):
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 136, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 136, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8251,7 +8244,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8525,7 +8518,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *             if self.dtype_is_object:
  */
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 176, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 176, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_Raise(__pyx_t_10, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -8766,7 +8759,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(stru
  *         info.buf = self.data
  *         info.len = self.len
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 192, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -9482,7 +9475,7 @@ static PyObject *__pyx_pf___pyx_array___reduce_cython__(CYTHON_UNUSED struct __p
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -9535,7 +9528,7 @@ static PyObject *__pyx_pf___pyx_array_2__setstate_cython__(CYTHON_UNUSED struct 
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -11179,7 +11172,7 @@ static int __pyx_memoryview___pyx_pf_15View_dot_MemoryView_10memoryview_6__setit
  * 
  *         have_slices, index = _unellipsify(index, self.view.ndim)
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 414, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 414, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -12206,7 +12199,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  *         else:
  *             if len(self.view.format) == 1:
  */
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 491, __pyx_L5_except_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 491, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -12562,7 +12555,7 @@ static int __pyx_memoryview___pyx_pf_15View_dot_MemoryView_10memoryview_8__getbu
  * 
  *         if flags & PyBUF_ND:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13102,7 +13095,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_7strides___get__(st
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 566, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 566, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -13216,7 +13209,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_10suboffsets___get_
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->view.ndim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 573, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__22, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 573, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__21, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 573, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = __pyx_t_3;
@@ -14217,7 +14210,7 @@ static PyObject *__pyx_pf___pyx_memoryview___reduce_cython__(CYTHON_UNUSED struc
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -14270,7 +14263,7 @@ static PyObject *__pyx_pf___pyx_memoryview_2__setstate_cython__(CYTHON_UNUSED st
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -14621,9 +14614,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
         __Pyx_GOTREF(__pyx_t_7);
         { Py_ssize_t __pyx_temp;
           for (__pyx_temp=0; __pyx_temp < ((__pyx_v_ndim - __pyx_t_8) + 1); __pyx_temp++) {
-            __Pyx_INCREF(__pyx_slice__25);
-            __Pyx_GIVEREF(__pyx_slice__25);
-            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__25);
+            __Pyx_INCREF(__pyx_slice__24);
+            __Pyx_GIVEREF(__pyx_slice__24);
+            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__24);
           }
         }
         __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 678, __pyx_L1_error)
@@ -14656,7 +14649,7 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
  *         else:
  */
       /*else*/ {
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__25); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 681, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__24); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 681, __pyx_L1_error)
       }
       __pyx_L7:;
 
@@ -14796,9 +14789,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
     __Pyx_GOTREF(__pyx_t_3);
     { Py_ssize_t __pyx_temp;
       for (__pyx_temp=0; __pyx_temp < __pyx_v_nslices; __pyx_temp++) {
-        __Pyx_INCREF(__pyx_slice__25);
-        __Pyx_GIVEREF(__pyx_slice__25);
-        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__25);
+        __Pyx_INCREF(__pyx_slice__24);
+        __Pyx_GIVEREF(__pyx_slice__24);
+        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__24);
       }
     }
     __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_3); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 692, __pyx_L1_error)
@@ -14922,7 +14915,7 @@ static PyObject *assert_direct_dimensions(Py_ssize_t *__pyx_v_suboffsets, int __
  * 
  * 
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 699, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 699, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -17085,7 +17078,7 @@ static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED 
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -17138,7 +17131,7 @@ static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUS
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -20986,7 +20979,7 @@ static PyTypeObject __pyx_type_4pcap_pcap = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  "pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, precision=PCAP_TSTAMP_PRECISION_MICRO)  -> packet capture object\n\n    Open a handle to a packet capture descriptor.\n\n    Keyword arguments:\n    name      -- name of a network interface or dumpfile to open,\n                 or None to open the first available up interface\n    snaplen   -- maximum number of bytes to capture for each packet\n    promisc   -- boolean to specify promiscuous mode sniffing\n    timeout_ms -- requests for the next packet will return None if the timeout\n                  (in milliseconds) is reached and no packets were received\n                  (Default: no timeout)\n    immediate -- disable buffering, if possible\n    precision -- select micro-second or nano-second precision\n    timestamp_in_ns -- report timestamps in nanoseconds\n    ", /*tp_doc*/
+  "pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, timestamp_in_ns=False)  -> packet capture object\n\n    Open a handle to a packet capture descriptor.\n\n    Keyword arguments:\n    name      -- name of a network interface or dumpfile to open,\n                 or None to open the first available up interface\n    snaplen   -- maximum number of bytes to capture for each packet\n    promisc   -- boolean to specify promiscuous mode sniffing\n    timeout_ms -- requests for the next packet will return None if the timeout\n                  (in milliseconds) is reached and no packets were received\n                  (Default: no timeout)\n    immediate -- disable buffering, if possible\n    timestamp_in_ns -- report timestamps in integer nanoseconds\n    ", /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21790,7 +21783,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Set_promiscuous_mode, __pyx_k_Set_promiscuous_mode, sizeof(__pyx_k_Set_promiscuous_mode), 0, 0, 1, 0},
   {&__pyx_kp_s_Set_snaplength, __pyx_k_Set_snaplength, sizeof(__pyx_k_Set_snaplength), 0, 0, 1, 0},
   {&__pyx_kp_s_Set_timeout, __pyx_k_Set_timeout, sizeof(__pyx_k_Set_timeout), 0, 0, 1, 0},
-  {&__pyx_kp_s_Set_timestamp_precision, __pyx_k_Set_timestamp_precision, sizeof(__pyx_k_Set_timestamp_precision), 0, 0, 1, 0},
   {&__pyx_n_s_StopIteration, __pyx_k_StopIteration, sizeof(__pyx_k_StopIteration), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_UTF_8, __pyx_k_UTF_8, sizeof(__pyx_k_UTF_8), 0, 0, 1, 0},
@@ -21874,7 +21866,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pkt, __pyx_k_pkt, sizeof(__pyx_k_pkt), 0, 0, 1, 1},
   {&__pyx_n_s_pkts, __pyx_k_pkts, sizeof(__pyx_k_pkts), 0, 0, 1, 1},
   {&__pyx_n_s_platform, __pyx_k_platform, sizeof(__pyx_k_platform), 0, 0, 1, 1},
-  {&__pyx_n_s_precision, __pyx_k_precision, sizeof(__pyx_k_precision), 0, 0, 1, 1},
   {&__pyx_n_s_promisc, __pyx_k_promisc, sizeof(__pyx_k_promisc), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
@@ -21926,10 +21917,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 2, __pyx_L1_error)
   __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(1, 183, __pyx_L1_error)
-  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(1, 233, __pyx_L1_error)
-  __pyx_builtin_KeyError = __Pyx_GetBuiltinName(__pyx_n_s_KeyError); if (!__pyx_builtin_KeyError) __PYX_ERR(1, 279, __pyx_L1_error)
-  __pyx_builtin_KeyboardInterrupt = __Pyx_GetBuiltinName(__pyx_n_s_KeyboardInterrupt); if (!__pyx_builtin_KeyboardInterrupt) __PYX_ERR(1, 434, __pyx_L1_error)
-  __pyx_builtin_StopIteration = __Pyx_GetBuiltinName(__pyx_n_s_StopIteration); if (!__pyx_builtin_StopIteration) __PYX_ERR(1, 488, __pyx_L1_error)
+  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(1, 231, __pyx_L1_error)
+  __pyx_builtin_KeyError = __Pyx_GetBuiltinName(__pyx_n_s_KeyError); if (!__pyx_builtin_KeyError) __PYX_ERR(1, 278, __pyx_L1_error)
+  __pyx_builtin_KeyboardInterrupt = __Pyx_GetBuiltinName(__pyx_n_s_KeyboardInterrupt); if (!__pyx_builtin_KeyboardInterrupt) __PYX_ERR(1, 433, __pyx_L1_error)
+  __pyx_builtin_StopIteration = __Pyx_GetBuiltinName(__pyx_n_s_StopIteration); if (!__pyx_builtin_StopIteration) __PYX_ERR(1, 487, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 133, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 148, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 151, __pyx_L1_error)
@@ -21984,17 +21975,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "pcap.pyx":242
+  /* "pcap.pyx":241
  *             self.__pcap = pcap_create(pcap_ex_name(p), self.__ebuf)
  *             passing = True
  *             def check_return(ret, descrip):             # <<<<<<<<<<<<<<
  *                 if ret != 0:
  *                     raise OSError, "%s failed to execute" % descrip
  */
-  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_s_ret, __pyx_n_s_descrip); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(1, 242, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_check_return, 242, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(1, 242, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_ret, __pyx_n_s_descrip); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 241, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_check_return, 241, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 241, __pyx_L1_error)
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -22002,18 +21993,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("self.__pcap cannot be converted to a Python object for pickling")
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_self___pcap_cannot_be_converted); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_self___pcap_cannot_be_converted); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
   /* "(tree fragment)":4
  *     raise TypeError("self.__pcap cannot be converted to a Python object for pickling")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("self.__pcap cannot be converted to a Python object for pickling")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_self___pcap_cannot_be_converted); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_self___pcap_cannot_be_converted); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
   /* "View.MemoryView":133
  * 
@@ -22022,9 +22013,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if itemsize <= 0:
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
   /* "View.MemoryView":136
  * 
@@ -22033,9 +22024,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if not isinstance(format, bytes):
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 136, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
   /* "View.MemoryView":148
  * 
@@ -22044,9 +22035,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 148, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
   /* "View.MemoryView":176
  *             self.data = <char *>malloc(self.len)
@@ -22055,9 +22046,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *             if self.dtype_is_object:
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 176, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 176, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
   /* "View.MemoryView":192
  *             bufmode = PyBUF_F_CONTIGUOUS | PyBUF_ANY_CONTIGUOUS
@@ -22066,9 +22057,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         info.buf = self.data
  *         info.len = self.len
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 192, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 192, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -22076,18 +22067,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "View.MemoryView":414
  *     def __setitem__(memoryview self, object index, object value):
@@ -22096,9 +22087,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         have_slices, index = _unellipsify(index, self.view.ndim)
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Cannot_assign_to_read_only_memor); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 414, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Cannot_assign_to_read_only_memor); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "View.MemoryView":491
  *             result = struct.unpack(self.view.format, bytesitem)
@@ -22107,9 +22098,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         else:
  *             if len(self.view.format) == 1:
  */
-  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 491, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":516
  *     def __getbuffer__(self, Py_buffer *info, int flags):
@@ -22118,9 +22109,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         if flags & PyBUF_ND:
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_Cannot_create_writable_memory_vi); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 516, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_Cannot_create_writable_memory_vi); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "View.MemoryView":566
  *         if self.view.strides == NULL:
@@ -22129,9 +22120,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 566, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 566, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
 
   /* "View.MemoryView":573
  *     def suboffsets(self):
@@ -22140,12 +22131,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([suboffset for suboffset in self.view.suboffsets[:self.view.ndim]])
  */
-  __pyx_tuple__22 = PyTuple_New(1); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 573, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
+  __pyx_tuple__21 = PyTuple_New(1); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 573, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_INCREF(__pyx_int_neg_1);
   __Pyx_GIVEREF(__pyx_int_neg_1);
-  PyTuple_SET_ITEM(__pyx_tuple__22, 0, __pyx_int_neg_1);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  PyTuple_SET_ITEM(__pyx_tuple__21, 0, __pyx_int_neg_1);
+  __Pyx_GIVEREF(__pyx_tuple__21);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -22153,18 +22144,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "View.MemoryView":678
  *         if item is Ellipsis:
@@ -22173,9 +22164,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *                 seen_ellipsis = True
  *             else:
  */
-  __pyx_slice__25 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__25)) __PYX_ERR(0, 678, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__25);
-  __Pyx_GIVEREF(__pyx_slice__25);
+  __pyx_slice__24 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__24)) __PYX_ERR(0, 678, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__24);
+  __Pyx_GIVEREF(__pyx_slice__24);
 
   /* "View.MemoryView":681
  *                 seen_ellipsis = True
@@ -22184,9 +22175,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *             have_slices = True
  *         else:
  */
-  __pyx_slice__25 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__25)) __PYX_ERR(0, 681, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__25);
-  __Pyx_GIVEREF(__pyx_slice__25);
+  __pyx_slice__24 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__24)) __PYX_ERR(0, 681, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__24);
+  __Pyx_GIVEREF(__pyx_slice__24);
 
   /* "View.MemoryView":692
  *     nslices = ndim - len(result)
@@ -22195,9 +22186,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *     return have_slices or nslices, tuple(result)
  */
-  __pyx_slice__25 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__25)) __PYX_ERR(0, 692, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__25);
-  __Pyx_GIVEREF(__pyx_slice__25);
+  __pyx_slice__24 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__24)) __PYX_ERR(0, 692, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__24);
+  __Pyx_GIVEREF(__pyx_slice__24);
 
   /* "View.MemoryView":699
  *     for suboffset in suboffsets[:ndim]:
@@ -22206,9 +22197,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 699, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__26);
-  __Pyx_GIVEREF(__pyx_tuple__26);
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 699, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -22216,18 +22207,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  */
-  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__27);
-  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__26);
+  __Pyx_GIVEREF(__pyx_tuple__26);
 
   /* "(tree fragment)":4
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_s_no_default___reduce___due_to_non); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
 
   /* "pcap.pyx":157
  * DLT_PFLOG =	117
@@ -22236,57 +22227,57 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     DLT_LOOP =		12
  *     DLT_RAW =		14
  */
-  __pyx_tuple__29 = PyTuple_Pack(1, __pyx_n_s_openbsd); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(1, 157, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__29);
-  __Pyx_GIVEREF(__pyx_tuple__29);
+  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_n_s_openbsd); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(1, 157, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__28);
+  __Pyx_GIVEREF(__pyx_tuple__28);
 
-  /* "pcap.pyx":498
+  /* "pcap.pyx":497
  *             pcap_close(self.__pcap)
  * 
  * def ex_name(char *foo):             # <<<<<<<<<<<<<<
  *     return pcap_ex_name(foo)
  * 
  */
-  __pyx_tuple__30 = PyTuple_Pack(2, __pyx_n_s_foo, __pyx_n_s_foo); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(1, 498, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__30);
-  __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_ex_name, 498, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(1, 498, __pyx_L1_error)
+  __pyx_tuple__29 = PyTuple_Pack(2, __pyx_n_s_foo, __pyx_n_s_foo); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(1, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__29);
+  __Pyx_GIVEREF(__pyx_tuple__29);
+  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_ex_name, 497, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(1, 497, __pyx_L1_error)
 
-  /* "pcap.pyx":501
+  /* "pcap.pyx":500
  *     return pcap_ex_name(foo)
  * 
  * def lookupdev():             # <<<<<<<<<<<<<<
  *     """Return the name of a network device suitable for sniffing."""
  *     cdef char *p
  */
-  __pyx_tuple__32 = PyTuple_Pack(2, __pyx_n_s_p, __pyx_n_s_ebuf); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(1, 501, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__32);
-  __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupdev, 501, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(1, 501, __pyx_L1_error)
+  __pyx_tuple__31 = PyTuple_Pack(2, __pyx_n_s_p, __pyx_n_s_ebuf); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(1, 500, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__31);
+  __Pyx_GIVEREF(__pyx_tuple__31);
+  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupdev, 500, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(1, 500, __pyx_L1_error)
 
-  /* "pcap.pyx":510
+  /* "pcap.pyx":509
  *     return str(p.decode('UTF-8'))
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""
  *     cdef pcap_if_t *devs
  */
-  __pyx_tuple__34 = PyTuple_Pack(5, __pyx_n_s_devs, __pyx_n_s_curr, __pyx_n_s_ebuf, __pyx_n_s_status, __pyx_n_s_retval); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(1, 510, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__34);
-  __Pyx_GIVEREF(__pyx_tuple__34);
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_findalldevs, 510, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(1, 510, __pyx_L1_error)
+  __pyx_tuple__33 = PyTuple_Pack(5, __pyx_n_s_devs, __pyx_n_s_curr, __pyx_n_s_ebuf, __pyx_n_s_status, __pyx_n_s_retval); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(1, 509, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__33);
+  __Pyx_GIVEREF(__pyx_tuple__33);
+  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_findalldevs, 509, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(1, 509, __pyx_L1_error)
 
-  /* "pcap.pyx":531
+  /* "pcap.pyx":530
  *     return retval
  * 
  * def lookupnet(char *dev):             # <<<<<<<<<<<<<<
  *     """
  *     Return the address and the netmask of a given device
  */
-  __pyx_tuple__36 = PyTuple_Pack(6, __pyx_n_s_dev, __pyx_n_s_dev, __pyx_n_s_netp, __pyx_n_s_maskp, __pyx_n_s_ebuf, __pyx_n_s_status); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(1, 531, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__36);
-  __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupnet, 531, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(1, 531, __pyx_L1_error)
+  __pyx_tuple__35 = PyTuple_Pack(6, __pyx_n_s_dev, __pyx_n_s_dev, __pyx_n_s_netp, __pyx_n_s_maskp, __pyx_n_s_ebuf, __pyx_n_s_status); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(1, 530, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__35);
+  __Pyx_GIVEREF(__pyx_tuple__35);
+  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pcap_pyx, __pyx_n_s_lookupnet, 530, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(1, 530, __pyx_L1_error)
 
   /* "View.MemoryView":286
  *         return self.name
@@ -22295,9 +22286,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 286, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__38);
-  __Pyx_GIVEREF(__pyx_tuple__38);
+  __pyx_tuple__37 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 286, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__37);
+  __Pyx_GIVEREF(__pyx_tuple__37);
 
   /* "View.MemoryView":287
  * 
@@ -22306,9 +22297,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__39 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__39);
-  __Pyx_GIVEREF(__pyx_tuple__39);
+  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__38);
+  __Pyx_GIVEREF(__pyx_tuple__38);
 
   /* "View.MemoryView":288
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -22317,9 +22308,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__40 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__40);
-  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_tuple__39 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__39);
+  __Pyx_GIVEREF(__pyx_tuple__39);
 
   /* "View.MemoryView":291
  * 
@@ -22328,9 +22319,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 291, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__41);
-  __Pyx_GIVEREF(__pyx_tuple__41);
+  __pyx_tuple__40 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__40);
+  __Pyx_GIVEREF(__pyx_tuple__40);
 
   /* "View.MemoryView":292
  * 
@@ -22339,19 +22330,19 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 292, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__42);
-  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 292, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__41);
+  __Pyx_GIVEREF(__pyx_tuple__41);
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Enum(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__43 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__43);
-  __Pyx_GIVEREF(__pyx_tuple__43);
-  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_tuple__42 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__42);
+  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -22940,7 +22931,7 @@ if (!__Pyx_RefNanny) {
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_find); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 157, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = __Pyx_PyInt_NeObjC(__pyx_t_2, __pyx_int_neg_1, -1L, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
@@ -23133,65 +23124,52 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pcap.pyx":225
- *     def __init__(self, name=None, snaplen=65535, promisc=True,
- *                  timeout_ms=0, immediate=False, rfmon=False,
- *                  precision=PCAP_TSTAMP_PRECISION_MICRO,             # <<<<<<<<<<<<<<
- *                  timestamp_in_ns=False):
- *         global dltoff
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_PCAP_TSTAMP_PRECISION_MICRO); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 225, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_k__6 = __pyx_t_1;
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "pcap.pyx":498
+  /* "pcap.pyx":497
  *             pcap_close(self.__pcap)
  * 
  * def ex_name(char *foo):             # <<<<<<<<<<<<<<
  *     return pcap_ex_name(foo)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_1ex_name, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 498, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_1ex_name, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 497, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ex_name, __pyx_t_1) < 0) __PYX_ERR(1, 498, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ex_name, __pyx_t_1) < 0) __PYX_ERR(1, 497, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pcap.pyx":501
+  /* "pcap.pyx":500
  *     return pcap_ex_name(foo)
  * 
  * def lookupdev():             # <<<<<<<<<<<<<<
  *     """Return the name of a network device suitable for sniffing."""
  *     cdef char *p
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_3lookupdev, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 501, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_3lookupdev, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 500, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lookupdev, __pyx_t_1) < 0) __PYX_ERR(1, 501, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lookupdev, __pyx_t_1) < 0) __PYX_ERR(1, 500, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pcap.pyx":510
+  /* "pcap.pyx":509
  *     return str(p.decode('UTF-8'))
  * 
  * def findalldevs():             # <<<<<<<<<<<<<<
  *     """Return a list of capture devices."""
  *     cdef pcap_if_t *devs
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_5findalldevs, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 510, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_5findalldevs, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 509, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findalldevs, __pyx_t_1) < 0) __PYX_ERR(1, 510, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findalldevs, __pyx_t_1) < 0) __PYX_ERR(1, 509, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pcap.pyx":531
+  /* "pcap.pyx":530
  *     return retval
  * 
  * def lookupnet(char *dev):             # <<<<<<<<<<<<<<
  *     """
  *     Return the address and the netmask of a given device
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_7lookupnet, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 531, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_4pcap_7lookupnet, NULL, __pyx_n_s_pcap); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lookupnet, __pyx_t_1) < 0) __PYX_ERR(1, 531, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lookupnet, __pyx_t_1) < 0) __PYX_ERR(1, 530, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "pcap.pyx":1
@@ -23224,7 +23202,7 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__37, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_1);
@@ -23238,7 +23216,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__39, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_1);
@@ -23252,7 +23230,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__40, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__39, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_1);
@@ -23266,7 +23244,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__40, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_1);
@@ -23280,7 +23258,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__42, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
