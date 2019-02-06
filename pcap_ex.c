@@ -52,7 +52,7 @@ _pcap_ex_findalldevs(pcap_if_t **dst, char *ebuf)
 {
 	pcap_if_t *pifs, *cur, *prev, *next;
 	int ret;
-	
+
 	if ((ret = pcap_findalldevs(&pifs, ebuf)) != -1) {
 		/* XXX - flip script like a dyslexic actor */
 		for (prev = NULL, cur = pifs; cur != NULL; ) {
@@ -172,7 +172,7 @@ pcap_ex_setup(pcap_t *pcap)
 #else
 #if 0
 	int fd, n;
-	
+
 	fd = pcap_fileno(pcap);
 	n = fcntl(fd, F_GETFL, 0) | O_NONBLOCK;
 	fcntl(fd, F_SETFL, n);
@@ -243,7 +243,7 @@ pcap_t *pcap_ex_open_offline_with_tstamp_precision(char *fname,
 
 /* return codes: 1 = pkt, 0 = timeout, -1 = error, -2 = EOF */
 int
-pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
+pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr *hdr, u_char **pkt)
 {
 #ifdef _WIN32
 	if (__pcap_ex_gotsig) {
@@ -252,8 +252,6 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 	}
 	return (pcap_next_ex(pcap, hdr, pkt));
 #else
-	static u_char *__pkt;
-	static struct pcap_pkthdr __hdr;
 	struct timeval tv = { 1, 0 };
 	fd_set rfds;
 	int fd, n;
@@ -264,7 +262,7 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 			__pcap_ex_gotsig = 0;
 			return (-1);
 		}
-		if ((__pkt = (u_char *)pcap_next(pcap, &__hdr)) == NULL) {
+		if ((*pkt = (u_char *)pcap_next(pcap, hdr)) == NULL) {
 			if (pcap_file(pcap) != NULL)
 				return (-2);
 			FD_ZERO(&rfds);
@@ -275,9 +273,7 @@ pcap_ex_next(pcap_t *pcap, struct pcap_pkthdr **hdr, u_char **pkt)
 		} else
 			break;
 	}
-	*pkt = __pkt;
-	*hdr = &__hdr;
-	
+
 	return (1);
 #endif
 }
@@ -302,7 +298,7 @@ pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
 	char path[] = "/tmp/.pypcapXXXXXX.pcap";
 	char ebuf[PCAP_ERRBUF_SIZE];
 	int ret = -1;
-	
+
 	mktemp(path);
 	if ((f = fopen(path, "w")) != NULL) {
 		hdr.magic = 0xa1b2c3d4;
@@ -314,7 +310,7 @@ pcap_ex_compile_nopcap(int snaplen, int dlt, struct bpf_program *fp, char *str,
 		hdr.linktype = dlt;
 		fwrite(&hdr, sizeof(hdr), 1, f);
 		fclose(f);
-	
+
 		if ((pc = pcap_open_offline(path, ebuf)) != NULL) {
 			ret = pcap_compile(pc, fp, str, optimize, netmask);
 			pcap_close(pc);

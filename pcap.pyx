@@ -95,7 +95,7 @@ cdef extern from "pcap_ex.h":
     void    pcap_ex_setnonblock(pcap_t *p, int nonblock, char *ebuf)
     int     pcap_ex_getnonblock(pcap_t *p, char *ebuf)
     int    pcap_ex_setdirection(pcap_t *p, int direction)
-    int     pcap_ex_next(pcap_t *p, pcap_pkthdr **hdr, u_char **pkt) nogil
+    int     pcap_ex_next(pcap_t *p, pcap_pkthdr *hdr, u_char **pkt) nogil
     int     pcap_ex_compile_nopcap(int snaplen, int dlt,
                                    bpf_program *fp, char *str,
                                    int optimize, unsigned int netmask)
@@ -403,7 +403,7 @@ cdef class pcap:
         callback -- function with (timestamp, pkt, *args) prototype
         *args    -- optional arguments passed to callback on execution
         """
-        cdef pcap_pkthdr *hdr
+        cdef pcap_pkthdr hdr
         cdef u_char *pkt
         cdef int n
         cdef int i = 1
@@ -461,7 +461,7 @@ cdef class pcap:
         return self
 
     def __next__(self):
-        cdef pcap_pkthdr *hdr
+        cdef pcap_pkthdr hdr
         cdef u_char *pkt
         cdef int n
         cdef double scale = self.__precision_scale

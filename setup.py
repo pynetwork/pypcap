@@ -103,10 +103,7 @@ def find_define_macros(pcap_h):
               encoding='utf-8',
               errors='surrogateescape') as fi:
         for line in fi.readlines():
-            if 'pcap_file(' in line:
-                print("found pcap_file function")
-                yield ('HAVE_PCAP_FILE', 1)
-            elif 'pcap_compile_nopcap(' in line:
+            if 'pcap_compile_nopcap(' in line:
                 print("found pcap_compile_nopcap function")
                 yield ('HAVE_PCAP_COMPILE_NOPCAP', 1)
             elif 'pcap_setnonblock(' in line:
