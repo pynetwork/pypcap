@@ -6,6 +6,8 @@ env:
   matrix:
     - TOXENV=py27
     - TOXENV=py34
+    - TOXENV=py36
+    - TOXENV=py37
     # This is temporarily disabled due to lack of travis support
     #- TOXENV=pypy
     - TOXENV=docs
