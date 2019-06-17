@@ -1,0 +1,4 @@
+pytest
+pytest-cov
+cython>=0.29
+dpkt
