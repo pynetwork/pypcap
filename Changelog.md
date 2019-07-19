@@ -1,3 +1,17 @@
+# pypcap 1.2.3 [2019-07-19]
+
+Fixes:
+
+- Fix overwritten packets: https://github.com/pynetwork/pypcap/issues/39 & https://github.com/pynetwork/pypcap/pull/43
+
+- Drop check for check for pcap_file(): https://github.com/pynetwork/pypcap/pull/85
+
+- Fix setup issues in python 3.7: https://github.com/pynetwork/pypcap/pull/77
+
+Adds:
+
+- Support new CLT SDK: https://github.com/pynetwork/pypcap/pull/79
+
 # pypcap 1.2.2 [2018-05-15]
 
 Fixes:
