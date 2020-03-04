@@ -1,0 +1,81 @@
+name: Release
+
+on: [push]
+
+env:
+  NPCAP_SDK_VERSION: '1.04'
+
+jobs:
+  build-sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+      - name: Install libpcap (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install libpcap-dev
+        if: runner.os == 'Linux'
+      - name: Build sdist
+        run: |
+          python setup.py sdist
+      # XXX: Use pypa/gh-action-pypi-publish instead
+      - uses: actions/upload-artifact@v1
+        with:
+          name: sdist
+          path: dist
+
+  build-wheel:
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+        python_version:
+          - 3.6
+          - 3.7
+          - 3.8
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '${{ matrix.python_version }}'
+      - name: Get pip cache
+        id: pip-cache
+        run: |
+          python -c "from pip._internal.locations import USER_CACHE_DIR; print('::set-output name=dir::' + USER_CACHE_DIR)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip
+      - name: Download Npcap SDK (Windows)
+        run: |
+          Invoke-WebRequest https://nmap.org/npcap/dist/npcap-sdk-${{ env.NPCAP_SDK_VERSION }} -OutFile C:\NpcapSDK.zip
+          Expand-Archive C:\NpcapSDK.zip -DestinationPath ..\wpdpack
+        if: runner.os == 'Windows'
+      - name: Install libpcap (macOS)
+        run: |
+          brew install libpcap
+        if: runner.os == 'macOS'
+      - name: Install libpcap (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install libpcap-dev
+        if: runner.os == 'Linux'
+      - name: Install build requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install wheel
+      - name: Build wheel for Python ${{ matrix.python_version }} in ${{ runner.os }}
+        run: |
+          python setup.py bdist_wheel
+      # XXX: Use pypa/gh-action-pypi-publish instead
+      - uses: actions/upload-artifact@v1
+        with:
+          name: ${{ runner.os }}-${{ matrix.python_version }}
+          path: dist
