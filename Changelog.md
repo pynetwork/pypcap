@@ -1,3 +1,9 @@
+# pypcap 1.3.0 [2022-09-05]
+
+Fixes:
+
+- Support Python 3.9
+
 # pypcap 1.2.3 [2019-07-19]
 
 Fixes:
