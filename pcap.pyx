@@ -63,6 +63,7 @@ cdef extern from "pcap.h":
     int     pcap_set_promisc(pcap_t *p, int promisc)
     int     pcap_set_timeout(pcap_t *p, int to_ms)
     int     pcap_set_immediate_mode(pcap_t *p, int immediate_mode)
+    int     pcap_set_buffer_size(pcap_t *p, int buffer_size)
     int     pcap_set_rfmon(pcap_t *p, int rfmon)
     int     pcap_activate(pcap_t *p)
     int     pcap_compile(pcap_t *p, bpf_program *fp, char *str, int optimize,
@@ -196,7 +197,8 @@ cdef class bpf:
 
 
 cdef class pcap:
-    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False, timestamp_in_ns=False)  -> packet capture object
+    """pcap(name=None, snaplen=65535, promisc=True, timeout_ms=None, immediate=False,
+            timestamp_in_ns=False, buffer_size=0)  -> packet capture object
 
     Open a handle to a packet capture descriptor.
 
@@ -210,6 +212,8 @@ cdef class pcap:
                   (Default: no timeout)
     immediate -- disable buffering, if possible
     timestamp_in_ns -- report timestamps in integer nanoseconds
+    buffer_size -- set the buffer size (in bytes) for capture handle
+                   (Default: 0 => use the platform's default)
     """
     cdef pcap_t *__pcap
     cdef char *__name
@@ -222,7 +226,7 @@ cdef class pcap:
 
     def __init__(self, name=None, snaplen=65535, promisc=True,
                  timeout_ms=0, immediate=False, rfmon=False,
-                 timestamp_in_ns=False):
+                 timestamp_in_ns=False, buffer_size=0):
         global dltoff
         cdef char *p
 
@@ -252,6 +256,8 @@ cdef class pcap:
                          "Set immediate mode")
             check_return(pcap_set_rfmon(self.__pcap, rfmon),
                          "Set monitor mode")
+            check_return(pcap_set_buffer_size(self.__pcap, buffer_size),
+                         "Set buffer size")
             # Ask for nano-second precision, but don't fail if not available.
             pcap_ex_set_tstamp_precision(self.__pcap, PCAP_TSTAMP_PRECISION_NANO)
             if pcap_activate(self.__pcap) != 0:
