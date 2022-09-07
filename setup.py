@@ -53,6 +53,24 @@ def find_prefix_and_pcap_h():
     sys.exit(1)
 
 
+def ctype_find_library(lib_files):
+    try:
+        from ctypes.util import find_library
+
+        unique_files = set()
+        for lib_file in lib_files:
+            unique_files.add(lib_file.split('.')[0])    # ignore file extension
+
+        for lib_file in unique_files:
+            lib_file_path = find_library(lib_file)
+            if lib_file_path:
+                return lib_file_path
+
+        return None     # library not found
+    except:
+        return None     # ctypes not found
+
+
 def find_lib_path_and_file(prefix):
     if sys.maxsize > 2 ** 32:
         candidates = [
@@ -81,7 +99,9 @@ def find_lib_path_and_file(prefix):
         'libpcap.dylib',
         'wpcap.lib'
     ]
-    lib_file_path = recursive_search_dirs(lib_sub_dirs, lib_files)
+    lib_file_path = ctype_find_library(lib_files)
+    if not lib_file_path:
+        lib_file_path = recursive_search_dirs(lib_sub_dirs, lib_files)
     if not lib_file_path:
         print("None of the following found: %s" % lib_files)
         sys.exit(1)
