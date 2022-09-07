@@ -57,9 +57,8 @@ def ctype_find_library(lib_files):
     try:
         from ctypes.util import find_library
 
-        unique_files = set()
-        for lib_file in lib_files:
-            unique_files.add(lib_file.split('.')[0])    # ignore file extension
+        unique_files = set(map(lambda lib_file: lib_file.split('.')[0], # ignore file extension
+                               lib_files))
 
         for lib_file in unique_files:
             lib_file_path = find_library(lib_file)
