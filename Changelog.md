@@ -2,7 +2,7 @@
 
 Fixes:
 
-- Support Python 3.9
+- Support Python 3.9 and 3.10
 
 Adds:
 
