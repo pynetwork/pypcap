@@ -1,6 +1,8 @@
 Python PCAP module
 ------------------
 
+**Attention** this project is currently unmaintained. If you would like to help with maitaining it please reach out (see: https://github.com/pynetwork/pypcap/issues/106)!
+
 |travis| `Read the Docs <http://pypcap.rtfd.org>`__
 
 This is a simplified object-oriented Python wrapper for libpcap -
